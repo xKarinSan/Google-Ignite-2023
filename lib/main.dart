@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
+import "package:firebase_core/firebase_core.dart";
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:googleignite2023/firebase_options.dart';
+import 'General/bottom_bar.dart';
 
-void main() {
+// ================== pages ==================
+import 'home/pages/home.dart';
+import 'Recycling/Pages/bin_locator.dart';
+import 'Contests/pages/all_contest_page.dart';
+import 'Rewards/pages/rewards_page.dart';
+import 'Profile/pages/profile_page.dart';
+
+Future<void> main() async {
   runApp(const MyApp());
 }
 
@@ -11,28 +22,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'The Best Mobile App'),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
+          useMaterial3: true,
+        ),
+        home: const HomePage(),
+        routes: {
+          '/home': (context) => const HomePage(),
+          '/recycling': (context) => const BinLocator(),
+          '/contests': (context) => const ContestPage(),
+          '/rewards': (context) => const RewardsPage(),
+          '/profile': (context) => const ProfilePage()
+        });
   }
 }
 
@@ -120,6 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+      // bottomNavigationBar: BottomBar(),
     );
   }
 }
