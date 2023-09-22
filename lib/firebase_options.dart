@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -26,7 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return iOS;
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -48,14 +49,23 @@ class DefaultFirebaseOptions {
         );
     }
   }
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDZ6Pikl2yvU8iig3KabNbnV9Q3kLM5yjQ',
-    appId: '1:547151558406:android:7af223b05728ec28181087',
-    messagingSenderId: '547151558406',
-    projectId: 'ignite-2023-67a01',
-    databaseURL: 'https://ignite-2023-67a01-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'ignite-2023-67a01.appspot.com',
+    apiKey: dotenv.env['FIREBASE_ANDROID_API_KEY'] ?? "",
+    appId: dotenv.env['FIREBASE_ANDROID_APP_ID'] ?? "",
+    messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? "",
+    projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? "",
+    databaseURL: dotenv.env['FIREBASE_DATABASE_URL'] ?? "",
+    storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? "",
   );
 
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env['FIREBASE_IOS_API_KEY'] ?? "",
+    appId: dotenv.env['FIREBASE_ANDROID_APP_ID'] ?? "",
+    messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? "",
+    projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? "",
+    databaseURL: dotenv.env['FIREBASE_DATABASE_URL'] ?? "",
+    storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? "",
+    iosClientId: dotenv.env['FIREBASE_IOS_CLIENT_ID'] ?? "",
+    iosBundleId: dotenv.env['FIREBASE_IOS_BUNDLE_ID'] ?? "",
+  );
 }
