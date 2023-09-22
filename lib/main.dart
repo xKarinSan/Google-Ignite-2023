@@ -4,6 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:googleignite2023/firebase_options.dart';
 import 'General/bottom_bar.dart';
 
+// =================firebase init=================
+import "FirebaseCredentials/firebase_environment.dart";
 // ================== pages ==================
 import 'home/pages/home.dart';
 import 'Recycling/Pages/bin_locator.dart';
@@ -14,26 +16,8 @@ import 'Profile/pages/profile_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
-  print(dotenv.env['apiKey']);
-  print(dotenv.env['appId']);
-  print(dotenv.env['messagingSenderId']);
-  print(dotenv.env['projectId']);
-  print(dotenv.env['databaseURL']);
-  print(dotenv.env['storageBucket']);
-  // Firebase.initializeApp(
-  //     options:
-  //          DefaultFirebaseOptions.currentPlatform
-  //         FirebaseOptions(
-  //   apiKey: dotenv.env['apiKey'] ?? '',
-  //   appId: dotenv.env['appId'] ?? '',
-  //   messagingSenderId: dotenv.env['messagingSenderId'] ?? '',
-  //   projectId: dotenv.env['projectId'] ?? '',
-  //   databaseURL: dotenv.env['databaseURL'] ?? '',
-  //   storageBucket: dotenv.env['storageBucket'] ?? '',
-  // )
-  // );
+  HelperFunctions.firebaseInit();
   runApp(const MyApp());
-  print("Started");
 }
 
 class MyApp extends StatelessWidget {
@@ -71,12 +55,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
