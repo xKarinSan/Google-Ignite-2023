@@ -41,7 +41,6 @@ dependencies:
   firebase_database: ^10.2.6
   firebase_auth: ^4.10.0
   dotenv: ^4.1.0
-  drop_shadow: ^0.1.0
 
 dev_dependencies:
   flutter_test:
