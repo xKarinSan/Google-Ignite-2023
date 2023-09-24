@@ -1,19 +1,54 @@
-// class Env {
-//   static const url = String.fromEnvironment('URL');
-//   static const firebaseAndroidApiKey =
-//       String.fromEnvironment(FIREBASE_ANDROID_API_KEY);
-//   static const firebaseIosApiKey = String.fromEnvironment(FIREBASE_IOS_API_KEY);
-//   static const firebaseAppIdAndroid =
-//       String.fromEnvironment('FIREBASE_APP_ID_ANDROID');
-//   static const firebaseAppIdIos = String.fromEnvironment('FIREBASE_APP_ID_IOS');
-//   static const firebaseMessageSenderId =
-//       String.fromEnvironment('FIREBASE_MESSAGE_SENDER_ID');
-//   static const firebaseProjectId =
-//       String.fromEnvironment('FIREBASE_PROJECT_ID');
-//   static const firebaseStorageBucket =
-//       String.fromEnvironment('FIREBASE_STORAGE_BUCKET');
-//   static const firebaseIosClientId =
-//       String.fromEnvironment('FIREBASE_IOS_CLIENT_ID');
-//   static const firebaseIosBundleId =
-//       String.fromEnvironment('FIREBASE_IOS_BUNDLE_ID');
-// }
+export 'firebase_environment.dart';
+
+import 'package:googleignite2023/firebase_options.dart';
+import "package:firebase_core/firebase_core.dart";
+import 'package:firebase_auth/firebase_auth.dart';
+
+class HelperFunctions {
+  static void firebaseInit() async {
+    // Launch a web view.
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+  }
+}
+
+class AuthHandler {
+  // auth instance
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  // current logged user
+  User? get currentUser => _firebaseAuth.currentUser;
+  // auth state changes
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
+  // sign in (email auth)
+  Future<void> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
+    // try {
+    await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+    // }
+    //  catch (error) {
+    //   print("error");
+    //   print(error);
+    // }
+  }
+
+  Future<void> createUserWithEmailAndPassword({
+    required String username,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      User? user = userCredential.user as User;
+      user.updateDisplayName(username);
+    } catch (error) {
+      // Handle error
+    }
+  }
+
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
+}

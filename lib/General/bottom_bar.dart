@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 
-// =============== pages ===============
-import "../Recycling/Pages/bin_locator.dart";
-import "../Home/pages/home.dart";
-import "../Contests/pages/all_contest_page.dart";
-
-void main() {
-  runApp(const BottomBar());
-}
-
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
   @override
@@ -20,8 +11,8 @@ class _BottomBarState extends State<BottomBar> {
   final LocalStorage storage = LocalStorage('bottom_bar_state');
   int _selectedIndex = 0;
 
-  @override
-  bool get wantKeepAlive => true;
+  // @override
+  // bool get wantKeepAlive => true;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -37,6 +28,7 @@ class _BottomBarState extends State<BottomBar> {
       // print("index: $_selectedIndex");
     } else {
       _selectedIndex = 0;
+      storage.setItem("index", _selectedIndex);
     }
 
     return BottomNavigationBar(
@@ -66,17 +58,17 @@ class _BottomBarState extends State<BottomBar> {
         ),
       ],
       onTap: (index) => {
-        _onItemTapped(index),
-        if (index == 0)
+        if (index == 0 && index != _selectedIndex)
           {Navigator.pushNamed(context, "/home")}
-        else if (index == 1)
+        else if (index == 1 && index != _selectedIndex)
           {Navigator.pushNamed(context, "/recycling")}
-        else if (index == 2)
+        else if (index == 2 && index != _selectedIndex)
           {Navigator.pushNamed(context, "/contests")}
-        else if (index == 3)
+        else if (index == 3 && index != _selectedIndex)
           {Navigator.pushNamed(context, "/rewards")}
-        else if (index == 4)
-          {Navigator.pushNamed(context, "/profile")}
+        else if (index == 4 && index != _selectedIndex)
+          {Navigator.pushNamed(context, "/profile")},
+        _onItemTapped(index),
       },
       //some widget )
     );

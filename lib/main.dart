@@ -1,37 +1,45 @@
+// ================= packages =================
+// ======= widget tree/middleware =======
+import "widget_tree.dart";
+
+// ======= flutter =======
 import 'package:flutter/material.dart';
 import "package:firebase_core/firebase_core.dart";
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:googleignite2023/firebase_options.dart';
 import 'General/bottom_bar.dart';
 
+// ======= firebase =======
+import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+
+// ======= firebase options =======
+import 'package:googleignite2023/firebase_options.dart';
+
+// =================firebase init=================
+// import "FirebaseCredentials/firebase_environment.dart";
 // ================== pages ==================
+// ======= homepage =======
 import 'home/pages/home.dart';
+
+// ======= recycling/hunt related =======
 import 'Recycling/Pages/bin_locator.dart';
+
+// ======= contests/competitions related =======
 import 'Contests/pages/all_contest_page.dart';
+
+// ======= rewards related =======
 import 'Rewards/pages/rewards_page.dart';
+
+// ======= profile related =======
 import 'Profile/pages/profile_page.dart';
+
+// ======= authentication =======
+import 'Authentication/Pages/auth_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
-  print(dotenv.env['apiKey']);
-  print(dotenv.env['appId']);
-  print(dotenv.env['messagingSenderId']);
-  print(dotenv.env['projectId']);
-  print(dotenv.env['databaseURL']);
-  print(dotenv.env['storageBucket']);
-  // Firebase.initializeApp(
-  //     options:
-  //          DefaultFirebaseOptions.currentPlatform
-  //         FirebaseOptions(
-  //   apiKey: dotenv.env['apiKey'] ?? '',
-  //   appId: dotenv.env['appId'] ?? '',
-  //   messagingSenderId: dotenv.env['messagingSenderId'] ?? '',
-  //   projectId: dotenv.env['projectId'] ?? '',
-  //   databaseURL: dotenv.env['databaseURL'] ?? '',
-  //   storageBucket: dotenv.env['storageBucket'] ?? '',
-  // )
-  // );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
   print("Started");
 }
@@ -48,13 +56,25 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
           useMaterial3: true,
         ),
-        home: const HomePage(),
+        home: const WidgetTree(),
         routes: {
+          // ======= homepage =======
           '/home': (context) => const HomePage(),
+
+          // ======= recycling/hunt related =======
           '/recycling': (context) => const BinLocator(),
+
+          // ======= contests/competitions related =======
           '/contests': (context) => const ContestPage(),
+
+          // ======= rewards related =======
           '/rewards': (context) => const RewardsPage(),
-          '/profile': (context) => const ProfilePage()
+          // ======= profile related =======
+
+          '/profile': (context) => ProfilePage(),
+
+          // ======= authentication =======
+          '/auth': (context) => const AuthPage(),
         });
   }
 }
@@ -71,17 +91,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
