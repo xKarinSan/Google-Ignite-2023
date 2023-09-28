@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '547151558406',
     projectId: 'ignite-2023-67a01',
     databaseURL:
-        'https://ignite-2023-67a01-default-rtdb.asia-southeast1.firebasedatabase.app',
+        'https://ignite-2023-67a01-default-rtdb.asia-southeast1.firebasedatabase.app/',
     storageBucket: 'ignite-2023-67a01.appspot.com',
   );
 
@@ -65,7 +65,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '547151558406',
     projectId: 'ignite-2023-67a01',
     databaseURL:
-        'https://ignite-2023-67a01-default-rtdb.asia-southeast1.firebasedatabase.app',
+        'https://ignite-2023-67a01-default-rtdb.asia-southeast1.firebasedatabase.app/',
     storageBucket: 'ignite-2023-67a01.appspot.com',
     iosClientId:
         '547151558406-pq2njp7s6bvl8sd09m162h0b5d2tnv5b.apps.googleusercontent.com',
