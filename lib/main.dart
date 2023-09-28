@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const HomePage(),
 
           // ======= recycling/hunt related =======
-          '/recycling': (context) => const BinLocator(),
+          '/recycling': (context) => BinLocator(),
 
           // ======= contests/competitions related =======
           '/contests': (context) => const ContestPage(),

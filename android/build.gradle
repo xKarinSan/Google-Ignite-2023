@@ -11,6 +11,10 @@ buildscript {
         classpath 'com.google.gms:google-services:4.3.10'
         // END: FlutterFire Configuration
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        plugins {
+            // ...
+            id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
+        }
     }
 }
 
