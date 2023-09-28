@@ -25,15 +25,51 @@ class _BinLocatorState extends State<BinLocator> {
     mapController = controller;
   }
 
+  // We need markers for the bins:
+  final Set<Marker> _markers = {
+    // Bin 1:
+    Marker(
+      markerId: const MarkerId('bin1'),
+      position: const LatLng(1.296568, 103.852119),
+      infoWindow: const InfoWindow(
+        title: 'Bin 1 - Paper',
+        snippet: 'Please deposit paper waste here',
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueGreen,
+      ),
+    ),
+    // Bin 2:
+    // Bin 3:
+    // Bin 4:
+    // Bin 5:
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: const Text('Bin Locator'),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+        ),
         body: GoogleMap(
           initialCameraPosition: CameraPosition(
             target: _center,
-            zoom: 15.0,
+            zoom: 16.0,
           ),
           onMapCreated: _onMapCreated,
+          markers: {
+            for (final marker in _markers)
+              Marker(
+                markerId: MarkerId(marker.markerId.value),
+                position: marker.position,
+                infoWindow: InfoWindow(
+                  title: marker.infoWindow.title,
+                  snippet: marker.infoWindow.snippet,
+                ),
+              ),
+          }
         ),
         bottomNavigationBar: const BottomBar(),
       );
