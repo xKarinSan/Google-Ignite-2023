@@ -13,7 +13,7 @@ class WidgetTree extends StatefulWidget {
 
 class _WidgetTreeState extends State<WidgetTree> {
   // username
-  final LocalStorage currentUser = LocalStorage('current_user.json');
+  final LocalStorage currentUser = LocalStorage('current_user');
   final LocalStorage bottomBarStorage = LocalStorage('bottom_bar_state');
 
   @override

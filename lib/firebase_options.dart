@@ -24,8 +24,10 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
+        print("Android");
         return android;
       case TargetPlatform.iOS:
+        print("iOS");
         return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(

@@ -1,6 +1,7 @@
 // ================= packages =================
 // ======= widget tree/middleware =======
 import "widget_tree.dart";
+import "Middleware/auth_middleware.dart";
 
 // ======= flutter =======
 import 'package:flutter/material.dart';
@@ -45,39 +46,50 @@ void main() async {
   print("Started");
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with RouteAware {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
-          useMaterial3: true,
-        ),
-        home: const WidgetTree(),
-        routes: {
-          // ======= homepage =======
-          '/home': (context) => const HomePage(),
+      // debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
+        useMaterial3: true,
+      ),
+      home: const WidgetTree(),
+      navigatorObservers: [
+        AuthMiddleware(),
+      ],
 
-          // ======= recycling/hunt related =======
-          // '/recycling': (context) => const BinLocator(),
-          '/recycling': (context) => const Popup(),
+      routes: {
+        // ======= homepage =======
+        '/home': (context) => const HomePage(),
 
-          // ======= contests/competitions related =======
-          '/contests': (context) => const ContestPage(),
+        // ======= recycling/hunt related =======
+        // '/recycling': (context) => const BinLocator(),
+        '/recycling': (context) => const Popup(),
 
-          // ======= rewards related =======
-          '/rewards': (context) => const RewardsPage(),
-          // ======= profile related =======
+        // ======= contests/competitions related =======
+        '/contests': (context) => const ContestPage(),
 
-          '/profile': (context) => ProfilePage(),
+        // ======= rewards related =======
+        '/rewards': (context) => const RewardsPage(),
+        // ======= profile related =======
 
-          // ======= authentication =======
-          '/auth': (context) => const AuthPage(),
-        });
+        '/profile': (context) => ProfilePage(),
+
+        // ======= authentication =======
+        '/auth': (context) => const AuthPage(),
+      },
+    );
   }
 }
 

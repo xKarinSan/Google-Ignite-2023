@@ -14,7 +14,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   // final User? user = AuthHandler().currentUser;
-  final LocalStorage currentUser = LocalStorage('current_user.json');
+  final LocalStorage currentUser = LocalStorage('current_user');
 
   bool isLoggingOut = false;
 
