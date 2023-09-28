@@ -47,6 +47,7 @@ class BottomBar extends StatelessWidget {
                         // Do something with the user's input
                       },
                     ),
+                    SizedBox(height: 16), // Add some spacing
                     TextFormField(
                       decoration: const InputDecoration(
                         labelText: 'Quantity',
@@ -56,6 +57,7 @@ class BottomBar extends StatelessWidget {
                         // Do something with the user's input
                       },
                     ),
+                    SizedBox(height: 16), // Add some spacing
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -63,15 +65,20 @@ class BottomBar extends StatelessWidget {
                           onPressed: () {
                             // Do something when the green button is pressed
                           },
-                          style:
-                              ElevatedButton.styleFrom(primary: Colors.green),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.green,
+                            onPrimary: Colors.white, // Text color
+                          ),
                           child: const Text('Add'),
                         ),
                         ElevatedButton(
                           onPressed: () {
                             // Do something when the red button is pressed
                           },
-                          style: ElevatedButton.styleFrom(primary: Colors.red),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                            onPrimary: Colors.white, // Text color
+                          ),
                           child: const Text('Cancel'),
                         ),
                       ],
