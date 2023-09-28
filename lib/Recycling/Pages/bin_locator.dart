@@ -40,9 +40,53 @@ class _BinLocatorState extends State<BinLocator> {
       ),
     ),
     // Bin 2:
+    Marker(
+      markerId: const MarkerId('bin2'),
+      position: const LatLng(1.298193, 103.848488),
+      infoWindow: const InfoWindow(
+        title: 'Bin 2 - Electronics',
+        snippet: 'Please deposit electronic waste here',
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueGreen,
+      ),
+    ),
     // Bin 3:
+    Marker(
+      markerId: const MarkerId('bin3'),
+      position: const LatLng(1.294968, 103.850231),
+      infoWindow: const InfoWindow(
+        title: 'Bin 3 - Plastic/Electronics',
+        snippet: 'Please deposit plastic or electronic waste here',
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueGreen,
+      ),
+    ),
     // Bin 4:
+    Marker(
+      markerId: const MarkerId('bin4'),
+      position: const LatLng(1.294469, 103.848641),
+      infoWindow: const InfoWindow(
+        title: 'Bin 4 - Miscellaneous',
+        snippet: 'Please deposit recyclable waste here',
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueGreen,
+      ),
+    ),
     // Bin 5:
+    Marker(
+      markerId: const MarkerId('bin5'),
+      position: const LatLng(1.296644, 103.850376),
+      infoWindow: const InfoWindow(
+        title: 'Bin 5 - Miscellaneous',
+        snippet: 'Please deposit recyclable waste here',
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueGreen,
+      ),
+    ),
   };
 
   @override
@@ -56,7 +100,7 @@ class _BinLocatorState extends State<BinLocator> {
         body: GoogleMap(
           initialCameraPosition: CameraPosition(
             target: _center,
-            zoom: 16.0,
+            zoom: 17.0,
           ),
           onMapCreated: _onMapCreated,
           markers: {
