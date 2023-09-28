@@ -31,6 +31,7 @@ class BinLocator extends StatelessWidget {
                   zoom: 11.0,
                 ),
               ),
+              bottomNavigationBar: const BottomBar(),
             ),
           );
         }
