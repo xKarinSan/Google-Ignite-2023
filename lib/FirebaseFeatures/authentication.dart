@@ -51,13 +51,15 @@ class AuthHandler {
           .createUserWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user as User;
       user.updateDisplayName(username);
-      await Database().createDocument(collection: "users", data: {
-        "uid": user.uid,
-        "username": username,
-        "photoURL": "",
-        "cumulativePoints": 0,
-        "currentPoints": 0,
-      });
+      await Database().createDocumentWithExistingId(
+          collection: "users",
+          id: "${user.uid}",
+          data: {
+            "username": username,
+            "photoURL": "",
+            "cumulativePoints": 0,
+            "currentPoints": 0,
+          });
       await currUserLocalStorage.setItem('userId', user.uid);
       await currUserLocalStorage.setItem('displayName', username);
       await currUserLocalStorage.setItem('email', email);
