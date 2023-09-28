@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import "../../../FirebaseCredentials/firebase_environment.dart";
 import "../../General/loader.dart";
+import 'package:lottie/lottie.dart';
+
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -69,7 +71,7 @@ class _AuthPageState extends State<AuthPage> {
       } on FirebaseAuthException catch (e) {
         print(e.message);
         setState(() {
-          errorMessage = "Registraation unsuccessful. Please try again.";
+          errorMessage = "Registration unsuccessful. Please try again.";
         });
         isLoading = false;
       }
@@ -153,6 +155,14 @@ class _AuthPageState extends State<AuthPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      Lottie.asset(
+                        'assets/animation_ln3bcryl.json', // Path to Lottie animation JSON file
+                      width: 200,
+                      height: 200,
+                      repeat: true, // Set to true to loop the animation
+                      reverse: false, // Set to true to reverse the animation
+                      animate: true, // Set to false to pause the animation
+                      ),
                       Text("GreenQuest",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
