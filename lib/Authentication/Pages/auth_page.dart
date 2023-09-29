@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import "../../../FirebaseCredentials/firebase_environment.dart";
+import '../../FirebaseFeatures/authentication.dart';
 import "../../General/loader.dart";
+import 'package:lottie/lottie.dart';
+
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -52,26 +54,36 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Future<void> createUserWithEmailAndPassword() async {
+    print("Registering");
     if (_controllerUsername.text == '' ||
         _controllerEmail.text == '' ||
         _controllerPassword.text == '' ||
         _controllerConfirmPassword.text == '') {
-      errorMessage = "Please fill in all the fields";
+      setState(() {
+        errorMessage = "Please fill in all the fields";
+      });
     } else if (_controllerConfirmPassword.text != _controllerPassword.text) {
-      errorMessage = "Passwords do not match";
+      setState(() {
+        errorMessage = "Passwords do not match";
+      });
     } else {
       try {
-        isLoading = true;
+        setState(() {
+          isLoading = true;
+        });
         await AuthHandler().createUserWithEmailAndPassword(
             username: _controllerUsername.text,
             email: _controllerEmail.text,
             password: _controllerPassword.text);
+        setState(() {
+          isLoading = false;
+        });
+        Navigator.pushNamed(context, '/home');
       } on FirebaseAuthException catch (e) {
         print(e.message);
         setState(() {
-          errorMessage = "Registraation unsuccessful. Please try again.";
+          isLoading = false;
         });
-        isLoading = false;
       }
     }
   }
@@ -131,6 +143,8 @@ class _AuthPageState extends State<AuthPage> {
             errorMessage = "";
             _controllerEmail.text = "";
             _controllerPassword.text = "";
+            _controllerUsername.text = "";
+            _controllerConfirmPassword.text = "";
           });
         },
         child: Text(
@@ -153,6 +167,14 @@ class _AuthPageState extends State<AuthPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      Lottie.asset(
+                        'assets/animation_ln3bcryl.json', // Path to Lottie animation JSON file
+                      width: 200,
+                      height: 200,
+                      repeat: true, // Set to true to loop the animation
+                      reverse: false, // Set to true to reverse the animation
+                      animate: true, // Set to false to pause the animation
+                      ),
                       Text("GreenQuest",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,

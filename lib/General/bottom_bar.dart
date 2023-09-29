@@ -26,9 +26,6 @@ class _BottomBarState extends State<BottomBar> {
     if (storage.getItem("index") != null) {
       _selectedIndex = storage.getItem("index");
       // print("index: $_selectedIndex");
-    } else {
-      _selectedIndex = 0;
-      storage.setItem("index", _selectedIndex);
     }
 
     return BottomNavigationBar(
