@@ -92,7 +92,7 @@ class RedeemTab extends StatelessWidget {
                 children: [
                   Expanded(
                     child: roundedCouponCard(
-                      'assets/Subway-logo.png',
+                      'assets/Subway-logo.png', // Adjusted image path
                       'Subway',
                       '10 dollars off',
                       '1000 points',
@@ -100,7 +100,7 @@ class RedeemTab extends StatelessWidget {
                   ),
                   Expanded(
                     child: roundedCouponCard(
-                      'assets/PKL.png',
+                      'assets/PKL.png', // Adjusted image path
                       'Park\'s Kitchen',
                       '2 dollars off',
                       '50 points',
@@ -113,7 +113,7 @@ class RedeemTab extends StatelessWidget {
                 children: [
                   Expanded(
                     child: roundedCouponCard(
-                      'assets/logo-kuro_kare.png',
+                      'assets/logo-kuro_kare.png', // Adjusted image path
                       'Kuro Kare',
                       'Free Drink',
                       '350 points',
@@ -121,7 +121,7 @@ class RedeemTab extends StatelessWidget {
                   ),
                   Expanded(
                     child: roundedCouponCard(
-                      'assets/GC.png',
+                      'assets/GC.png', // Adjusted image path
                       'Gong Cha',
                       'Free Topping',
                       '400 points',
@@ -134,7 +134,7 @@ class RedeemTab extends StatelessWidget {
                 children: [
                   Expanded(
                     child: roundedCouponCard(
-                      'assets/yole.png',
+                      'assets/yole.png', // Adjusted image path
                       'Yole',
                       '1 for 1',
                       '600 points',
@@ -142,7 +142,7 @@ class RedeemTab extends StatelessWidget {
                   ),
                   Expanded(
                     child: roundedCouponCard(
-                      'assets/GC.png',
+                      'assets/GC.png', // Adjusted image path
                       'Gong Cha',
                       'Free Drink',
                       '900 points',
@@ -184,7 +184,7 @@ Widget roundedCouponCard(
   return Container(
     margin: EdgeInsets.all(8.0),
     width: double.infinity,
-    height: 200,
+    height: 220, // Adjusted height to accommodate text
     child: ClipRRect(
       borderRadius: BorderRadius.circular(16.0),
       child: Card(
@@ -192,7 +192,7 @@ Widget roundedCouponCard(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 160,
+              height: 100, // Adjusted image height
               child: Image.asset(
                 imagePath,
                 width: double.infinity,
@@ -208,11 +208,23 @@ Widget roundedCouponCard(
                     discount,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
+                      fontSize: 16, // Adjusted font size
                     ),
                   ),
-                  Text(store),
-                  SizedBox(height: 8),
-                  Text(points),
+                  Text(
+                    store,
+                    style: TextStyle(
+                      fontSize: 12, // Adjusted font size
+                    ),
+                  ),
+                  SizedBox(height: 4), // Adjusted spacing
+                  Text(
+                    points,
+                    style: TextStyle(
+                      fontSize: 12, // Adjusted font size
+                      color: Colors.green,
+                    ),
+                  ),
                 ],
               ),
             ),
