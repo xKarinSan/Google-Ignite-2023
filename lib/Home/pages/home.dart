@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../General/bottom_bar.dart';
+import '../../General/bottom_bar.dart'; 
 import 'package:localstorage/localstorage.dart';
 
 class HomePage extends StatelessWidget {
@@ -215,7 +215,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  margin: const EdgeInsets.only(left: 16.0, right:16.0, bottom: 16.0 ),
                   child: ListTile(
                     leading: Image.asset('assets/earth.png'),
                     title: const Text(
