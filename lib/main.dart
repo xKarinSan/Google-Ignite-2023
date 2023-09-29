@@ -20,6 +20,7 @@ import 'home/pages/home.dart';
 
 // ======= recycling/hunt related =======
 import 'Recycling/Pages/bin_locator.dart';
+import 'Recycling/Pages/pop_up.dart';
 
 // ======= contests/competitions related =======
 import 'Contests/pages/all_contest_page.dart';
@@ -58,7 +59,8 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const HomePage(),
 
           // ======= recycling/hunt related =======
-          '/recycling': (context) => const BinLocator(),
+          // '/recycling': (context) => const BinLocator(),
+          '/recycling': (context) => const Popup(),
 
           // ======= contests/competitions related =======
           '/contests': (context) => const ContestPage(),

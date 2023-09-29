@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../General/bottom_bar.dart';
-import "../../../FirebaseCredentials/firebase_environment.dart";
+import '../../FirebaseFeatures/authentication.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:localstorage/localstorage.dart';
 import '../../General/loader.dart';
@@ -14,7 +14,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   // final User? user = AuthHandler().currentUser;
-  final LocalStorage currentUser = LocalStorage('current_user.json');
+  final LocalStorage currentUser = LocalStorage('current_user');
+  final LocalStorage bottomBarStorage = LocalStorage('bottom_bar_state');
 
   bool isLoggingOut = false;
 
@@ -27,6 +28,8 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() {
           isLoggingOut = false;
         });
+        currentUser.clear();
+        bottomBarStorage.clear();
         Navigator.pushNamed(context, '/auth');
       }).catchError((onError) {
         isLoggingOut = false;
