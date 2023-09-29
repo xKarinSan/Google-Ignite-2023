@@ -5,16 +5,12 @@ import "widget_tree.dart";
 // ======= flutter =======
 import 'package:flutter/material.dart';
 import "package:firebase_core/firebase_core.dart";
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:googleignite2023/firebase_options.dart';
-import 'General/bottom_bar.dart';
 
 // ======= firebase =======
-import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 // ======= firebase options =======
-import 'package:googleignite2023/firebase_options.dart';
 
 // =================firebase init=================
 // import "FirebaseCredentials/firebase_environment.dart";
@@ -71,7 +67,7 @@ class MyApp extends StatelessWidget {
           '/rewards': (context) => const RewardsPage(),
           // ======= profile related =======
 
-          '/profile': (context) => ProfilePage(),
+          '/profile': (context) => const ProfilePage(),
 
           // ======= authentication =======
           '/auth': (context) => const AuthPage(),
@@ -99,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body:
-          Center(), // This trailing comma makes auto-formatting nicer for build methods.
+          const Center(), // This trailing comma makes auto-formatting nicer for build methods.
       // bottomNavigationBar: BottomBar(),
     );
   }

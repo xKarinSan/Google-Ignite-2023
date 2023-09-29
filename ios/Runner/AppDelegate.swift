@@ -11,7 +11,10 @@ import GoogleMaps  // Add this import
     GeneratedPluginRegistrant.register(with: self)
 
     // TODO: Add your Google Maps API key
-    GMSServices.provideAPIKey(environment["GOOGLE_MAPS_API_KEY"] as! String)
+    // Need to get the API key from info.plist
+    guard let infoDictionary: [String: Any] = Bundle.main.infoDictionary else { return false }
+    guard let mySecretApiKey: String = infoDictionary["GoogleMapsApiKey"] as? String else { return false }
+    GMSServices.provideAPIKey(mySecretApiKey)
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

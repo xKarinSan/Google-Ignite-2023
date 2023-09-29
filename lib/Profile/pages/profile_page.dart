@@ -6,7 +6,7 @@ import 'package:localstorage/localstorage.dart';
 import '../../General/loader.dart';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -56,15 +56,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(currentUser.getItem("displayName") != null
-                      ? currentUser.getItem("displayName")
-                      : "User name"),
-                  Text(currentUser.getItem("email") != null
-                      ? currentUser.getItem("email")
-                      : "User Email"),
-                  Text(currentUser.getItem("photoURL") != null
-                      ? currentUser.getItem("photoURL")
-                      : "Photo URL"),
+                  Text(currentUser.getItem("displayName") ?? "User name"),
+                  Text(currentUser.getItem("email") ?? "User Email"),
+                  Text(currentUser.getItem("photoURL") ?? "Photo URL"),
                   _signOutButton()
                 ],
               ),
