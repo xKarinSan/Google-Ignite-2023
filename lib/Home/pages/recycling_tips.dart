@@ -67,8 +67,8 @@ class RecycleTip extends StatelessWidget {
             text: title,
             style: TextStyle(
               color: Color.fromRGBO(1, 1, 1, 1),
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
+              fontSize: 25.0,
+              fontWeight: FontWeight.w600,
             ),
             children: [
               TextSpan(
