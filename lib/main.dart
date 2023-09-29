@@ -21,6 +21,7 @@ import 'package:googleignite2023/firebase_options.dart';
 // ================== pages ==================
 // ======= homepage =======
 import 'home/pages/home.dart';
+import 'home/pages/recycling_tips.dart';
 
 // ======= recycling/hunt related =======
 import 'Recycling/Pages/bin_locator.dart';
@@ -45,8 +46,8 @@ void main() async {
   print("Started");
 }
 
-class DefaultTextStyleApp extends StatelessWidget {
-  const DefaultTextStyleApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +61,7 @@ class DefaultTextStyleApp extends StatelessWidget {
         routes: {
           // ======= homepage =======
           '/home': (context) => const HomePage(),
+          '/tips': (context) => const RecyclingTipsPage(),
 
           // ======= recycling/hunt related =======
           // '/recycling': (context) => const BinLocator(),
