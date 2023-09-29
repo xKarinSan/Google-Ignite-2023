@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import '../../General/bottom_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+// We need to import the determinePosition function from the Location.dart file:
 
 void main() {
   runApp(const BinLocator());
@@ -12,10 +14,22 @@ class BinLocator extends StatefulWidget {
   @override
   // ignore: library_private_types_in_public_api
   _BinLocatorState createState() => _BinLocatorState();
-
 }
 
 class _BinLocatorState extends State<BinLocator> {
+
+  // Function to get the current location:
+  Future<Position> getCurrentLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      return Future.error('Location permissions are denied');
+    } else {
+      final Future<Position> position = (await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high)) as Future<Position>;
+      return position;
+    }
+  }
+
 
   late GoogleMapController mapController;
   final LatLng _center = const LatLng(1.296568, 103.852119);
@@ -87,17 +101,18 @@ class _BinLocatorState extends State<BinLocator> {
         BitmapDescriptor.hueGreen,
       ),
     ),
+    // User's location:
   };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Bin Locator'),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-        ),
-        body: GoogleMap(
+      appBar: AppBar(
+        title: const Text('Bin Locator'),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+      ),
+      body: GoogleMap(
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 17.0,
@@ -113,9 +128,8 @@ class _BinLocatorState extends State<BinLocator> {
                   snippet: marker.infoWindow.snippet,
                 ),
               ),
-          }
-        ),
-        bottomNavigationBar: const BottomBar(),
-      );
+          }),
+      bottomNavigationBar: const BottomBar(),
+    );
   }
 }
