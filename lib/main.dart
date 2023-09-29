@@ -57,6 +57,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
           useMaterial3: true,
         ),
+        debugShowCheckedModeBanner: false,
         home: const WidgetTree(),
         routes: {
           // ======= homepage =======
