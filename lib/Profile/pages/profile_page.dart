@@ -62,6 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Text(currentUser.getItem("displayName") ?? "User name"),
                   Text(currentUser.getItem("email") ?? "User Email"),
                   Text(currentUser.getItem("photoURL") ?? "Photo URL"),
+                  Text(currentUser.getItem("userId") ?? "User ID"),
                   _signOutButton()
                 ],
               ),
