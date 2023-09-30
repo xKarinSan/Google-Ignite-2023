@@ -53,7 +53,7 @@ class AuthHandler {
       user.updateDisplayName(username);
       await Database().createDocumentWithExistingId(
           collection: "users",
-          id: "${user.uid}",
+          id: user.uid,
           data: {
             "username": username,
             "photoURL": "",

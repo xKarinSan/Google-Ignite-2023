@@ -11,13 +11,13 @@ class ContestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         // appBar: AppBar(
         //   title: const Text('Home'),
         // ),
-        body: const Center(
+        body: Center(
           child: Text('Contests'),
         ),
-        bottomNavigationBar: const BottomBar());
+        bottomNavigationBar: BottomBar());
   }
 }

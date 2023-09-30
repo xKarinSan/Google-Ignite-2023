@@ -18,7 +18,7 @@ class Loader extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
+              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
             ),
             const CircularProgressIndicator(
                 color: Color.fromRGBO(18, 126, 0, 1)),
