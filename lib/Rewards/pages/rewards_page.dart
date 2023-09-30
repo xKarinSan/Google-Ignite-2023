@@ -167,9 +167,7 @@ class MyCouponsTab extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // MyCouponsTab content goes here
-        ],
+        children: [],
       ),
     );
   }
