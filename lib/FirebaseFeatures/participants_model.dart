@@ -2,8 +2,8 @@ import "./database.dart";
 
 class ParticipantMethod {
   // get all participants of a competition
-  Future<Object?> getAllParticipants() async {
-    return Database().getAllDocuments(entityName: "competitions");
+  Future<List> getAllParticipants() async {
+    return Database().getAllDocumentsList(entityName: "competitions");
   }
 
   // get participant by Id

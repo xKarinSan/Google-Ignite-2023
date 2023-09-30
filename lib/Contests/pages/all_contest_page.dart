@@ -48,33 +48,10 @@ class _ContestPageState extends State<ContestPage> {
   @override
   void initState() {
     super.initState();
-
     // Get all competitions from the database.
     CompetitionMethods().getAllCompetitions().then((value) {
-      List<CompetitionSchema> allCompetitions = [];
-      // Convert the data to a Map.
-      Map<dynamic, dynamic> data = value as Map<dynamic, dynamic>;
-
-      // Loop through the data and add each competition to the list.
-      data.forEach((key, value) {
-        // Convert the data to a Map.
-        Map<dynamic, dynamic> competitionData = value as Map<dynamic, dynamic>;
-
-        // Create a new CompetitionSchema object.
-        CompetitionSchema competition = CompetitionSchema(
-          competitionId: key,
-          competitionName: competitionData["competitionName"],
-          startDate: competitionData["startDate"].toString(),
-          endDate: competitionData["endDate"].toString(),
-        );
-
-        // Add the competition to the list.
-        allCompetitions.add(competition);
-      });
-
-      // Update the state of the app.
       setState(() {
-        competitions = allCompetitions;
+        competitions = value;
       });
     });
   }

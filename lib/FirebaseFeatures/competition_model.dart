@@ -2,11 +2,11 @@ import "./database.dart";
 
 class CompetitionMethods {
   // get all competitions
-  Future<Object?> getAllCompetitions() async {
-    return Database().getAllDocuments(entityName: "competitions");
+  Future<List> getAllCompetitions() async {
+    return Database().getAllDocumentsList(entityName: "competitions");
   }
 
-  // get competitionById
+  // get competition by Id
   Future<Map<dynamic, dynamic>> getCompetitionById(String competitionId) async {
     return Database()
         .getDocumentById(entityName: "competitions", id: competitionId);

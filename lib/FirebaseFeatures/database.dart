@@ -23,19 +23,37 @@ class Database {
   }
 
 // ================== get all documents of a specific entity==================
-  Future<Object?> getAllDocuments({required String entityName}) async {
+  Future<Map<dynamic, dynamic>> getAllDocumentsMap(
+      {required String entityName}) async {
     try {
       DatabaseReference ref = setDatabaseReference(entityName);
       DataSnapshot snapshot = await ref.get();
       if (snapshot.exists) {
-        print(snapshot.value);
-        return snapshot.value;
+        return snapshot.value as Map<dynamic, dynamic>;
+        ;
       } else {
-        print('No data available.');
-        return null;
+        return {};
       }
     } catch (e) {
-      return null;
+      return {};
+    }
+  }
+
+  Future<List> getAllDocumentsList({required String entityName}) async {
+    try {
+      Map<dynamic, dynamic> unprocessedData =
+          await getAllDocumentsMap(entityName: entityName);
+
+      // print(snapshot.value);
+      List res = [];
+      unprocessedData.forEach((key, value) {
+        value["id"] = key;
+        res.add(value);
+      });
+
+      return res;
+    } catch (e) {
+      return [];
     }
   }
 
@@ -45,7 +63,6 @@ class Database {
     DatabaseReference ref = setDatabaseReference("$entityName/$id");
     DataSnapshot snapshot = await ref.get();
     if (snapshot.exists) {
-      // dynamic rawValue = snapshot.value;
       Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
       data["id"] = id;
       print("data");
