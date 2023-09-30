@@ -59,8 +59,8 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const HomePage(),
 
           // ======= recycling/hunt related =======
-          // '/recycling': (context) => const BinLocator(),
-          '/recycling': (context) => const Popup(),
+          '/recycling': (context) => const BinLocator(),
+          // '/recycling': (context) => const Popup(),
 
           // ======= contests/competitions related =======
           '/contests': (context) => const ContestPage(),

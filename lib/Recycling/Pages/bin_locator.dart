@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import '../../General/bottom_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// We need to import the determinePosition function from the Location.dart file:
+// Importing the geolocator package:
+import 'package:geolocator/geolocator.dart';
 
 void main() {
   runApp(const BinLocator());
@@ -17,26 +17,56 @@ class BinLocator extends StatefulWidget {
 }
 
 class _BinLocatorState extends State<BinLocator> {
-
-  // Function to get the current location:
-  Future<Position> getCurrentLocation() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      return Future.error('Location permissions are denied');
-    } else {
-      final Future<Position> position = (await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high)) as Future<Position>;
-      return position;
-    }
-  }
-
-
+  // Boolean values for design purposes:
+  bool isLocationEnabled = false;
   late GoogleMapController mapController;
   final LatLng _center = const LatLng(1.296568, 103.852119);
 
   // Setting the controller:
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+
+  // Method to retrieve the user's current location:
+  void _getCurrentLocation() async {
+    Position position = await _determinePosition();
+    setState(() {
+      isLocationEnabled = !isLocationEnabled;
+      isLocationEnabled ? mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(position.latitude, position.longitude),
+            zoom: 17.0,
+          ),
+        ),
+      ) : mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: _center,
+            zoom: 17.0,
+          ),
+        ),
+      );
+    });
+  }
+
+  // We need a method to deal with permissions:
+  Future<Position> _determinePosition() async {
+
+    // First we check the permissions:
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    // If the permissions are denied, we ask for them:
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      // If they still refuse we return an error:
+      if(permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied by the user');
+      }
+    }
+    // Now we return:
+    return await Geolocator.getCurrentPosition();
   }
 
   // We need markers for the bins:
@@ -101,7 +131,6 @@ class _BinLocatorState extends State<BinLocator> {
         BitmapDescriptor.hueGreen,
       ),
     ),
-    // User's location:
   };
 
   @override
@@ -109,10 +138,11 @@ class _BinLocatorState extends State<BinLocator> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bin Locator'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
       ),
       body: GoogleMap(
+          mapType: MapType.hybrid,
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 17.0,
@@ -128,7 +158,16 @@ class _BinLocatorState extends State<BinLocator> {
                   snippet: marker.infoWindow.snippet,
                 ),
               ),
-          }),
+          },
+          myLocationEnabled: true,
+          myLocationButtonEnabled: false,
+          ),
+      // We need a floating action button to retrieve the user's location:
+      floatingActionButton: FloatingActionButton(
+        onPressed: _getCurrentLocation,
+        tooltip: 'Get Location',
+        child: isLocationEnabled ? const Icon(Icons.location_on) : const Icon(Icons.location_off),
+      ),
       bottomNavigationBar: const BottomBar(),
     );
   }

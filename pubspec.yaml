@@ -43,7 +43,7 @@ dependencies:
   firebase_auth: ^4.10.0
   dotenv: ^4.1.0
   google_maps_flutter: ^2.5.0
-  geolocator: ^8.0.5
+  geolocator: ^8.2.0
 
 dev_dependencies:
   flutter_test:
