@@ -20,17 +20,23 @@ class AuthHandler {
     await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
     // }
-    currUserLocalStorage.setItem(
+    await currUserLocalStorage.setItem(
         'displayName',
         AuthHandler().currentUser?.displayName?.isNotEmpty ?? false
             ? AuthHandler().currentUser?.displayName
             : "");
-    currUserLocalStorage.setItem(
+    await currUserLocalStorage.setItem(
         'email',
         AuthHandler().currentUser?.email?.isNotEmpty ?? false
             ? AuthHandler().currentUser?.email
             : "");
-    currUserLocalStorage.setItem(
+
+    await currUserLocalStorage.setItem(
+        'userId',
+        AuthHandler().currentUser?.uid.isNotEmpty ?? false
+            ? AuthHandler().currentUser?.uid
+            : "");
+    await currUserLocalStorage.setItem(
         'photoURL',
         AuthHandler().currentUser?.photoURL?.isNotEmpty ?? false
             ? AuthHandler().currentUser?.photoURL
