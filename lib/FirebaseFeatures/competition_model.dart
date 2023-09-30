@@ -7,10 +7,8 @@ class CompetitionMethods {
   }
 
   // get competitionById
-  Future<Object?> getCompetitionById(String competitionId) async {
+  Future<Map<dynamic, dynamic>> getCompetitionById(String competitionId) async {
     return Database()
         .getDocumentById(entityName: "competitions", id: competitionId);
   }
-
-
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../../General/bottom_bar.dart';
 import "package:googleignite2023/FirebaseFeatures/database.dart";
+import "../../FirebaseFeatures/competition_model.dart";
+import "../helper_functions.dart";
 import 'dart:async';
 
 class CompetitionFields {
@@ -48,7 +50,7 @@ class _ContestPageState extends State<ContestPage> {
     super.initState();
 
     // Get all competitions from the database.
-    Database().getAllDocuments(entityName: "competitions").then((value) {
+    CompetitionMethods().getAllCompetitions().then((value) {
       List<CompetitionSchema> allCompetitions = [];
       // Convert the data to a Map.
       Map<dynamic, dynamic> data = value as Map<dynamic, dynamic>;
@@ -107,40 +109,6 @@ class _ContestPageState extends State<ContestPage> {
   }
 }
 
-class Countdown {
-  final DateTime timestamp;
-
-  int? daysRemaining;
-  int? hoursRemaining;
-  int? minutesRemaining;
-  int? secondsRemaining;
-
-  Countdown(this.timestamp) {
-    calculateRemainingTime();
-  }
-
-  void calculateRemainingTime() {
-    final now = DateTime.now();
-    final delta = timestamp.difference(now);
-
-    if (delta.inSeconds < 0) {
-      daysRemaining = 0;
-      hoursRemaining = 0;
-      minutesRemaining = 0;
-      secondsRemaining = 0;
-    } else {
-      daysRemaining = delta.inDays;
-      hoursRemaining = delta.inHours % 24;
-      minutesRemaining = delta.inMinutes % 60;
-      secondsRemaining = delta.inSeconds % 60;
-    }
-  }
-
-  String get formattedRemainingTime {
-    return '${daysRemaining}d, ${hoursRemaining}h, ${minutesRemaining}min, ${secondsRemaining}s';
-  }
-}
-
 class CompetitionContainer extends StatefulWidget {
   const CompetitionContainer({
     Key? key,
@@ -179,12 +147,6 @@ class _CompetitionContainerState extends State<CompetitionContainer> {
 
     return GestureDetector(
         onTap: () {
-          print("tapped");
-          // Navigator.pushNamed(context, "/contests/current", arguments: {
-          //   'id': widget.competition["competitionId"],
-          // });
-          print('widget.competition["competitionId"] :' +
-              widget.competition["competitionId"]);
           Navigator.pushNamed(context, '/contests/current', arguments: {
             'competitionId': widget.competition["competitionId"].toString(),
           });
