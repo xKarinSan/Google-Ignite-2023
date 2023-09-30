@@ -1,5 +1,7 @@
 // ================= packages =================
 // ======= widget tree/middleware =======
+import 'package:googleignite2023/Contests/pages/current_contest_page.dart';
+
 import "widget_tree.dart";
 
 // ======= flutter =======
@@ -38,7 +40,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
-  print("Started");
 }
 
 class MyApp extends StatelessWidget {
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
 
           // ======= contests/competitions related =======
           '/contests': (context) => const ContestPage(),
+          '/contests/current': (context) => CurrentContestPage(),
 
           // ======= rewards related =======
           '/rewards': (context) => const RewardsPage(),
@@ -75,31 +77,5 @@ class MyApp extends StatelessWidget {
           // ======= authentication =======
           '/auth': (context) => const AuthPage(),
         });
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body:
-          const Center(), // This trailing comma makes auto-formatting nicer for build methods.
-      // bottomNavigationBar: BottomBar(),
-    );
   }
 }

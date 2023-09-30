@@ -5,10 +5,6 @@ import '../../General/bottom_bar.dart';
 import "package:googleignite2023/FirebaseFeatures/database.dart";
 import 'dart:async';
 
-void main() {
-  runApp(const ContestPage());
-}
-
 class CompetitionFields {
   final String competitionName;
   final String startDate;
@@ -165,8 +161,9 @@ class _CompetitionContainerState extends State<CompetitionContainer> {
     super.initState();
 
     // Create a new Countdown object.
-    _countdown = Countdown(
-        DateTime.fromMillisecondsSinceEpoch(widget.competition["endDate"],isUtc:true));
+    _countdown = Countdown(DateTime.fromMillisecondsSinceEpoch(
+        widget.competition["endDate"],
+        isUtc: true));
 
     // Start a timer to update the countdown every second.
     Timer.periodic(Duration(seconds: 1), (timer) {
@@ -180,50 +177,59 @@ class _CompetitionContainerState extends State<CompetitionContainer> {
   Widget build(BuildContext context) {
     String countdown = _countdown.formattedRemainingTime;
 
-    return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Card(
-            color: Colors.white,
-            // margin: const EdgeInsets.symmetric(vertical: 10.0),
-            // margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-
-            child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.competition["competitionName"],
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
+    return GestureDetector(
+        onTap: () {
+          print("tapped");
+          // Navigator.pushNamed(context, "/contests/current", arguments: {
+          //   'id': widget.competition["competitionId"],
+          // });
+          print('widget.competition["competitionId"] :' +
+              widget.competition["competitionId"]);
+          Navigator.pushNamed(context, '/contests/current', arguments: {
+            'competitionId': widget.competition["competitionId"].toString(),
+          });
+        },
+        child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Card(
+                color: Colors.white,
+                child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.competition["competitionName"],
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                "Ending in: " + countdown,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                            ],
                           ),
-                          const SizedBox(height: 8.0),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            "Ending in: "+countdown,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                        ],
-                      ),
-                    ),
-                    Align(
-                      widthFactor: BorderSide.strokeAlignOutside,
-                      alignment: Alignment.centerRight,
-                      child: const Icon(Icons.arrow_forward_ios),
-                    ),
-                  ],
-                ))));
+                        ),
+                        Align(
+                          widthFactor: BorderSide.strokeAlignOutside,
+                          alignment: Alignment.centerRight,
+                          child: const Icon(Icons.arrow_forward_ios),
+                        ),
+                      ],
+                    )))));
   }
 }
