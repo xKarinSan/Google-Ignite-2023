@@ -26,21 +26,37 @@ class RewardsPage extends StatelessWidget {
               ),
             ),
             bottom: PreferredSize(
-              preferredSize: Size.fromHeight(80.0),
+              preferredSize: Size.fromHeight(120.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'You have:',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '1000 points',
-                    style: TextStyle(
-                      fontSize: 20,
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                    decoration: BoxDecoration(
                       color: Colors.green,
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'You have:',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          '1000 points',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const TabBar(
@@ -54,17 +70,10 @@ class RewardsPage extends StatelessWidget {
               ),
             ),
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          body: TabBarView(
             children: [
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    RedeemTab(),
-                    MyCouponsTab(),
-                  ],
-                ),
-              ),
+              RedeemTab(),
+              MyCouponsTab(),
             ],
           ),
           bottomNavigationBar: const BottomBar(),
@@ -83,74 +92,58 @@ class RedeemTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ListView(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+          Wrap(
+            spacing: 16.0,
+            runSpacing: 16.0,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: roundedCouponCard(
-                      'assets/Subway-logo.png', // Adjusted image path
-                      'Subway',
-                      '10 dollars off',
-                      '1000 points',
-                    ),
-                  ),
-                  Expanded(
-                    child: roundedCouponCard(
-                      'assets/PKL.png', // Adjusted image path
-                      'Park\'s Kitchen',
-                      '2 dollars off',
-                      '50 points',
-                    ),
-                  ),
-                ],
+              CouponCard(
+                imagePath: 'assets/Subway-logo.png',
+                store: 'Subway',
+                discount: '\$10 off',
+                points: '1000 points',
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: roundedCouponCard(
-                      'assets/logo-kuro_kare.png', // Adjusted image path
-                      'Kuro Kare',
-                      'Free Drink',
-                      '350 points',
-                    ),
-                  ),
-                  Expanded(
-                    child: roundedCouponCard(
-                      'assets/GC.png', // Adjusted image path
-                      'Gong Cha',
-                      'Free Topping',
-                      '400 points',
-                    ),
-                  ),
-                ],
+              CouponCard(
+                imagePath: 'assets/PKL.png',
+                store: "Park's Kitchen",
+                discount: '\$2 dollars off',
+                points: '50 points',
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: roundedCouponCard(
-                      'assets/yole.png', // Adjusted image path
-                      'Yole',
-                      '1 for 1',
-                      '600 points',
-                    ),
-                  ),
-                  Expanded(
-                    child: roundedCouponCard(
-                      'assets/GC.png', // Adjusted image path
-                      'Gong Cha',
-                      'Free Drink',
-                      '900 points',
-                    ),
-                  ),
-                ],
+              CouponCard(
+                imagePath: 'assets/logo-kuro_kare.png',
+                store: 'Kuro Kare',
+                discount: 'Free Drink',
+                points: '350 points',
               ),
-              // Add more RedeemTab content here
+              CouponCard(
+                imagePath: 'assets/GC.png',
+                store: 'Gong Cha',
+                discount: 'Free Topping',
+                points: '400 points',
+              ),
+              CouponCard(
+                imagePath: 'assets/yole.png',
+                store: 'Yole',
+                discount: '1 for 1',
+                points: '600 points',
+              ),
+              CouponCard(
+                imagePath: 'assets/Ima.png',
+                store: 'Ima Sushi',
+                discount: '10% off',
+                points: '350 points',
+              ),
+              CouponCard(
+                imagePath: 'assets/khoon.png',
+                store: 'Khoon Coffee House',
+                discount: 'Free Upgrade',
+                points: '400 points',
+              ),
+              CouponCard(
+                imagePath: 'assets/Sub.png',
+                store: 'Subarashii Super Don',
+                discount: 'Free Drink',
+                points: '300 points',
+              ),
             ],
           ),
         ],
@@ -167,68 +160,115 @@ class MyCouponsTab extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [],
+        children: [
+          // Add your coupons for the "My Coupons" tab here
+        ],
       ),
     );
   }
 }
 
-Widget roundedCouponCard(
-  String imagePath,
-  String store,
-  String discount,
-  String points,
-) {
-  return Container(
-    margin: EdgeInsets.all(8.0),
-    width: double.infinity,
-    height: 220, // Adjusted height to accommodate text
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(16.0),
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 100, // Adjusted image height
-              child: Image.asset(
-                imagePath,
-                width: double.infinity,
-                fit: BoxFit.contain,
+class CouponCard extends StatelessWidget {
+  final String imagePath;
+  final String store;
+  final String discount;
+  final String points;
+
+  const CouponCard({
+    required this.imagePath,
+    required this.store,
+    required this.discount,
+    required this.points,
+    Key? key,
+  }) : super(key: key);
+
+  void _showRedeemDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Redeem $store voucher?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Redeem',
+                style: TextStyle(color: Colors.green),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    discount,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16, // Adjusted font size
-                    ),
-                  ),
-                  Text(
-                    store,
-                    style: TextStyle(
-                      fontSize: 12, // Adjusted font size
-                    ),
-                  ),
-                  SizedBox(height: 4), // Adjusted spacing
-                  Text(
-                    points,
-                    style: TextStyle(
-                      fontSize: 12, // Adjusted font size
-                      color: Colors.green,
-                    ),
-                  ),
-                ],
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Colors.red),
               ),
             ),
           ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        _showRedeemDialog(context);
+      },
+      child: Container(
+        margin: EdgeInsets.all(8.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16.0),
+          child: Card(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.5, // Set the aspect ratio for the image
+                  child: Image.asset(
+                    imagePath,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        discount,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14, // Adjust the font size
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        store,
+                        style: TextStyle(
+                          fontSize: 12, // Adjust the font size
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        points,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
