@@ -4,7 +4,6 @@ import '../../FirebaseFeatures/authentication.dart';
 import "../../General/loader.dart";
 import 'package:lottie/lottie.dart';
 
-
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
 
@@ -157,6 +156,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: isLoading == true
             ? Loader(title: isLogin ? "Logging in..." : "Registering...")
             : Container(
@@ -169,11 +169,11 @@ class _AuthPageState extends State<AuthPage> {
                     children: <Widget>[
                       Lottie.asset(
                         'assets/animation_ln3bcryl.json', // Path to Lottie animation JSON file
-                      width: 200,
-                      height: 200,
-                      repeat: true, // Set to true to loop the animation
-                      reverse: false, // Set to true to reverse the animation
-                      animate: true, // Set to false to pause the animation
+                        width: 200,
+                        height: 200,
+                        repeat: true, // Set to true to loop the animation
+                        reverse: false, // Set to true to reverse the animation
+                        animate: true, // Set to false to pause the animation
                       ),
                       const Text("GreenQuest",
                           style: TextStyle(
