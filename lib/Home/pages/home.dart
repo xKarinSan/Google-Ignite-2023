@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../General/bottom_bar.dart'; 
-import 'package:localstorage/localstorage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -228,9 +227,9 @@ class HomePage extends StatelessWidget {
                     subtitle: const Text(
                         'Find out more about the type of items you can recycle at the bins.'),
                     trailing: const Icon(Icons.arrow_forward),
-                    // onTap: () {
-                    //   Navigator.pushNamed(context, '/');
-                    // },
+                    onTap: () {
+                      Navigator.pushNamed(context, '/tips');
+                    },
                   ),
                 ),
               ],

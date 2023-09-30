@@ -10,13 +10,13 @@ class Popup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         // appBar: AppBar(
         //   title: const Text('Pop Up'),
         // ),
-        body: const Center(
+        body: Center(
           child: Text('Pop Up'),
         ),
-        bottomNavigationBar: const BottomBar());
+        bottomNavigationBar: BottomBar());
   }
 }

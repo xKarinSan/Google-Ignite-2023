@@ -22,7 +22,7 @@ class Database {
       required Map<String, Object> data}) async {
     try {
       // print(data);
-      DatabaseReference ref = db.ref(collection + "/" + id);
+      DatabaseReference ref = db.ref("$collection/$id");
 
       await ref.set(data);
     } catch (e) {
