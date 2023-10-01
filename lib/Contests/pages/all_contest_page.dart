@@ -41,7 +41,7 @@ class ContestPage extends StatefulWidget {
 }
 
 class _ContestPageState extends State<ContestPage> {
-  var competitions = [];
+  List<Widget> competitionWidgets = [];
   final DatabaseReference databaseReference =
       Database().setDatabaseReference("competitions");
 
@@ -50,8 +50,16 @@ class _ContestPageState extends State<ContestPage> {
     super.initState();
     // Get all competitions from the database.
     CompetitionMethods().getAllCompetitions().then((value) {
+      List<Widget> tempList = [];
+      value.sort((a, b) => (a?['endDate']).compareTo(b?['endDate']));
+      value.forEach((competition) {
+        tempList.add(CompetitionContainer(
+          competition: competition as Map,
+        ));
+      });
+
       setState(() {
-        competitions = value;
+        competitionWidgets = tempList;
       });
     });
   }
@@ -68,18 +76,11 @@ class _ContestPageState extends State<ContestPage> {
           ),
         ),
         body: Center(
-            child: FirebaseAnimatedList(
-                query: databaseReference,
-                itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                    Animation<double> animation, int index) {
-                  Map competition = snapshot.value as Map;
-                  competition["competitionId"] = snapshot.key;
-
-                  return CompetitionContainer(
-                    competition: competition,
-                  );
-                })),
-        bottomNavigationBar: const BottomBar());
+          child: ListView(
+            children: competitionWidgets,
+          ),
+        ),
+        bottomNavigationBar: BottomBar());
   }
 }
 
@@ -127,52 +128,54 @@ class _CompetitionContainerState extends State<CompetitionContainer> {
     String countdown = _countdown.formattedRemainingTime;
 
     return GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, '/contests/current', arguments: {
-            'competitionId': widget.competition["competitionId"].toString(),
-          });
-        },
-        child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
+      onTap: () {
+        Navigator.pushNamed(context, '/contests/current', arguments: {
+          'competitionId': widget.competition["id"].toString(),
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Card(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(
+                12.0), // Increased padding for better spacing
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.competition["competitionName"],
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Text(
+                        "Ending in: $countdown", // Simplified string concatenation
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 24.0, // Set the icon size
+                ),
+              ],
             ),
-            child: Card(
-                color: Colors.white,
-                child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.competition["competitionName"],
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 8.0),
-                              const SizedBox(height: 8.0),
-                              Text(
-                                "Ending in: " + countdown,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                              const SizedBox(height: 8.0),
-                            ],
-                          ),
-                        ),
-                        const Align(
-                          widthFactor: BorderSide.strokeAlignOutside,
-                          alignment: Alignment.centerRight,
-                          child: Icon(Icons.arrow_forward_ios),
-                        ),
-                      ],
-                    )))));
+          ),
+        ),
+      ),
+    );
   }
 }

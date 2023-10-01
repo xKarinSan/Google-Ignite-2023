@@ -124,7 +124,7 @@ class HomePage extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                'Ongoing Competition:',
+                'Your Competition:',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),

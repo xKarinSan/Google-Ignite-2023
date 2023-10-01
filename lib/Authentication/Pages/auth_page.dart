@@ -53,7 +53,6 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Future<void> createUserWithEmailAndPassword() async {
-    print("Registering");
     if (_controllerUsername.text == '' ||
         _controllerEmail.text == '' ||
         _controllerPassword.text == '' ||

@@ -25,7 +25,6 @@ class _BottomBarState extends State<BottomBar> {
   Widget build(BuildContext context) {
     if (storage.getItem("index") != null) {
       _selectedIndex = storage.getItem("index");
-      // print("index: $_selectedIndex");
     }
 
     return BottomNavigationBar(

@@ -34,7 +34,7 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
     super.initState();
 
     userId = currentUser.getItem("userId");
-    currTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    currTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         isLoading = false;
         _countdown.calculateRemainingTime();
@@ -43,7 +43,6 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
     });
 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      print("id $id");
       CompetitionMethods().getCompetitionById(id).then((res) {
         _competition = res as Map<dynamic, dynamic>?;
         if (_competition == null) {
@@ -63,9 +62,10 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
           .then((participants) {
         // participants
         //     .sort((a, b) => a["cumulativePoints"].compareTo(b["cumulativePoints"]));
+        participants.sort((a, b) =>
+            (b?['cumulativePoints']).compareTo(a?['cumulativePoints']));
         int i = 1;
         participants.forEach((participant) {
-          print("participant: $participant");
           if (participant["userId"] == userId) {
             participant["username"] += " (You)";
             participant["isMe"] = true;
@@ -76,6 +76,7 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
           i += 1;
           userCompetitions.add(ParticipantContainer(participant: participant));
         });
+        // userCompetitions.sort((a, b) => (b?['cumulativePoints']).compareTo(a?['cumulativePoints']))
       });
     });
   }
@@ -93,46 +94,45 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
     id = routeArgs['competitionId'].toString();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Rankings"),
+        title: const Text("Rankings"),
       ),
-      body: isLoading? Loader(title:"Retrieving competition info"):
-      
-      
-       Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
-        child: Column(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    _competition?["competitionName"] ?? "Loading...",
-                    style: TextStyle(fontSize: 28),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    "Ends in: $countdown",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                if (userCompetitions.isNotEmpty)
-                  Container(
-                    height: 500,
-                    child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: userCompetitions,
+      body: isLoading
+          ? const Loader(title: "Retrieving competition info")
+          : Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
+              child: Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Text(
+                          _competition?["competitionName"] ?? "Loading...",
+                          style: const TextStyle(fontSize: 28),
+                        ),
                       ),
-                    ),
+                      Center(
+                        child: Text(
+                          "Ends in: $countdown",
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      if (userCompetitions.isNotEmpty)
+                        Container(
+                          height: 500,
+                          child: SingleChildScrollView(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            child: Column(
+                              children: userCompetitions,
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
-              ],
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
     );
   }
 }
@@ -154,7 +154,7 @@ class ParticipantContainer extends StatelessWidget {
         child: Card(
           // color: participant.isMe ?? Colors.red : Colors.white,
           color: participant["isMe"] ?? false
-              ? Color.fromARGB(255, 14, 157, 18)
+              ? const Color.fromARGB(255, 14, 157, 18)
               : Colors.white,
           // color: Colors.white,
           child: Padding(

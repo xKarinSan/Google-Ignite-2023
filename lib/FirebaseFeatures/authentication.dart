@@ -41,10 +41,6 @@ class AuthHandler {
         AuthHandler().currentUser?.photoURL?.isNotEmpty ?? false
             ? AuthHandler().currentUser?.photoURL
             : "");
-    //  catch (error) {
-    //   print("error");
-    //   print(error);
-    // }
   }
 
   Future<void> createUserWithEmailAndPassword({
