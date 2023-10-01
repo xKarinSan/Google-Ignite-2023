@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
           '/rewards': (context) => const RewardsPage(),
           // ======= profile related =======
 
-          '/profile': (context) => ProfilePage(),
+          '/profile': (context) => const ProfilePage(),
 
           // ======= authentication =======
           '/auth': (context) => const AuthPage(),
