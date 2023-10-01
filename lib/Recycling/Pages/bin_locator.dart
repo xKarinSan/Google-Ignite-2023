@@ -170,6 +170,12 @@ class _BinLocatorState extends State<BinLocator> {
                   List<LatLng> polylineCoordinates = await _getDirections(marker.position);
                   // Now we draw the polyline:
                   _drawPolyline(polylineCoordinates);
+                  // Now we check if the bin is within the blue circle:
+                  if(_isWithinCircle(marker.position)) {
+                    // If it is, we navigate to the scan image page:
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushNamed(context, '/pop-up');
+                  }
                 },
               );
             },
@@ -184,7 +190,7 @@ class _BinLocatorState extends State<BinLocator> {
             Circle(
               circleId: const CircleId('user'),
               center: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
-              radius: 50,
+              radius: 25,
               fillColor: Colors.blueAccent.withOpacity(0.4),
               // No border:
               strokeColor: Colors.transparent,
@@ -253,4 +259,24 @@ class _BinLocatorState extends State<BinLocator> {
     });
   }
 
+  // If bin is within the blue circle, then we need to navigate to another page to scan image:
+  // If bin is not within the blue circle, then we only need to draw the polyline:
+  // We need a method to check if the bin is within the blue circle:
+  bool _isWithinCircle(LatLng bin) {
+    // Get user's location again:
+    Position position = _currentPosition!;
+    // Get the distance between the user's location and the bin:
+    double distanceBetween = Geolocator.distanceBetween(
+      position.latitude,
+      position.longitude,
+      bin.latitude,
+      bin.longitude,
+    );
+    // If the distance is less than 50m, then the bin is within the circle:
+    if(distanceBetween < 50) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
