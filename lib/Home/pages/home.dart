@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
 
             // Card 1: Your Points
             Card(
-              color: Colors.green,
+              color:Color.fromARGB(255, 156, 206, 182),
               margin: const EdgeInsets.symmetric(
                   horizontal: 16.0), // Add horizontal margin
               child: Padding(
@@ -43,16 +43,16 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
                     const Text(
-                      '500', // Hardcoded points value
+                      '1000', // Hardcoded points value
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                     const SizedBox(
@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
                             context, '/recycling'); // Navigate to '/recycling'
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.green,
+                        foregroundColor: Color.fromARGB(255, 73, 236, 157),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
                               10.0), // Adjust border radius
@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
                             double.infinity, 48), // Text (label) color
                       ),
                       child: const Text(
-                        'Get Hunting 🔎',
+                        'Get Hunting',
                         style: TextStyle(
                           fontSize: 15, // Adjust the font size
                           fontWeight: FontWeight.bold, // Make the text bold
@@ -104,7 +104,7 @@ class HomePage extends StatelessWidget {
                             double.infinity, 48), // Text (label) color
                       ),
                       child: const Text(
-                        'Redeem Rewards 🎁',
+                        'Redeem Rewards ',
                         style: TextStyle(
                           fontSize: 15, // Adjust the font size
                           fontWeight: FontWeight.bold, // Make the text bold
@@ -124,7 +124,7 @@ class HomePage extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                'Your Competition:',
+                'Your Competitions:',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
@@ -133,7 +133,7 @@ class HomePage extends StatelessWidget {
             // Card 2: You Competition
 
             Card(
-          color: Colors.green.shade100,
+          color: Color.fromARGB(255, 156, 206, 182),
           margin: const EdgeInsets.symmetric(
               horizontal: 16.0), // Add horizontal margin
           child: Padding(
@@ -164,7 +164,7 @@ class HomePage extends StatelessWidget {
                   'Ends on: 15 Oct 2023', // Updated event end date
                   style: TextStyle(
                     fontSize: 12, // Adjusted font size for date
-                    color: Colors.grey, // Set text color to grey
+                    color: Colors.white, // Set text color to grey
                   ),
                 ),
                 const SizedBox(
@@ -176,23 +176,24 @@ class HomePage extends StatelessWidget {
                         context, '/contests'); // Navigate to '/leaderboard' or the appropriate route
                   },
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.green,
+                    // foregroundColor: Colors.green,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
                           10.0), // Adjust border radius
                     ),
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24.0), // Add padding left and right
                     minimumSize: const Size(
                         double.infinity, 48), // Button size
                   ),
                   child: const Text(
-                    'View Leaderboard 🏆', // Button text
+                    'View Leaderboard ', // Button text
                     style: TextStyle(
                       fontSize: 15, // Adjust the font size
                       fontWeight: FontWeight.bold, // Make the text bold
-                      color: Colors.white,// Set the text color to dark green
+                      color: Color.fromARGB(255, 27, 94,
+                              32),// Set the text color to dark green
                     ),
                   ),
                 ),
