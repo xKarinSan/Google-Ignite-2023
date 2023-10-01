@@ -1,5 +1,7 @@
 // ================= packages =================
 // ======= widget tree/middleware =======
+import 'package:googleignite2023/Recycling/Pages/bin_locator.dart';
+
 import "widget_tree.dart";
 
 // ======= flutter =======
@@ -8,9 +10,11 @@ import "package:firebase_core/firebase_core.dart";
 import 'package:googleignite2023/firebase_options.dart';
 
 // ======= firebase =======
+import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 // ======= firebase options =======
+import 'package:googleignite2023/firebase_options.dart';
 
 // =================firebase init=================
 // import "FirebaseCredentials/firebase_environment.dart";
@@ -61,8 +65,8 @@ class MyApp extends StatelessWidget {
           '/tips': (context) => const RecyclingTipsPage(),
 
           // ======= recycling/hunt related =======
-          // '/recycling': (context) => const BinLocator(),
-          '/recycling': (context) => const Popup(),
+          '/recycling': (context) => const BinLocator(),
+          '/pop-up': (context) => const Popup(),
 
           // ======= contests/competitions related =======
           '/contests': (context) => const ContestPage(),

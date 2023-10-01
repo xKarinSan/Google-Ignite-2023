@@ -1,85 +1,79 @@
 import 'package:flutter/material.dart';
 import '../../General/bottom_bar.dart';
 
-void main() {
-  runApp(const RewardsPage());
-}
-
 class RewardsPage extends StatelessWidget {
   const RewardsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: const Text(
-              'Rewards',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: const Text(
+            'Rewards',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
             ),
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(120.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'You have:',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          '1000 points',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
-                          ),
-                        ),
-                      ],
-                    ),
+          ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(120.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0, vertical: 8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
-                  const TabBar(
-                    tabs: [
-                      Tab(text: 'Redeem'),
-                      Tab(text: 'My Coupons'),
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'You have:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        '1000 points',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
                     ],
-                    labelColor: Colors.black,
                   ),
-                ],
-              ),
+                ),
+                const TabBar(
+                  tabs: [
+                    Tab(text: 'Redeem'),
+                    Tab(text: 'My Coupons'),
+                  ],
+                  labelColor: Colors.black,
+                ),
+              ],
             ),
           ),
-          body: const TabBarView(
-            children: [
-              RedeemTab(),
-              MyCouponsTab(),
-            ],
-          ),
-          bottomNavigationBar: const BottomBar(),
         ),
+        body: const TabBarView(
+          children: [
+            RedeemTab(),
+            MyCouponsTab(),
+          ],
+        ),
+        bottomNavigationBar: const BottomBar(),
       ),
     );
   }
