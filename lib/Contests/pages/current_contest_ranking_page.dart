@@ -63,6 +63,8 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
           .then((participants) {
         // participants
         //     .sort((a, b) => a["cumulativePoints"].compareTo(b["cumulativePoints"]));
+        participants.sort((a, b) =>
+            (b?['cumulativePoints']).compareTo(a?['cumulativePoints']));
         int i = 1;
         participants.forEach((participant) {
           if (participant["userId"] == userId) {
@@ -75,6 +77,7 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
           i += 1;
           userCompetitions.add(ParticipantContainer(participant: participant));
         });
+        // userCompetitions.sort((a, b) => (b?['cumulativePoints']).compareTo(a?['cumulativePoints']))
       });
     });
   }
@@ -94,43 +97,42 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
       appBar: AppBar(
         title: Text("Rankings"),
       ),
-      body: isLoading? Loader(title:"Retrieving contest info"):
-      
-      
-       Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
-        child: Column(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    _competition?["competitionName"] ?? "Loading...",
-                    style: TextStyle(fontSize: 28),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    "Ends in: $countdown",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                if (userCompetitions.isNotEmpty)
-                  Container(
-                    height: 500,
-                    child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: userCompetitions,
+      body: isLoading
+          ? Loader(title: "Retrieving contest info")
+          : Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
+              child: Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Text(
+                          _competition?["competitionName"] ?? "Loading...",
+                          style: TextStyle(fontSize: 28),
+                        ),
                       ),
-                    ),
+                      Center(
+                        child: Text(
+                          "Ends in: $countdown",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      if (userCompetitions.isNotEmpty)
+                        Container(
+                          height: 500,
+                          child: SingleChildScrollView(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            child: Column(
+                              children: userCompetitions,
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
-              ],
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
       bottomNavigationBar: BottomBar(),
     );
   }
