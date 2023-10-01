@@ -69,8 +69,8 @@ class _ContestPageState extends State<ContestPage> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color.fromRGBO(26, 159, 5, 1),
-          title: Text(
+          backgroundColor: const Color.fromRGBO(26, 159, 5, 1),
+          title: const Text(
             "Contests",
             style: TextStyle(color: Colors.white),
           ),
@@ -110,7 +110,7 @@ class _CompetitionContainerState extends State<CompetitionContainer> {
         isUtc: true));
 
     // Start a timer to update the countdown every second.
-    currTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    currTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _countdown.calculateRemainingTime();
       });
