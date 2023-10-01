@@ -41,27 +41,28 @@ class _BinLocatorState extends State<BinLocator> {
     setState(() {
       _currentPosition = position;
       isLocationEnabled = !isLocationEnabled;
-      isLocationEnabled ? mapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(position.latitude, position.longitude),
-            zoom: 17.0,
-          ),
-        ),
-      ) : mapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: _center,
-            zoom: 17.0,
-          ),
-        ),
-      );
+      isLocationEnabled
+          ? mapController.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: LatLng(position.latitude, position.longitude),
+                  zoom: 17.0,
+                ),
+              ),
+            )
+          : mapController.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: _center,
+                  zoom: 17.0,
+                ),
+              ),
+            );
     });
   }
 
   // We need a method to deal with permissions:
   Future<Position> _determinePosition() async {
-
     // First we check the permissions:
     LocationPermission permission = await Geolocator.checkPermission();
 
@@ -69,7 +70,7 @@ class _BinLocatorState extends State<BinLocator> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       // If they still refuse we return an error:
-      if(permission == LocationPermission.denied) {
+      if (permission == LocationPermission.denied) {
         return Future.error('Location permissions are denied by the user');
       }
     }
@@ -151,15 +152,16 @@ class _BinLocatorState extends State<BinLocator> {
         foregroundColor: Colors.white,
       ),
       body: GoogleMap(
-          mapType: MapType.hybrid,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 17.0,
-          ),
-          onMapCreated: _onMapCreated,
-          markers: // Everytime a marker is tapped, we need to draw the polyline:
-          Set<Marker>.of(_markers.map(
-                (Marker marker) {
+        mapType: MapType.hybrid,
+        initialCameraPosition: CameraPosition(
+          target: _center,
+          zoom: 17.0,
+        ),
+        onMapCreated: _onMapCreated,
+        markers: // Everytime a marker is tapped, we need to draw the polyline:
+            Set<Marker>.of(
+          _markers.map(
+            (Marker marker) {
               return Marker(
                 markerId: marker.markerId,
                 position: marker.position,
@@ -167,36 +169,40 @@ class _BinLocatorState extends State<BinLocator> {
                 icon: marker.icon,
                 onTap: () async {
                   // We need to get the directions:
-                  List<LatLng> polylineCoordinates = await _getDirections(marker.position);
+                  List<LatLng> polylineCoordinates =
+                      await _getDirections(marker.position);
                   // Now we draw the polyline:
                   _drawPolyline(polylineCoordinates);
                   // Now we check if the bin is within the blue circle:
-                  if(_isWithinCircle(marker.position)) {
-                    // If it is, we navigate to the scan image page:
+                  if (_isWithinCircle(marker.position)) {
+                    // If it is, we make a dialog box pop up:
                     // ignore: use_build_context_synchronously
-                    Navigator.pushNamed(context, '/pop-up');
+                    _dialog(context);
                   }
                 },
               );
             },
           ),
-          ),
-          // We need to draw the polyline:
-          polylines: Set<Polyline>.of(_polylines.values),
-          myLocationEnabled: true,
-          myLocationButtonEnabled: false,
-          // Adding a radius around the user's location only if we have it:
-          circles: _currentPosition!=null ? <Circle>{
-            Circle(
-              circleId: const CircleId('user'),
-              center: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
-              radius: 25,
-              fillColor: Colors.blueAccent.withOpacity(0.4),
-              // No border:
-              strokeColor: Colors.transparent,
-            ),
-          } : <Circle>{},
-          ),
+        ),
+        // We need to draw the polyline:
+        polylines: Set<Polyline>.of(_polylines.values),
+        myLocationEnabled: true,
+        myLocationButtonEnabled: false,
+        // Adding a radius around the user's location only if we have it:
+        circles: _currentPosition != null
+            ? <Circle>{
+                Circle(
+                  circleId: const CircleId('user'),
+                  center: LatLng(
+                      _currentPosition!.latitude, _currentPosition!.longitude),
+                  radius: 25,
+                  fillColor: Colors.blueAccent.withOpacity(0.4),
+                  // No border:
+                  strokeColor: Colors.transparent,
+                ),
+              }
+            : <Circle>{},
+      ),
       // We need a floating action button to retrieve the user's location: also need to it's opacity lower if the user's location is not enabled:
       floatingActionButton: FloatingActionButton(
         onPressed: _getCurrentLocation,
@@ -208,6 +214,66 @@ class _BinLocatorState extends State<BinLocator> {
         ),
       ),
       bottomNavigationBar: const BottomBar(),
+    );
+  }
+
+  Future<dynamic> _dialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add Item'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Item Name',
+                ),
+                onChanged: (value) {
+                  // Do something with the user's input
+                },
+              ),
+              const SizedBox(height: 16), // Add some spacing
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Quantity',
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  // Do something with the user's input
+                },
+              ),
+              const SizedBox(height: 16), // Add some spacing
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Do something when the green button is pressed
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.green, // Text color
+                    ),
+                    child: const Text('Add'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Do something when the red button is pressed
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.red, // Text color
+                    ),
+                    child: const Text('Cancel'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -230,7 +296,7 @@ class _BinLocatorState extends State<BinLocator> {
     );
 
     // Now we need to parse the result:
-    if(result.points.isNotEmpty) {
+    if (result.points.isNotEmpty) {
       for (var point in result.points) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       }
@@ -273,7 +339,7 @@ class _BinLocatorState extends State<BinLocator> {
       bin.longitude,
     );
     // If the distance is less than 50m, then the bin is within the circle:
-    if(distanceBetween < 50) {
+    if (distanceBetween < 50) {
       return true;
     } else {
       return false;
