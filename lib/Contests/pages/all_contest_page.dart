@@ -130,7 +130,7 @@ class _CompetitionContainerState extends State<CompetitionContainer> {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, '/contests/current', arguments: {
-          'competitionId': widget.competition["competitionId"].toString(),
+          'competitionId': widget.competition["id"].toString(),
         });
       },
       child: Container(

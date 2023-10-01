@@ -43,7 +43,6 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
     });
 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      print("id $id");
       CompetitionMethods().getCompetitionById(id).then((res) {
         _competition = res as Map<dynamic, dynamic>?;
         if (_competition == null) {
@@ -97,35 +96,20 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
       appBar: AppBar(
         title: Text("Rankings"),
       ),
-      body: isLoading? Loader(title:"Retrieving competition info"):
-      
-      
-       Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
-        child: Column(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    _competition?["competitionName"] ?? "Loading...",
-                    style: TextStyle(fontSize: 28),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    "Ends in: $countdown",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                if (userCompetitions.isNotEmpty)
-                  Container(
-                    height: 500,
-                    child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: userCompetitions,
+      body: isLoading
+          ? Loader(title: "Retrieving contest info")
+          : Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
+              child: Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Text(
+                          _competition?["competitionName"] ?? "Loading...",
+                          style: TextStyle(fontSize: 28),
+                        ),
                       ),
                       Center(
                         child: Text(

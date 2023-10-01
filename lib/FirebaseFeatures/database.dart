@@ -13,7 +13,6 @@ class Database {
   Future<void> createDocumentWithNewId(
       {required String collection, required Map<String, Object> data}) async {
     try {
-      // print(data);
       DatabaseReference ref = setDatabaseReference(collection);
 
       await ref.push().set(data);
@@ -43,8 +42,6 @@ class Database {
     try {
       Map<dynamic, dynamic> unprocessedData =
           await getAllDocumentsMap(entityName: entityName);
-
-      // print(snapshot.value);
       List res = [];
       unprocessedData.forEach((key, value) {
         value["id"] = key;
@@ -65,8 +62,6 @@ class Database {
     if (snapshot.exists) {
       Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
       data["id"] = id;
-      // print("data");
-      // print(data);
       return data as Map<dynamic, dynamic>;
     } else {
       return {};
@@ -99,8 +94,6 @@ class Database {
     try {
       Map<dynamic, dynamic> unprocessedData =
           await getAllDocumentsMap(entityName: entityName);
-
-      // print(snapshot.value);
       List res = [];
       unprocessedData.forEach((key, value) {
         value["id"] = key;
@@ -118,7 +111,6 @@ class Database {
       required String id,
       required Map<String, Object> data}) async {
     try {
-      // print(data);
       DatabaseReference ref = setDatabaseReference("$collection/$id");
 
       await ref.set(data);

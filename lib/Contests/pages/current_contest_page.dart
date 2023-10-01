@@ -62,11 +62,6 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
             .checkIfParticipantExists(competitionId: id, participantId: userId)
             .then((userIsParticipant) {
           isParticipant = userIsParticipant;
-          if (!isParticipant) {
-            print("Not a participant");
-          } else {
-            print("participant");
-          }
         });
       });
     });
