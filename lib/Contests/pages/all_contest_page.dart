@@ -49,7 +49,7 @@ class _ContestPageState extends State<ContestPage> {
   void initState() {
     super.initState();
     // Get all competitions from the database.
-    CompetitionMethods().getAllCompetitions().then((value) {
+    CompetitionMethods().getAllCompetitionsList().then((value) {
       List<Widget> tempList = [];
       value.sort((a, b) => (a?['endDate']).compareTo(b?['endDate']));
       value.forEach((competition) {

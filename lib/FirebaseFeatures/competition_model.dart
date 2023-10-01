@@ -1,9 +1,15 @@
+import "package:flutter/animation.dart";
+
 import "./database.dart";
 
 class CompetitionMethods {
   // get all competitions
-  Future<List> getAllCompetitions() async {
+  Future<List> getAllCompetitionsList() async {
     return Database().getAllDocumentsList(entityName: "competitions");
+  }
+
+  Future<Map<dynamic, dynamic>> getAllCompetitionsMap() async {
+    return Database().getAllDocumentsMap(entityName: "competitions");
   }
 
   // get competition by Id

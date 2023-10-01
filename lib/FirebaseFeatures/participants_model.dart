@@ -1,4 +1,5 @@
 import "package:firebase_database/firebase_database.dart";
+import "package:googleignite2023/FirebaseFeatures/competition_model.dart";
 import "./user_model.dart";
 import "./database.dart";
 
@@ -18,9 +19,33 @@ class ParticipantMethod {
     }
   }
 
+  Future<List> getParticipatingCompetition({
+    required String userId,
+  }) async {
+    Map<dynamic, dynamic> competitionsMap =
+        await CompetitionMethods().getAllCompetitionsMap();
+    Map<dynamic, dynamic> participantMap = await Database()
+        .getDocumentByFieldMap(
+            entityName: "participant", fieldName: "userId", fieldValue: userId);
+    List res = [];
+    participantMap.forEach((key, value) {
+      print("competitionsMap $competitionsMap");
+      print("participantMap $participantMap");
+      print("value $value");
+      Map<dynamic, dynamic> competition =
+          competitionsMap[value["competitionId"]];
+      print("competition $competition");
+      value["competitionName"] = competition["competitionName"];
+      value["endDate"] = competition["endDate"];
+      res.add(value);
+    });
+    return res;
+  }
+
   // get all participants of a competition
   Future<List> getCompetitionParticipants(
       {required String competitionId}) async {
+
     // get all users from db
     Map<dynamic, dynamic> userMap = await UserMethods().getAllUsersMap();
     Map<dynamic, dynamic> participantMap = await Database()
@@ -30,7 +55,6 @@ class ParticipantMethod {
             fieldValue: competitionId);
     // get all participant records from db
     List res = [];
-
     participantMap.forEach((key, value) {
       Map<dynamic, dynamic> user = userMap[value["userId"]];
       value["username"] = user["username"];
@@ -58,12 +82,4 @@ class ParticipantMethod {
     });
     return res;
   }
-
-  // get all participants of a competition
-//   Future<Object?> getCompetitionParticipants(String competitionId) async {
-//     return Database().getDocumentByField(
-//         entityName: "competitions",
-//         fieldName: "userId",
-//         fieldValue: competitionId);
-//   }
 }
