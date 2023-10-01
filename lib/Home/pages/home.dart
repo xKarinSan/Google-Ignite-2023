@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../General/bottom_bar.dart';
+import '../../General/bottom_bar.dart'; 
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -214,7 +214,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  margin: const EdgeInsets.only(left: 16.0, right:16.0, bottom: 16.0 ),
                   child: ListTile(
                     leading: Image.asset('assets/earth.png'),
                     title: const Text(
@@ -227,9 +227,9 @@ class HomePage extends StatelessWidget {
                     subtitle: const Text(
                         'Find out more about the type of items you can recycle at the bins.'),
                     trailing: const Icon(Icons.arrow_forward),
-                    // onTap: () {
-                    //   Navigator.pushNamed(context, '/');
-                    // },
+                    onTap: () {
+                      Navigator.pushNamed(context, '/tips');
+                    },
                   ),
                 ),
               ],
