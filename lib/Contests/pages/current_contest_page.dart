@@ -39,7 +39,7 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
   void initState() {
     super.initState();
     userId = currentUser.getItem("userId");
-    currTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    currTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _countdown.calculateRemainingTime();
         countdown = _countdown.formattedRemainingTime;
@@ -100,13 +100,13 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
     id = routeArgs['competitionId'].toString();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Current Contest"),
+        title: const Text("Current Contest"),
       ),
       body: Column(children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
           child: isLoading
-              ? Loader(title: "Retrieving contest info...")
+              ? const Loader(title: "Retrieving contest info...")
               : Column(
                   children: [
                     Column(
@@ -114,11 +114,11 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
                       children: [
                         Text(
                           _competition?["competitionName"] ?? "Loading...",
-                          style: TextStyle(fontSize: 25),
+                          style: const TextStyle(fontSize: 25),
                         ),
                         Text(
                           "Ends in: $countdown",
-                          style: TextStyle(fontSize: 22),
+                          style: const TextStyle(fontSize: 22),
                         ),
                       ],
                     ),
@@ -140,7 +140,7 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
                 ),
         ),
       ]),
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: const BottomBar(),
     );
   }
 }
