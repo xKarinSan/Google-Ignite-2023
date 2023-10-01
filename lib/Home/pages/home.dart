@@ -14,14 +14,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final LocalStorage currentUser = LocalStorage('current_user');
+  final LocalStorage currentUser = new LocalStorage('current_user');
   Map<dynamic, dynamic>? _currentUser; // need the exact number of points
   List<dynamic> userCompetitions = [];
 
   @override
   void initState() {
     super.initState();
+    print("initialised home");
+    print("currentUser $currentUser");
+    print(currentUser.getItem("userId"));
     String userId = currentUser.getItem("userId");
+    print("userId $userId");
 
     //get all the competitions user is participating in
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
