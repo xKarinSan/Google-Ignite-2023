@@ -131,61 +131,54 @@ class RedeemTab extends StatelessWidget {
               ),
               // Add more CouponCard widgets for other stores
               CouponCard(
-                imagePath: 'assets/PKL.png',
-                store: "Park's Kitchen",
-                discount: '\$2 dollars off',
-                points: '50 points',
-                userPoints: userPoints,
-                addRedeemedCoupon: addRedeemedCoupon
-              ),
+                  imagePath: 'assets/PKL.png',
+                  store: "Park's Kitchen",
+                  discount: '\$2 dollars off',
+                  points: '50 points',
+                  userPoints: userPoints,
+                  addRedeemedCoupon: addRedeemedCoupon),
               CouponCard(
-                imagePath: 'assets/logo-kuro_kare.png',
-                store: 'Kuro Kare',
-                discount: 'Free Drink',
-                points: '350 points',
-                userPoints: userPoints,
-                addRedeemedCoupon: addRedeemedCoupon
-              ),
+                  imagePath: 'assets/logo-kuro_kare.png',
+                  store: 'Kuro Kare',
+                  discount: 'Free Drink',
+                  points: '350 points',
+                  userPoints: userPoints,
+                  addRedeemedCoupon: addRedeemedCoupon),
               CouponCard(
-                imagePath: 'assets/GC.png',
-                store: 'Gong Cha',
-                discount: 'Free Topping',
-                points: '400 points',
-                userPoints: userPoints,
-                addRedeemedCoupon: addRedeemedCoupon
-              ),
+                  imagePath: 'assets/GC.png',
+                  store: 'Gong Cha',
+                  discount: 'Free Topping',
+                  points: '400 points',
+                  userPoints: userPoints,
+                  addRedeemedCoupon: addRedeemedCoupon),
               CouponCard(
-                imagePath: 'assets/yole.png',
-                store: 'Yole',
-                discount: '1-for-1',
-                points: '600 points',
-                userPoints: userPoints,
-                addRedeemedCoupon: addRedeemedCoupon
-              ),
+                  imagePath: 'assets/yole.png',
+                  store: 'Yole',
+                  discount: '1-for-1',
+                  points: '600 points',
+                  userPoints: userPoints,
+                  addRedeemedCoupon: addRedeemedCoupon),
               CouponCard(
-                imagePath: 'assets/Ima.png',
-                store: 'Ima Sushi',
-                discount: '10% off',
-                points: '350 points',
-                userPoints: userPoints,
-                addRedeemedCoupon: addRedeemedCoupon
-              ),
+                  imagePath: 'assets/Ima.png',
+                  store: 'Ima Sushi',
+                  discount: '10% off',
+                  points: '350 points',
+                  userPoints: userPoints,
+                  addRedeemedCoupon: addRedeemedCoupon),
               CouponCard(
-                imagePath: 'assets/khoon.png',
-                store: 'Khoon Coffee House',
-                discount: 'Free Upgrade',
-                points: '400 points',
-                userPoints: userPoints,
-                addRedeemedCoupon: addRedeemedCoupon
-              ),
+                  imagePath: 'assets/khoon.png',
+                  store: 'Khoon Coffee House',
+                  discount: 'Free Upgrade',
+                  points: '400 points',
+                  userPoints: userPoints,
+                  addRedeemedCoupon: addRedeemedCoupon),
               CouponCard(
-                imagePath: 'assets/Sub.png',
-                store: 'Subarashii Super Don',
-                discount: 'Free Drink',
-                points: '300 points',
-                userPoints: userPoints,
-                addRedeemedCoupon: addRedeemedCoupon
-              ),
+                  imagePath: 'assets/Sub.png',
+                  store: 'Subarashii Super Don',
+                  discount: 'Free Drink',
+                  points: '300 points',
+                  userPoints: userPoints,
+                  addRedeemedCoupon: addRedeemedCoupon),
             ],
           ),
         ],
@@ -227,7 +220,8 @@ class MyCouponsTab extends StatelessWidget {
                           children: [
                             Text(
                               coupon.storeName,
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                             Text(
                               coupon.discount,
@@ -255,7 +249,6 @@ class MyCouponsTab extends StatelessWidget {
   }
 }
 
-
 class CouponCard extends StatelessWidget {
   final String imagePath;
   final String store;
@@ -274,95 +267,109 @@ class CouponCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  void _showRedeemDialog(BuildContext context, int userPoints, String storeName, String discount, String imagePath) {
+  void _showRedeemDialog(BuildContext context, int userPoints, String storeName,
+      String discount, String imagePath) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Would you like to redeem a $store voucher?'),
+          title: Text(
+            'Would you like to redeem a $store voucher?',
+            style: TextStyle(fontSize: 16),
+          ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                int voucherPoints = int.parse(points.split(' ')[0]);
-                if (userPoints >= voucherPoints) {
-                  // Deduct points and update the userPoints property.
-                  userPoints -= voucherPoints;
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  int voucherPoints = int.parse(points.split(' ')[0]);
+                  if (userPoints >= voucherPoints) {
+                    // Deduct points and update the userPoints property.
+                    userPoints -= voucherPoints;
 
-                  // Add the redeemed coupon to the list
-                  addRedeemedCoupon(storeName, discount, imagePath);
+                    // Add the redeemed coupon to the list
+                    addRedeemedCoupon(storeName, discount, imagePath);
 
-                  // Update the text within the AlertDialog.
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Redemption success!'),
-                        content: RichText(
-                          text: TextSpan(
-                            text: 'You have redeemed a $store voucher. You have ',
-                            style: DefaultTextStyle.of(context).style,
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: '$userPoints',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green,
+                    // Update the text within the AlertDialog.
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Redemption success!'),
+                          content: RichText(
+                            text: TextSpan(
+                              text:
+                                  'You have redeemed a $store voucher. You have ',
+                              style: DefaultTextStyle.of(context).style,
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: '$userPoints',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
+                                  ),
                                 ),
-                              ),
-                              const TextSpan(
-                                text: ' points left.',
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text(
-                              'OK',
-                              style: TextStyle(color: Colors.green),
+                                const TextSpan(
+                                  text: ' points left.',
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      );
-                    },
-                  );
-                } else {
-                  // Display insufficient points message.
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('You have insufficient points.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text(
-                              'OK',
-                              style: TextStyle(color: Colors.red),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                'OK',
+                                style: TextStyle(color: Colors.green),
+                              ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-              },
-              child: const Text(
-                'Confirm',
-                style: TextStyle(color: Colors.green),
-              ),
-            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    // Display insufficient points message.
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('You have insufficient points.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                'OK',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+                child: const Text(
+                  'Confirm',
+                  style: TextStyle(color: Colors.green),
+                ),
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            side: BorderSide(color: Colors.green))))),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          side: BorderSide(color: Colors.red)))),
               child: const Text(
                 'Cancel',
                 style: TextStyle(color: Colors.red),

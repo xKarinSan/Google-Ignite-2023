@@ -1,4 +1,5 @@
 import "package:firebase_database/firebase_database.dart";
+import "package:googleignite2023/FirebaseFeatures/competition_model.dart";
 import "./user_model.dart";
 import "./database.dart";
 
@@ -18,6 +19,44 @@ class ParticipantMethod {
     }
   }
 
+  Future<Map<dynamic, dynamic>> getRandomParticipatingCompetition(
+      {required String userId}) async {
+    print("[getRandomParticipatingCompetition] userId $userId");
+    Map<dynamic, dynamic> competitionsMap =
+        await CompetitionMethods().getAllCompetitionsMap();
+    Map<dynamic, dynamic> participantMap = await Database()
+        .getDocumentByFieldMap(
+            entityName: "participant", fieldName: "userId", fieldValue: userId);
+    List res = [];
+    participantMap.forEach((key, value) {
+      print("competitionsMap $competitionsMap");
+      print('value["competitionId"]');
+      print(value["competitionId"]);
+      Map<dynamic, dynamic> competition =
+          competitionsMap[value["competitionId"]];
+      res.add(competition);
+    });
+    return res.length > 0 ? res[0] : {};
+  }
+
+  Future<List> getParticipatingCompetition({
+    required String userId,
+  }) async {
+    Map<dynamic, dynamic> competitionsMap =
+        await CompetitionMethods().getAllCompetitionsMap();
+    Map<dynamic, dynamic> participantMap = await Database()
+        .getDocumentByFieldMap(
+            entityName: "participant", fieldName: "userId", fieldValue: userId);
+    List res = [];
+    participantMap.forEach((key, value) {
+      print(value);
+      Map<dynamic, dynamic> competition =
+          competitionsMap[value["competitionId"]];
+      res.add(value);
+    });
+    return res;
+  }
+
   // get all participants of a competition
   Future<List> getCompetitionParticipants(
       {required String competitionId}) async {
@@ -30,7 +69,6 @@ class ParticipantMethod {
             fieldValue: competitionId);
     // get all participant records from db
     List res = [];
-
     participantMap.forEach((key, value) {
       Map<dynamic, dynamic> user = userMap[value["userId"]];
       value["username"] = user["username"];
@@ -58,12 +96,4 @@ class ParticipantMethod {
     });
     return res;
   }
-
-  // get all participants of a competition
-//   Future<Object?> getCompetitionParticipants(String competitionId) async {
-//     return Database().getDocumentByField(
-//         entityName: "competitions",
-//         fieldName: "userId",
-//         fieldValue: competitionId);
-//   }
 }

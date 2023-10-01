@@ -61,14 +61,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Lottie.asset(
-                  'assets/animation_ln7de1mq.json',
-                  width: 300,
-                  height: 300,
-                ),
-                  Text(currentUser.getItem("displayName") ?? "User name"),
-                  Text(currentUser.getItem("email") ?? "User Email"),
-                  Text(currentUser.getItem("photoURL") ?? "Photo URL"),
-                  Text(currentUser.getItem("userId") ?? "User ID"),
+                    'assets/animation_ln7de1mq.json',
+                    // width: 300,
+                    // height: 300,
+                  ),
+                  Text(currentUser.getItem("displayName") ?? "User name",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+
+                  // Text(currentUser.getItem("email") ?? "User Email"),
+                  // Text(currentUser.getItem("photoURL") ?? "Photo URL"),
+                  // Text(currentUser.getItem("userId") ?? "User ID"),
                   _signOutButton()
                 ],
               ),
