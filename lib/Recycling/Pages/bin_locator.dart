@@ -6,9 +6,6 @@ import 'package:geolocator/geolocator.dart';
 // Importing the polylines package:
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
-void main() {
-  runApp(const BinLocator());
-}
 
 class BinLocator extends StatefulWidget {
   const BinLocator({Key? key}) : super(key: key);

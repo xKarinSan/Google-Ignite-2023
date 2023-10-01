@@ -55,6 +55,7 @@ class _BottomBarState extends State<BottomBar> {
         ),
       ],
       onTap: (index) => {
+        // print("inded $index")
         if (index == 0 && index != _selectedIndex)
           {Navigator.pushNamed(context, "/home")}
         else if (index == 1 && index != _selectedIndex)
