@@ -100,6 +100,7 @@ class CompetitionContainer extends StatefulWidget {
 
 class _CompetitionContainerState extends State<CompetitionContainer> {
   late Countdown _countdown;
+  Timer? currTimer;
 
   @override
   void initState() {
@@ -111,11 +112,17 @@ class _CompetitionContainerState extends State<CompetitionContainer> {
         isUtc: true));
 
     // Start a timer to update the countdown every second.
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    currTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         _countdown.calculateRemainingTime();
       });
     });
+  }
+
+  @override
+  void dispose() {
+    currTimer?.cancel();
+    super.dispose();
   }
 
   @override

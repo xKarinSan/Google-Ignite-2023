@@ -8,6 +8,7 @@ import '../../FirebaseFeatures/competition_model.dart';
 import "../../FirebaseFeatures/participants_model.dart";
 import "../../General/bottom_bar.dart";
 import "../helper_functions.dart";
+import "../../FirebaseFeatures/participants_model.dart";
 
 class CurrentContestPage extends StatefulWidget {
   const CurrentContestPage({super.key});
@@ -21,6 +22,7 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
   String id = "";
   String countdown = "";
   String userId = "";
+  Timer? currTimer;
   Map<dynamic, dynamic>? _competition;
   late Countdown _countdown;
 
@@ -28,7 +30,7 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
   void initState() {
     super.initState();
     userId = currentUser.getItem("userId");
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    currTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         _countdown.calculateRemainingTime();
         countdown = _countdown.formattedRemainingTime;
@@ -46,8 +48,23 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
         _countdown = Countdown(DateTime.fromMillisecondsSinceEpoch(
             _competition?["endDate"] ?? 0,
             isUtc: true));
+        ParticipantMethod()
+            .checkIfParticipantExists(competitionId: id, participantId: userId)
+            .then((isParticipant) {
+          if (!isParticipant) {
+            print("Not a participant");
+          } else {
+            print("participant");
+          }
+        });
       });
     });
+  }
+
+  @override
+  void dispose() {
+    currTimer?.cancel();
+    super.dispose();
   }
 
   Future<void> joinCompetition() async {

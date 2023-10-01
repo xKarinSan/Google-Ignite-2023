@@ -65,8 +65,8 @@ class Database {
     if (snapshot.exists) {
       Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
       data["id"] = id;
-      print("data");
-      print(data);
+      // print("data");
+      // print(data);
       return data as Map<dynamic, dynamic>;
     } else {
       return {};
@@ -74,7 +74,7 @@ class Database {
   }
 
 // ============= get a document by a field; returns a list of documents =============
-  Future<Object?> getDocumentByField(
+  Future<Map<dynamic, dynamic>> getDocumentByFieldMap(
       {required String entityName,
       required String fieldName,
       required String fieldValue}) async {
@@ -83,13 +83,32 @@ class Database {
       DataSnapshot snapshot =
           await ref.orderByChild(fieldName).equalTo(fieldValue).get();
       if (snapshot.exists) {
-        // print(snapshot.value);
-        return snapshot.value;
+        return snapshot.value as Map<dynamic, dynamic>;
       } else {
-        return null;
+        return {};
       }
     } catch (e) {
-      return null;
+      return {};
+    }
+  }
+
+  Future<List> getDocumentByFieldList(
+      {required String entityName,
+      required String fieldName,
+      required String fieldValue}) async {
+    try {
+      Map<dynamic, dynamic> unprocessedData =
+          await getAllDocumentsMap(entityName: entityName);
+
+      // print(snapshot.value);
+      List res = [];
+      unprocessedData.forEach((key, value) {
+        value["id"] = key;
+        res.add(value);
+      });
+      return res;
+    } catch (e) {
+      return [];
     }
   }
 
