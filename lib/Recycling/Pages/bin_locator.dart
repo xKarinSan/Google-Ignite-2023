@@ -3,6 +3,8 @@ import '../../General/bottom_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 // Importing the geolocator package:
 import 'package:geolocator/geolocator.dart';
+// Importing the polylines package:
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 void main() {
   runApp(const BinLocator());
@@ -27,11 +29,17 @@ class _BinLocatorState extends State<BinLocator> {
     mapController = controller;
   }
 
+  // A variable to store the user's location whenever we get it:
+  Position? _currentPosition;
+
+  // We need a variable to store the polylines:
+  Map<PolylineId, Polyline> _polylines = {};
 
   // Method to retrieve the user's current location:
   void _getCurrentLocation() async {
     Position position = await _determinePosition();
     setState(() {
+      _currentPosition = position;
       isLocationEnabled = !isLocationEnabled;
       isLocationEnabled ? mapController.animateCamera(
         CameraUpdate.newCameraPosition(
@@ -72,6 +80,7 @@ class _BinLocatorState extends State<BinLocator> {
   // We need markers for the bins:
   final Set<Marker> _markers = {
     // Bin 1:
+    // We need to add a button to the info window to get directions to the bin:
     Marker(
       markerId: const MarkerId('bin1'),
       position: const LatLng(1.296568, 103.852119),
@@ -148,27 +157,100 @@ class _BinLocatorState extends State<BinLocator> {
             zoom: 17.0,
           ),
           onMapCreated: _onMapCreated,
-          markers: {
-            for (final marker in _markers)
-              Marker(
-                markerId: MarkerId(marker.markerId.value),
+          markers: // Everytime a marker is tapped, we need to draw the polyline:
+          Set<Marker>.of(_markers.map(
+                (Marker marker) {
+              return Marker(
+                markerId: marker.markerId,
                 position: marker.position,
-                infoWindow: InfoWindow(
-                  title: marker.infoWindow.title,
-                  snippet: marker.infoWindow.snippet,
-                ),
-              ),
-          },
+                infoWindow: marker.infoWindow,
+                icon: marker.icon,
+                onTap: () async {
+                  // We need to get the directions:
+                  List<LatLng> polylineCoordinates = await _getDirections(marker.position);
+                  // Now we draw the polyline:
+                  _drawPolyline(polylineCoordinates);
+                },
+              );
+            },
+          ),
+          ),
+          // We need to draw the polyline:
+          polylines: Set<Polyline>.of(_polylines.values),
           myLocationEnabled: true,
           myLocationButtonEnabled: false,
+          // Adding a radius around the user's location only if we have it:
+          circles: _currentPosition!=null ? <Circle>{
+            Circle(
+              circleId: const CircleId('user'),
+              center: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+              radius: 50,
+              fillColor: Colors.blueAccent.withOpacity(0.4),
+              // No border:
+              strokeColor: Colors.transparent,
+            ),
+          } : <Circle>{},
           ),
-      // We need a floating action button to retrieve the user's location:
+      // We need a floating action button to retrieve the user's location: also need to it's opacity lower if the user's location is not enabled:
       floatingActionButton: FloatingActionButton(
         onPressed: _getCurrentLocation,
         tooltip: 'Get Location',
-        child: isLocationEnabled ? const Icon(Icons.location_on) : const Icon(Icons.location_off),
+        backgroundColor: Colors.white,
+        child: Icon(
+          Icons.location_on,
+          color: isLocationEnabled ? Colors.green : Colors.grey,
+        ),
       ),
       bottomNavigationBar: const BottomBar(),
     );
   }
+
+  // Now that we have the directions API and polyline package, we need to provide the routes to the bins when the user clicks on the info window:
+  // We need a method to get the directions:
+  Future<List<LatLng>> _getDirections(LatLng destination) async {
+    // Instantiation:
+    List<LatLng> polylineCoordinates = [];
+    PolylinePoints polylinePoints = PolylinePoints();
+
+    // First we get the user's location again:
+    Position position = await _determinePosition();
+
+    // Now we get the directions from the user's location to the destination:
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      const String.fromEnvironment('MAPS_API_KEY'), // Google Maps API Key
+      PointLatLng(position.latitude, position.longitude),
+      PointLatLng(destination.latitude, destination.longitude),
+      travelMode: TravelMode.walking,
+    );
+
+    // Now we need to parse the result:
+    if(result.points.isNotEmpty) {
+      for (var point in result.points) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
+    } else {
+      // ignore: avoid_print
+      print(result.errorMessage);
+    }
+    // Now we return the coordinates:
+    return polylineCoordinates;
+  }
+
+  // Now that we have the directions, we need to draw the polyline:
+  void _drawPolyline(List<LatLng> polylineCoordinates) async {
+    // We make the polygon visible:
+    PolylineId id = const PolylineId('direction');
+    Polyline polyline = Polyline(
+      polylineId: id,
+      color: Colors.blueAccent,
+      points: polylineCoordinates,
+      width: 7,
+    );
+    // Now we set state:
+    setState(() {
+      // We add the polyline to the map:
+      _polylines[id] = polyline;
+    });
+  }
+
 }
