@@ -33,7 +33,7 @@ dependencies:
   lottie: ^2.0.2
   flutter:
     sdk: flutter
-  google_fonts: ^2.2.0
+  google_fonts: ^6.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,7 +43,9 @@ dependencies:
   firebase_database: ^10.2.6
   firebase_auth: ^4.10.0
   dotenv: ^4.1.0
-  cloud_firestore: ^4.9.2
+  google_maps_flutter: ^2.5.0
+  geolocator: ^8.2.0
+  flutter_polyline_points: ^2.0.0
 
 dev_dependencies:
   flutter_test:
