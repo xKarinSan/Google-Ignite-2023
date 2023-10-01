@@ -1,8 +1,35 @@
 import 'package:flutter/material.dart';
 import '../../General/bottom_bar.dart';
 
-class RewardsPage extends StatelessWidget {
-  const RewardsPage({Key? key}) : super(key: key);
+class RedeemedCoupon {
+  final String storeName;
+  final String discount;
+  final String imagePath;
+
+  RedeemedCoupon(this.storeName, this.discount, this.imagePath);
+}
+
+void main() {
+  runApp(RewardsPage(userPoints: 1000)); // Provide a value for userPoints
+}
+
+class RewardsPage extends StatefulWidget {
+  final int userPoints; // Add a userPoints field
+
+  RewardsPage({Key? key, required this.userPoints}) : super(key: key);
+
+  @override
+  _RewardsPageState createState() => _RewardsPageState();
+}
+
+class _RewardsPageState extends State<RewardsPage> {
+  List<RedeemedCoupon> redeemedCoupons = [];
+
+  void _addRedeemedCoupon(String storeName, String discount, String imagePath) {
+    setState(() {
+      redeemedCoupons.add(RedeemedCoupon(storeName, discount, imagePath));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +54,7 @@ class RewardsPage extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0, vertical: 8.0),
+                      horizontal: 8.0, vertical: 4.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12.0),
@@ -37,22 +64,15 @@ class RewardsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'You have:',
+                        'Explore and redeem various rewards offered by our participating merchants below:',
                         style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
                           color: Colors.black,
+                          fontSize: 14,
                         ),
                       ),
-                      SizedBox(height: 8),
-                      Text(
-                        '1000 points',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
+                      SizedBox(
+                          height:
+                              4), // Add some spacing between the title and points
                     ],
                   ),
                 ),
@@ -67,10 +87,13 @@ class RewardsPage extends StatelessWidget {
             ),
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            RedeemTab(),
-            MyCouponsTab(),
+            RedeemTab(
+              userPoints: widget.userPoints,
+              addRedeemedCoupon: _addRedeemedCoupon, // Pass the function
+            ),
+            MyCouponsTab(redeemedCoupons: redeemedCoupons), // Pass the list
           ],
         ),
         bottomNavigationBar: const BottomBar(),
@@ -80,11 +103,17 @@ class RewardsPage extends StatelessWidget {
 }
 
 class RedeemTab extends StatelessWidget {
-  const RedeemTab({Key? key}) : super(key: key);
+  final int userPoints;
+  final Function(String, String, String) addRedeemedCoupon;
+  RedeemTab({
+    Key? key,
+    required this.userPoints,
+    required this.addRedeemedCoupon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -97,48 +126,65 @@ class RedeemTab extends StatelessWidget {
                 store: 'Subway',
                 discount: '\$10 off',
                 points: '1000 points',
+                userPoints: userPoints,
+                addRedeemedCoupon: addRedeemedCoupon,
               ),
+              // Add more CouponCard widgets for other stores
               CouponCard(
                 imagePath: 'assets/PKL.png',
                 store: "Park's Kitchen",
                 discount: '\$2 dollars off',
                 points: '50 points',
+                userPoints: userPoints,
+                addRedeemedCoupon: addRedeemedCoupon
               ),
               CouponCard(
                 imagePath: 'assets/logo-kuro_kare.png',
                 store: 'Kuro Kare',
                 discount: 'Free Drink',
                 points: '350 points',
+                userPoints: userPoints,
+                addRedeemedCoupon: addRedeemedCoupon
               ),
               CouponCard(
                 imagePath: 'assets/GC.png',
                 store: 'Gong Cha',
                 discount: 'Free Topping',
                 points: '400 points',
+                userPoints: userPoints,
+                addRedeemedCoupon: addRedeemedCoupon
               ),
               CouponCard(
                 imagePath: 'assets/yole.png',
                 store: 'Yole',
-                discount: '1 for 1',
+                discount: '1-for-1',
                 points: '600 points',
+                userPoints: userPoints,
+                addRedeemedCoupon: addRedeemedCoupon
               ),
               CouponCard(
                 imagePath: 'assets/Ima.png',
                 store: 'Ima Sushi',
                 discount: '10% off',
                 points: '350 points',
+                userPoints: userPoints,
+                addRedeemedCoupon: addRedeemedCoupon
               ),
               CouponCard(
                 imagePath: 'assets/khoon.png',
                 store: 'Khoon Coffee House',
                 discount: 'Free Upgrade',
                 points: '400 points',
+                userPoints: userPoints,
+                addRedeemedCoupon: addRedeemedCoupon
               ),
               CouponCard(
                 imagePath: 'assets/Sub.png',
                 store: 'Subarashii Super Don',
                 discount: 'Free Drink',
                 points: '300 points',
+                userPoints: userPoints,
+                addRedeemedCoupon: addRedeemedCoupon
               ),
             ],
           ),
@@ -149,48 +195,167 @@ class RedeemTab extends StatelessWidget {
 }
 
 class MyCouponsTab extends StatelessWidget {
-  const MyCouponsTab({Key? key}) : super(key: key);
+  final List<RedeemedCoupon> redeemedCoupons;
+
+  MyCouponsTab({Key? key, required this.redeemedCoupons}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Add your coupons for the "My Coupons" tab here
+          for (RedeemedCoupon coupon in redeemedCoupons)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                elevation: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        coupon.imagePath,
+                        width: 50,
+                        height: 50,
+                        // fit: BoxFit.cover,
+                      ),
+                      SizedBox(width: 16), // Add spacing between image and text
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              coupon.storeName,
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              coupon.discount,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                        color: Colors.black,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
   }
 }
 
+
 class CouponCard extends StatelessWidget {
   final String imagePath;
   final String store;
   final String discount;
   final String points;
+  final int userPoints;
+  final Function(String, String, String) addRedeemedCoupon;
 
   const CouponCard({
     required this.imagePath,
     required this.store,
     required this.discount,
     required this.points,
+    required this.userPoints,
+    required this.addRedeemedCoupon,
     Key? key,
   }) : super(key: key);
 
-  void _showRedeemDialog(BuildContext context) {
+  void _showRedeemDialog(BuildContext context, int userPoints, String storeName, String discount, String imagePath) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Redeem $store voucher?'),
+          backgroundColor: Colors.white,
+          title: Text('Would you like to redeem a $store voucher?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
+                int voucherPoints = int.parse(points.split(' ')[0]);
+                if (userPoints >= voucherPoints) {
+                  // Deduct points and update the userPoints property.
+                  userPoints -= voucherPoints;
+
+                  // Add the redeemed coupon to the list
+                  addRedeemedCoupon(storeName, discount, imagePath);
+
+                  // Update the text within the AlertDialog.
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Redemption success!'),
+                        content: RichText(
+                          text: TextSpan(
+                            text: 'You have redeemed a $store voucher. You have ',
+                            style: DefaultTextStyle.of(context).style,
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: '$userPoints',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green,
+                                ),
+                              ),
+                              const TextSpan(
+                                text: ' points left.',
+                              ),
+                            ],
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text(
+                              'OK',
+                              style: TextStyle(color: Colors.green),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  // Display insufficient points message.
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('You have insufficient points.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text(
+                              'OK',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
               },
               child: const Text(
-                'Redeem',
+                'Confirm',
                 style: TextStyle(color: Colors.green),
               ),
             ),
@@ -213,13 +378,14 @@ class CouponCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _showRedeemDialog(context);
+        _showRedeemDialog(context, userPoints, store, discount, imagePath);
       },
       child: Container(
         margin: const EdgeInsets.all(8.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16.0),
           child: Card(
+            color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
