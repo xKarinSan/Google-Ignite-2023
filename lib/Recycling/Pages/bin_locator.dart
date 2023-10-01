@@ -10,13 +10,13 @@ class BinLocator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         // appBar: AppBar(
         //   title: const Text('Bin Locator'),
         // ),
-        body: const Center(
+        body: Center(
           child: Text('Bin Locator'),
         ),
-        bottomNavigationBar: const BottomBar());
+        bottomNavigationBar: BottomBar());
   }
 }

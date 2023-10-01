@@ -4,7 +4,6 @@ import '../../FirebaseFeatures/authentication.dart';
 import "../../General/loader.dart";
 import 'package:lottie/lottie.dart';
 
-
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
 
@@ -107,14 +106,14 @@ class _AuthPageState extends State<AuthPage> {
     return errorMessage == ''
         ? Container()
         : Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Color.fromRGBO(151, 0, 0, 1),
+              color: const Color.fromRGBO(151, 0, 0, 1),
             ),
             child: Text(errorMessage == '' ? '' : '$errorMessage',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white)));
+                style: const TextStyle(color: Colors.white)));
   }
 
   Widget _submitButton() {
@@ -122,7 +121,7 @@ class _AuthPageState extends State<AuthPage> {
         // width: double.infinity,
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Colors.green,
+              backgroundColor: Colors.green,
               minimumSize: const Size.fromHeight(50),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5)),
@@ -131,7 +130,7 @@ class _AuthPageState extends State<AuthPage> {
                 ? signInWithEmailAndPassword
                 : createUserWithEmailAndPassword,
             child: Text(
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 isLogin ? "Sign In" : "Register")));
   }
 
@@ -148,7 +147,7 @@ class _AuthPageState extends State<AuthPage> {
           });
         },
         child: Text(
-            style: TextStyle(color: Colors.black87),
+            style: const TextStyle(color: Colors.black87),
             isLogin
                 ? "Don't have an account? Register here!"
                 : "Already have an account? Sign in here!"));
@@ -157,6 +156,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: isLoading == true
             ? Loader(title: isLogin ? "Logging in..." : "Registering...")
             : Container(
@@ -169,13 +169,13 @@ class _AuthPageState extends State<AuthPage> {
                     children: <Widget>[
                       Lottie.asset(
                         'assets/animation_ln3bcryl.json', // Path to Lottie animation JSON file
-                      width: 200,
-                      height: 200,
-                      repeat: true, // Set to true to loop the animation
-                      reverse: false, // Set to true to reverse the animation
-                      animate: true, // Set to false to pause the animation
+                        width: 200,
+                        height: 200,
+                        repeat: true, // Set to true to loop the animation
+                        reverse: false, // Set to true to reverse the animation
+                        animate: true, // Set to false to pause the animation
                       ),
-                      Text("GreenQuest",
+                      const Text("GreenQuest",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 35,
@@ -184,20 +184,20 @@ class _AuthPageState extends State<AuthPage> {
                           ? Container()
                           : _entryField(
                               'Username*', _controllerUsername, false),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       _entryField('Email*', _controllerEmail, false),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       _entryField('Password*', _controllerPassword, true),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       isLogin
                           ? Container()
                           : _entryField('Confirm Password*',
                               _controllerConfirmPassword, true),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       _submitButton(),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       _ToggleLoginRegister(),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       _errorMessage()
                     ])));
   }

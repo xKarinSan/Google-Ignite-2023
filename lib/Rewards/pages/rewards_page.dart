@@ -17,7 +17,7 @@ class RewardsPage extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
-            title: Text(
+            title: const Text(
               'Rewards',
               style: TextStyle(
                 color: Colors.black,
@@ -26,34 +26,36 @@ class RewardsPage extends StatelessWidget {
               ),
             ),
             bottom: PreferredSize(
-              preferredSize: Size.fromHeight(120.0),
+              preferredSize: const Size.fromHeight(120.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 8.0),
                     decoration: BoxDecoration(
-                      color: Colors.green,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     width: MediaQuery.of(context).size.width * 0.85,
-                    child: Column(
+                    child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'You have:',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
                         ),
                         SizedBox(height: 8),
                         Text(
                           '1000 points',
                           style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
                           ),
                         ),
                       ],
@@ -70,7 +72,7 @@ class RewardsPage extends StatelessWidget {
               ),
             ),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               RedeemTab(),
               MyCouponsTab(),
@@ -88,7 +90,7 @@ class RedeemTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -157,7 +159,7 @@ class MyCouponsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -193,7 +195,7 @@ class CouponCard extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(
+              child: const Text(
                 'Redeem',
                 style: TextStyle(color: Colors.green),
               ),
@@ -202,7 +204,7 @@ class CouponCard extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(
+              child: const Text(
                 'Cancel',
                 style: TextStyle(color: Colors.red),
               ),
@@ -220,7 +222,7 @@ class CouponCard extends StatelessWidget {
         _showRedeemDialog(context);
       },
       child: Container(
-        margin: EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(8.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16.0),
           child: Card(
@@ -241,24 +243,25 @@ class CouponCard extends StatelessWidget {
                     children: [
                       Text(
                         discount,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 14, // Adjust the font size
+                          fontSize: 20, // Adjust the font size
                         ),
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
                         store,
-                        style: TextStyle(
-                          fontSize: 12, // Adjust the font size
+                        style: const TextStyle(
+                          fontSize: 18, // Adjust the font size
                         ),
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
                         points,
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: const TextStyle(
+                          fontSize: 16,
                           color: Colors.green,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],

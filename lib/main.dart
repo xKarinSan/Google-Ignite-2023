@@ -5,29 +5,27 @@ import "widget_tree.dart";
 // ======= flutter =======
 import 'package:flutter/material.dart';
 import "package:firebase_core/firebase_core.dart";
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:googleignite2023/firebase_options.dart';
-import 'General/bottom_bar.dart';
 
 // ======= firebase =======
-import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 // ======= firebase options =======
-import 'package:googleignite2023/firebase_options.dart';
 
 // =================firebase init=================
 // import "FirebaseCredentials/firebase_environment.dart";
 // ================== pages ==================
 // ======= homepage =======
 import 'home/pages/home.dart';
+import 'home/pages/recycling_tips.dart';
 
 // ======= recycling/hunt related =======
-import 'Recycling/Pages/bin_locator.dart';
 import 'Recycling/Pages/pop_up.dart';
 
 // ======= contests/competitions related =======
 import 'Contests/pages/all_contest_page.dart';
+import 'package:googleignite2023/Contests/pages/current_contest_page.dart';
+import 'package:googleignite2023/Contests/pages/current_contest_ranking_page.dart';
 
 // ======= rewards related =======
 import 'Rewards/pages/rewards_page.dart';
@@ -42,26 +40,25 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
-  print("Started");
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
           useMaterial3: true,
         ),
-        debugShowCheckedModeBanner: false,
         home: const WidgetTree(),
         routes: {
           // ======= homepage =======
           '/home': (context) => const HomePage(),
+          '/tips': (context) => const RecyclingTipsPage(),
 
           // ======= recycling/hunt related =======
           // '/recycling': (context) => const BinLocator(),
@@ -69,41 +66,17 @@ class MyApp extends StatelessWidget {
 
           // ======= contests/competitions related =======
           '/contests': (context) => const ContestPage(),
+          '/contests/current': (context) => const CurrentContestPage(),
+          '/contests/current/dashboard': (context) => const ContestDashboardPage(),
 
           // ======= rewards related =======7
           '/rewards': (context) => const RewardsPage(),
           // ======= profile related =======
 
-          '/profile': (context) => ProfilePage(),
+          '/profile': (context) => const ProfilePage(),
 
           // ======= authentication =======
           '/auth': (context) => const AuthPage(),
         });
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body:
-          Center(), // This trailing comma makes auto-formatting nicer for build methods.
-      // bottomNavigationBar: BottomBar(),
-    );
   }
 }

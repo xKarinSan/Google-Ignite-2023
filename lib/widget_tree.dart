@@ -37,11 +37,11 @@ class _WidgetTreeState extends State<WidgetTree> {
             //     snapshot.data?.photoURL?.isNotEmpty ?? false
             //         ? AuthHandler().currentUser?.photoURL
             //         : "");
-            return HomePage();
+            return const HomePage();
           } else {
             // currentUser.clear();
             // bottomBarStorage.clear();
-            return AuthPage();
+            return const AuthPage();
           }
         });
   }
