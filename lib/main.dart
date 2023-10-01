@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
           '/contests/current': (context) => const CurrentContestPage(),
           '/contests/current/dashboard': (context) => const ContestDashboardPage(),
 
-          // ======= rewards related =======
+          // ======= rewards related =======7
           '/rewards': (context) => const RewardsPage(),
           // ======= profile related =======
 
