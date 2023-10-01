@@ -16,16 +16,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final LocalStorage currentUser = new LocalStorage('current_user');
   Map<dynamic, dynamic>? _currentUser; // need the exact number of points
+  Map<dynamic, dynamic>? _randomCompetition = {};
   List<dynamic> userCompetitions = [];
 
   @override
   void initState() {
     super.initState();
-    print("initialised home");
-    print("currentUser $currentUser");
-    print(currentUser.getItem("userId"));
+    // print("initialised home");
+    // print("currentUser $currentUser");
+    // print(currentUser.getItem("userId"));
     String userId = currentUser.getItem("userId");
-    print("userId $userId");
+    // print("userId $userId");
 
     //get all the competitions user is participating in
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
@@ -37,6 +38,15 @@ class _HomePageState extends State<HomePage> {
           .then((res) => setState(() {
                 userCompetitions = res as List<dynamic>;
               }));
+
+      ParticipantMethod()
+          .getRandomParticipatingCompetition(userId: userId)
+          .then((res) {
+        setState(() {
+          _randomCompetition = res as Map<dynamic, dynamic>?;
+        });
+        print(_randomCompetition);
+      });
     });
   }
 
@@ -83,8 +93,11 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    const Text(
-                      '1000', // Hardcoded points value
+                    Text(
+                      // _currentUser?['currentPoints'].toString() ??
+                      //     '0',
+                      "1000",
+                      // Hardcoded points value
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
@@ -160,7 +173,7 @@ class _HomePageState extends State<HomePage> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Your Competition:',
+                  'Your Competition(s):',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -178,9 +191,10 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const ListTile(
+                    ListTile(
                       title: Text(
-                        'SMU Recyclathon 2023', // Updated event name
+                        _randomCompetition?['competitionName'].toString() ??
+                            "Join a competition", // Updated event name
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -188,19 +202,19 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    const Text(
-                      'Your rank: #5', // Updated user's rank
-                      style: TextStyle(
-                        fontSize: 18, // Adjusted font size for rank
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+                    // const Text(
+                    //   'Your rank: #5', // Updated user's rank
+                    //   style: TextStyle(
+                    //     fontSize: 18, // Adjusted font size for rank
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.black,
+                    //   ),
+                    // ),
                     const Text(
                       'Ends on: 15 Oct 2023', // Updated event end date
                       style: TextStyle(
-                        fontSize: 12, // Adjusted font size for date
-                        color: Colors.white, // Set text color to grey
+                        fontSize: 14, // Adjusted font size for date
+                        color: Colors.black, // Set text color to grey
                       ),
                     ),
                     const SizedBox(

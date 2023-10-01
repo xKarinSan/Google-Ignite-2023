@@ -19,7 +19,7 @@ class ParticipantMethod {
     }
   }
 
-  Future<Map<dynamic, dynamic>> getRandomCompetitionWinner(
+  Future<Map<dynamic, dynamic>> getRandomParticipatingCompetition(
       {required String userId}) async {
     Map<dynamic, dynamic> competitionsMap =
         await CompetitionMethods().getAllCompetitionsMap();
@@ -30,7 +30,7 @@ class ParticipantMethod {
     participantMap.forEach((key, value) {
       Map<dynamic, dynamic> competition =
           competitionsMap[value["competitionId"]];
-      res.add(value);
+      res.add(competition);
       return;
     });
     return res.length > 0 ? res[0] : {};
