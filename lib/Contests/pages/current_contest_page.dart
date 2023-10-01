@@ -6,6 +6,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:googleignite2023/Contests/pages/all_contest_page.dart';
 import 'package:googleignite2023/FirebaseFeatures/database.dart';
+import 'package:googleignite2023/General/loader.dart';
 import 'package:localstorage/localstorage.dart';
 import '../../FirebaseFeatures/competition_model.dart';
 import "../../FirebaseFeatures/participants_model.dart";
@@ -27,6 +28,7 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
   String userId = "";
   Timer? currTimer;
   bool isParticipant = false;
+  bool isLoading = true;
   Map<dynamic, dynamic>? _competition;
   late Countdown _countdown;
 
@@ -41,6 +43,7 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
       setState(() {
         _countdown.calculateRemainingTime();
         countdown = _countdown.formattedRemainingTime;
+        isLoading = false;
       });
     });
 
@@ -102,34 +105,39 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
       body: Column(children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
-          child: Column(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _competition?["competitionName"] ?? "Loading...",
-                    style: TextStyle(fontSize: 25),
-                  ),
-                  Text(
-                    "Ends in: $countdown",
-                    style: TextStyle(fontSize: 22),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        onPressed: isParticipant
-                            ? enterCompetitionPage
-                            : joinCompetition,
-                        child:
-                            Text(isParticipant ? "View Dashboard" : "Join"))),
-              ),
-            ],
-          ),
+          child: isLoading
+              ? Loader(title: "Retrieving contest info...")
+              : Column(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _competition?["competitionName"] ?? "Loading...",
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        Text(
+                          "Ends in: $countdown",
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          width: double.infinity,
+                          child: isLoading
+                              ? null
+                              : ElevatedButton(
+                                  onPressed: isParticipant
+                                      ? enterCompetitionPage
+                                      : joinCompetition,
+                                  child: Text(isParticipant
+                                      ? "View Dashboard"
+                                      : "Join"))),
+                    ),
+                  ],
+                ),
         ),
       ]),
       bottomNavigationBar: BottomBar(),

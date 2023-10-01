@@ -7,6 +7,7 @@ import 'package:googleignite2023/FirebaseFeatures/competition_model.dart';
 import 'package:googleignite2023/FirebaseFeatures/database.dart';
 import 'package:googleignite2023/FirebaseFeatures/participants_model.dart';
 import 'package:googleignite2023/General/bottom_bar.dart';
+import 'package:googleignite2023/General/loader.dart';
 import 'package:localstorage/localstorage.dart';
 
 class ContestDashboardPage extends StatefulWidget {
@@ -24,6 +25,7 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
   Timer? currTimer;
   Map<dynamic, dynamic>? _competition;
   late Countdown _countdown;
+  bool isLoading = true;
 
   List<Widget> userCompetitions = [];
 
@@ -34,6 +36,7 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
     userId = currentUser.getItem("userId");
     currTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
+        isLoading = false;
         _countdown.calculateRemainingTime();
         countdown = _countdown.formattedRemainingTime;
       });
@@ -92,7 +95,10 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
       appBar: AppBar(
         title: Text("Rankings"),
       ),
-      body: Padding(
+      body: isLoading? Loader(title:"Retrieving competition info"):
+      
+      
+       Padding(
         padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
         child: Column(
           children: [
