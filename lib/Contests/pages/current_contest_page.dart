@@ -113,7 +113,7 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
                         ),
                         Text(
                           "Ends in: $countdown",
-                          style: const TextStyle(fontSize: 22),
+                          style: const TextStyle(fontSize: 18),
                         ),
                       ],
                     ),
@@ -124,12 +124,16 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
                           child: isLoading
                               ? null
                               : ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(
+                                          Colors.green)),
                                   onPressed: isParticipant
                                       ? enterCompetitionPage
                                       : joinCompetition,
-                                  child: Text(isParticipant
-                                      ? "View Dashboard"
-                                      : "Join"))),
+                                  child: Text(
+                                    isParticipant ? "View Dashboard" : "Join",
+                                    style: TextStyle(color: Colors.white),
+                                  ))),
                     ),
                   ],
                 ),

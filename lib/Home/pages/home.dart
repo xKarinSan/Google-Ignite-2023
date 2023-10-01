@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:googleignite2023/Contests/helper_functions.dart';
 import 'package:googleignite2023/FirebaseFeatures/participants_model.dart';
 import 'package:googleignite2023/FirebaseFeatures/user_model.dart';
 import 'package:localstorage/localstorage.dart';
@@ -17,8 +18,10 @@ class _HomePageState extends State<HomePage> {
   final LocalStorage currentUser = new LocalStorage('current_user');
   Map<dynamic, dynamic>? _currentUser; // need the exact number of points
   Map<dynamic, dynamic>? _randomCompetition = {};
-  List<dynamic> userCompetitions = [];
-
+  // List<dynamic> userCompetitions = [];
+  Timer? currTimer;
+  String countdown = "";
+  late Countdown _countdown;
   @override
   void initState() {
     super.initState();
@@ -26,26 +29,29 @@ class _HomePageState extends State<HomePage> {
     // print("currentUser $currentUser");
     // print(currentUser.getItem("userId"));
     String userId = currentUser.getItem("userId");
-    // print("userId $userId");
+    print("userId $userId");
+    currTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _countdown.calculateRemainingTime();
+        countdown = _countdown.formattedRemainingTime;
+      });
+    });
 
     //get all the competitions user is participating in
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       UserMethods().getUserById(userId).then((res) => setState(() {
             _currentUser = res as Map<dynamic, dynamic>?;
           }));
-      ParticipantMethod()
-          .getParticipatingCompetition(userId: userId)
-          .then((res) => setState(() {
-                userCompetitions = res as List<dynamic>;
-              }));
 
       ParticipantMethod()
           .getRandomParticipatingCompetition(userId: userId)
           .then((res) {
         setState(() {
           _randomCompetition = res as Map<dynamic, dynamic>?;
+          _countdown = Countdown(DateTime.fromMillisecondsSinceEpoch(
+              _randomCompetition?["endDate"] ?? 0,
+              isUtc: true));
         });
-        print(_randomCompetition);
       });
     });
   }
@@ -74,7 +80,7 @@ class _HomePageState extends State<HomePage> {
 
             // Card 1: Your Points
             Card(
-              color: Color.fromARGB(255, 156, 206, 182),
+              color: Color.fromARGB(255, 23, 190, 109),
               margin: const EdgeInsets.symmetric(
                   horizontal: 16.0), // Add horizontal margin
               child: Padding(
@@ -88,20 +94,18 @@ class _HomePageState extends State<HomePage> {
                         'Your Points:',
                         style: TextStyle(
                           fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white,
                         ),
                       ),
                     ),
                     Text(
-                      // _currentUser?['currentPoints'].toString() ??
-                      //     '0',
                       "1000",
                       // Hardcoded points value
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(
@@ -113,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                             context, '/recycling'); // Navigate to '/recycling'
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Color.fromARGB(255, 73, 236, 157),
+                        foregroundColor: Color.fromARGB(255, 23, 190, 109),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
                               10.0), // Adjust border radius
@@ -182,7 +186,7 @@ class _HomePageState extends State<HomePage> {
             // Card 2: You Competition
 
             Card(
-              color: Color.fromARGB(255, 156, 206, 182),
+              color: Color.fromARGB(255, 23, 190, 109),
               margin: const EdgeInsets.symmetric(
                   horizontal: 16.0), // Add horizontal margin
               child: Padding(
@@ -198,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -210,11 +214,13 @@ class _HomePageState extends State<HomePage> {
                     //     color: Colors.black,
                     //   ),
                     // ),
-                    const Text(
-                      'Ends on: 15 Oct 2023', // Updated event end date
+                    Text(
+                      "Ends in: $countdown",
+                      // 'Ends on: 15 Oct 2023',
+                      // Updated event end date
                       style: TextStyle(
-                        fontSize: 14, // Adjusted font size for date
-                        color: Colors.black, // Set text color to grey
+                        fontSize: 18, // Adjusted font size for date
+                        color: Colors.white, // Set text color to grey
                       ),
                     ),
                     const SizedBox(

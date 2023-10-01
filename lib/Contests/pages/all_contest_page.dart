@@ -69,13 +69,14 @@ class _ContestPageState extends State<ContestPage> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color.fromARGB(255, 156, 206, 182),
+          // backgroundColor: Color.fromARGB(255, 23, 190, 109),
           title: const Text(
             "Contests",
             style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold, // Add this line to make the text bold
-          ),
+              color: Colors.black,
+              fontWeight:
+                  FontWeight.bold, // Add this line to make the text bold
+            ),
           ),
         ),
         body: Center(
