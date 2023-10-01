@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:googleignite2023/Contests/pages/all_contest_page.dart';
+import 'package:googleignite2023/FirebaseFeatures/database.dart';
 import 'package:localstorage/localstorage.dart';
 import '../../FirebaseFeatures/competition_model.dart';
 import "../../FirebaseFeatures/participants_model.dart";
@@ -23,8 +26,12 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
   String countdown = "";
   String userId = "";
   Timer? currTimer;
+  bool isParticipant = false;
   Map<dynamic, dynamic>? _competition;
   late Countdown _countdown;
+
+  final DatabaseReference databaseReference =
+      Database().setDatabaseReference("competitions");
 
   @override
   void initState() {
@@ -50,7 +57,8 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
             isUtc: true));
         ParticipantMethod()
             .checkIfParticipantExists(competitionId: id, participantId: userId)
-            .then((isParticipant) {
+            .then((userIsParticipant) {
+          isParticipant = userIsParticipant;
           if (!isParticipant) {
             print("Not a participant");
           } else {
@@ -70,6 +78,15 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
   Future<void> joinCompetition() async {
     await ParticipantMethod()
         .createParticipant(competitionId: id, userId: userId);
+    Navigator.pushNamed(context, '/contests/current/dashboard', arguments: {
+      'competitionId': id,
+    });
+  }
+
+  void enterCompetitionPage() async {
+    Navigator.pushNamed(context, '/contests/current/dashboard', arguments: {
+      'competitionId': id,
+    });
   }
 
   // get the competition details
@@ -82,33 +99,39 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
       appBar: AppBar(
         title: Text("Current Contest"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
-        child: Column(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _competition?["competitionName"] ?? "Loading...",
-                  style: TextStyle(fontSize: 25),
-                ),
-                Text(
-                  "Ends in: $countdown",
-                  style: TextStyle(fontSize: 22),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: joinCompetition, child: Text("Join"))),
-            )
-          ],
+      body: Column(children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
+          child: Column(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _competition?["competitionName"] ?? "Loading...",
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  Text(
+                    "Ends in: $countdown",
+                    style: TextStyle(fontSize: 22),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: isParticipant
+                            ? enterCompetitionPage
+                            : joinCompetition,
+                        child:
+                            Text(isParticipant ? "View Dashboard" : "Join"))),
+              ),
+            ],
+          ),
         ),
-      ),
+      ]),
       bottomNavigationBar: BottomBar(),
     );
   }

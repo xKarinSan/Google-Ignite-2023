@@ -1,7 +1,5 @@
 // ================= packages =================
 // ======= widget tree/middleware =======
-import 'package:googleignite2023/Contests/pages/current_contest_page.dart';
-
 import "widget_tree.dart";
 
 // ======= flutter =======
@@ -26,6 +24,8 @@ import 'Recycling/Pages/pop_up.dart';
 
 // ======= contests/competitions related =======
 import 'Contests/pages/all_contest_page.dart';
+import 'package:googleignite2023/Contests/pages/current_contest_page.dart';
+import 'package:googleignite2023/Contests/pages/current_contest_ranking_page.dart';
 
 // ======= rewards related =======
 import 'Rewards/pages/rewards_page.dart';
@@ -66,7 +66,8 @@ class MyApp extends StatelessWidget {
 
           // ======= contests/competitions related =======
           '/contests': (context) => const ContestPage(),
-          '/contests/current': (context) => CurrentContestPage(),
+          '/contests/current': (context) => const CurrentContestPage(),
+          '/contests/current/dashboard': (context) => const ContestDashboardPage(),
 
           // ======= rewards related =======
           '/rewards': (context) => const RewardsPage(),

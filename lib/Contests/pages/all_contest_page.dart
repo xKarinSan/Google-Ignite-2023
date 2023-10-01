@@ -67,9 +67,6 @@ class _ContestPageState extends State<ContestPage> {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        // appBar: AppBar(
-        //   title: const Text('Home'),
-        // ),
         body: Center(
             child: FirebaseAnimatedList(
                 query: databaseReference,

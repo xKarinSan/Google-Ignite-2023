@@ -30,8 +30,6 @@ class ParticipantMethod {
             fieldValue: competitionId);
     // get all participant records from db
     List res = [];
-    // var sortedParticipantMap = Map.fromEntries(participantMap.entries.toList()
-    //   ..sort((e1, e2) => e1.value.compareTo(e2.value)));
 
     participantMap.forEach((key, value) {
       Map<dynamic, dynamic> user = userMap[value["userId"]];
@@ -39,8 +37,6 @@ class ParticipantMethod {
       res.add(value);
     });
     return res;
-    // return [];
-    // return Database().getAllDocumentsList(entityName: "competitions");
   }
 
   // check if participant is inside a competition
@@ -58,7 +54,6 @@ class ParticipantMethod {
       if (value["userId"] == participantId) {
         res = true;
         return;
-
       }
     });
     return res;
