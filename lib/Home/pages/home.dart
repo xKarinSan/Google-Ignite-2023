@@ -100,9 +100,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Text(
-                      "1000",
+                      _currentUser?['currentPoints'].toString() ?? "0",
+                      // "1000",
                       // Hardcoded points value
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
