@@ -13,25 +13,16 @@ class RewardMethod {
   }
 
   // existing user redeems a reward
-  Future<bool> redeemReward({
-    required String userId,
-    required String storeName,
-    required String discount,
-    required String imagePath,
-    required int points
-  }) async {
+  Future<bool> redeemReward(
+      {required String userId,
+      required String storeName,
+      required String discount,
+      required String imagePath,
+      required int points}) async {
     try {
-      // find the user and deduct points
-      // await UserMethods().getUserById(userId).then((user) async {
-      //   int userPoints = user?['currentPoints'];
-      //   userPoints -= points;
-      //   await UserMethods()
-      //       .updateUserPoints(userId: userId, points: userPoints);
-      // });
-
       Map<dynamic, dynamic> currentUser =
           await UserMethods().getUserById(userId);
-      int userPoints = currentUser?['currentPoints'];
+      int userPoints = currentUser['currentPoints'];
       userPoints -= points;
       if (userPoints < 0) {
         return false;
@@ -60,6 +51,7 @@ class RewardMethod {
       Map<dynamic, dynamic> rewardMap = await Database().getDocumentByFieldMap(
           entityName: "userRewards", fieldName: "userId", fieldValue: userId);
       List res = [];
+      print("rewardMap $rewardMap");
       rewardMap.forEach((key, value) {
         res.add(value);
       });

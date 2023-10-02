@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:googleignite2023/Contests/helper_functions.dart';
 import 'package:googleignite2023/FirebaseFeatures/competition_model.dart';
-import 'package:googleignite2023/FirebaseFeatures/database.dart';
 import 'package:googleignite2023/FirebaseFeatures/participants_model.dart';
 import 'package:googleignite2023/General/bottom_bar.dart';
 import 'package:googleignite2023/General/loader.dart';
@@ -42,9 +40,9 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
       });
     });
 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       CompetitionMethods().getCompetitionById(id).then((res) {
-        _competition = res as Map<dynamic, dynamic>?;
+        _competition = res;
         if (_competition == null) {
           return;
         }
@@ -65,7 +63,7 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
         participants.sort((a, b) =>
             (b?['cumulativePoints']).compareTo(a?['cumulativePoints']));
         int i = 1;
-        participants.forEach((participant) {
+        for (var participant in participants) {
           if (participant["userId"] == userId) {
             participant["username"] += " (You)";
             participant["isMe"] = true;
@@ -75,7 +73,7 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
           participant["rank"] = i;
           i += 1;
           userCompetitions.add(ParticipantContainer(participant: participant));
-        });
+        }
         // userCompetitions.sort((a, b) => (b?['cumulativePoints']).compareTo(a?['cumulativePoints']))
       });
     });
@@ -118,7 +116,7 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
                         ),
                       ),
                       if (userCompetitions.isNotEmpty)
-                        Container(
+                        SizedBox(
                           height: 500,
                           child: SingleChildScrollView(
                             physics: const AlwaysScrollableScrollPhysics(),
@@ -196,7 +194,7 @@ class ParticipantContainer extends StatelessWidget {
                       const SizedBox(height: 8.0),
                       const SizedBox(height: 8.0),
                       Text(
-                        "Points: " + participant["cumulativePoints"].toString(),
+                        "Points: ${participant["cumulativePoints"]}",
                         style: TextStyle(
                           fontSize: 16,
                           color: participant["isMe"] ?? false

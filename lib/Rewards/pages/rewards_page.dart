@@ -28,7 +28,7 @@ class RewardsPage extends StatefulWidget {
 class _RewardsPageState extends State<RewardsPage> {
   int userCurrentPoints = 0;
   List<RedeemedCoupon> redeemedCoupons = [];
-  final LocalStorage currentUser = new LocalStorage('current_user');
+  final LocalStorage currentUser = LocalStorage('current_user');
 
   void _addRedeemedCoupon(String storeName, String discount, String imagePath) {
     setState(() {
@@ -84,22 +84,22 @@ class _RewardsPageState extends State<RewardsPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Your points:"),
+                      const Text("Your points:"),
                       Text(
-                        userCurrentPoints?.toString() ?? "0",
-                        style: TextStyle(
+                        userCurrentPoints.toString() ?? "0",
+                        style: const TextStyle(
                             fontSize: 22,
-                            color: const Color.fromARGB(255, 2, 137, 6),
+                            color: Color.fromARGB(255, 2, 137, 6),
                             fontWeight: FontWeight.bold),
                       ),
-                      Text(
+                      const Text(
                         'Explore and redeem various rewards offered by our participating merchants below:',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                           height:
                               4), // Add some spacing between the title and points
                     ],
@@ -134,7 +134,7 @@ class _RewardsPageState extends State<RewardsPage> {
 class RedeemTab extends StatefulWidget {
   final int userPoints;
   final Function(String, String, String) addRedeemedCoupon;
-  RedeemTab({
+  const RedeemTab({
     Key? key,
     required this.userPoints,
     required this.addRedeemedCoupon,
@@ -200,7 +200,7 @@ class _RedeemTabState extends State<RedeemTab> {
 class MyCouponsTab extends StatelessWidget {
   final List<RedeemedCoupon> redeemedCoupons;
 
-  MyCouponsTab({Key? key, required this.redeemedCoupons}) : super(key: key);
+  const MyCouponsTab({Key? key, required this.redeemedCoupons}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -223,19 +223,19 @@ class MyCouponsTab extends StatelessWidget {
                         height: 50,
                         // fit: BoxFit.cover,
                       ),
-                      SizedBox(width: 16), // Add spacing between image and text
+                      const SizedBox(width: 16), // Add spacing between image and text
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               coupon.storeName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                             Text(
                               coupon.discount,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.green,
                               ),
@@ -243,7 +243,7 @@ class MyCouponsTab extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward_ios,
                         size: 16,
                         color: Colors.black,
@@ -288,7 +288,7 @@ class CouponCard extends StatelessWidget {
           backgroundColor: Colors.white,
           title: Text(
             'Would you like to redeem a $store voucher?',
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
           actions: [
             TextButton(
@@ -364,15 +364,15 @@ class CouponCard extends StatelessWidget {
                     );
                   }
                 },
-                child: const Text(
-                  'Confirm',
-                  style: TextStyle(color: Colors.green),
-                ),
                 style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
-                            side: BorderSide(color: Colors.green))))),
+                            side: const BorderSide(color: Colors.green)))),
+                child: const Text(
+                  'Confirm',
+                  style: TextStyle(color: Colors.green),
+                )),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -381,7 +381,7 @@ class CouponCard extends StatelessWidget {
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
-                          side: BorderSide(color: Colors.red)))),
+                          side: const BorderSide(color: Colors.red)))),
               child: const Text(
                 'Cancel',
                 style: TextStyle(color: Colors.red),

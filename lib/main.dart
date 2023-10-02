@@ -9,11 +9,9 @@ import "package:firebase_core/firebase_core.dart";
 import 'package:googleignite2023/firebase_options.dart';
 
 // ======= firebase =======
-import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 // ======= firebase options =======
-import 'package:googleignite2023/firebase_options.dart';
 
 // =================firebase init=================
 // import "FirebaseCredentials/firebase_environment.dart";
@@ -31,7 +29,6 @@ import 'package:googleignite2023/Contests/pages/current_contest_page.dart';
 import 'package:googleignite2023/Contests/pages/current_contest_ranking_page.dart';
 
 // ======= rewards related =======
-import 'Rewards/pages/rewards_page.dart';
 import 'Rewards/pages/user_rewards_page.dart';
 
 // ======= profile related =======
@@ -75,7 +72,7 @@ class MyApp extends StatelessWidget {
               const ContestDashboardPage(),
 
           // ======= rewards related =======7
-          '/rewards': (context) => UserRewardsPage(),
+          '/rewards': (context) => const UserRewardsPage(),
           // ======= profile related =======
 
           '/profile': (context) => const ProfilePage(),

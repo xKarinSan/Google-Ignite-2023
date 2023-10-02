@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:googleignite2023/FirebaseFeatures/rewards_model.dart';
 import 'package:googleignite2023/FirebaseFeatures/user_model.dart';
-import 'package:googleignite2023/General/loader.dart';
 import 'package:localstorage/localstorage.dart';
-import '../../General/bottom_bar.dart';
 
 class CouponCard extends StatefulWidget {
   final String imagePath;
@@ -36,7 +34,7 @@ class _CouponCardState extends State<CouponCard> {
           backgroundColor: Colors.white,
           title: Text(
             'Would you like to redeem a ${widget.vendorName} voucher?',
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
           actions: [
             TextButton(
@@ -62,7 +60,6 @@ class _CouponCardState extends State<CouponCard> {
                           message:
                               "You have redeemed a ${widget.vendorName} voucher. You have ${userPoints - voucherPoints} points left.",
                         );
-                        ;
                       },
                     );
                   } else {
@@ -70,21 +67,21 @@ class _CouponCardState extends State<CouponCard> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return RedeemDialog(
+                        return const RedeemDialog(
                             isSuccess: false, message: "Insufficient funds!");
                       },
                     );
                   }
                 },
-                child: const Text(
-                  'Confirm',
-                  style: TextStyle(color: Colors.green),
-                ),
                 style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
-                            side: BorderSide(color: Colors.green))))),
+                            side: const BorderSide(color: Colors.green)))),
+                child: const Text(
+                  'Confirm',
+                  style: TextStyle(color: Colors.green),
+                )),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -93,7 +90,7 @@ class _CouponCardState extends State<CouponCard> {
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
-                          side: BorderSide(color: Colors.red)))),
+                          side: const BorderSide(color: Colors.red)))),
               child: const Text(
                 'Cancel',
                 style: TextStyle(color: Colors.red),
@@ -208,7 +205,7 @@ class RedeemDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title:
-          isSuccess ? Text('Redemption success!') : Text('Redemption failed!'),
+          isSuccess ? const Text('Redemption success!') : const Text('Redemption failed!'),
       content: Text(message),
       actions: [
         TextButton(

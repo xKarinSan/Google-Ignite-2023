@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Text(currentUser.getItem("displayName") ?? "User name",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
 
                   // Text(currentUser.getItem("email") ?? "User Email"),
                   // Text(currentUser.getItem("photoURL") ?? "Photo URL"),

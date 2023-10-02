@@ -36,7 +36,7 @@ class ParticipantMethod {
           competitionsMap[value["competitionId"]];
       res.add(competition);
     });
-    return res.length > 0 ? res[0] : {};
+    return res.isNotEmpty ? res[0] : {};
   }
 
   Future<List> getParticipatingCompetition({

@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:googleignite2023/Contests/pages/all_contest_page.dart';
 import 'package:googleignite2023/FirebaseFeatures/database.dart';
 import 'package:googleignite2023/General/loader.dart';
 import 'package:localstorage/localstorage.dart';
@@ -12,7 +9,6 @@ import '../../FirebaseFeatures/competition_model.dart';
 import "../../FirebaseFeatures/participants_model.dart";
 import "../../General/bottom_bar.dart";
 import "../helper_functions.dart";
-import "../../FirebaseFeatures/participants_model.dart";
 
 class CurrentContestPage extends StatefulWidget {
   const CurrentContestPage({super.key});
@@ -47,9 +43,9 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
       });
     });
 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       CompetitionMethods().getCompetitionById(id).then((res) {
-        _competition = res as Map<dynamic, dynamic>?;
+        _competition = res;
         if (_competition == null) {
           Navigator.pushNamed(context, "/contests");
           return;
@@ -119,12 +115,12 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Container(
+                      child: SizedBox(
                           width: double.infinity,
                           child: isLoading
                               ? null
                               : ElevatedButton(
-                                  style: ButtonStyle(
+                                  style: const ButtonStyle(
                                       backgroundColor: MaterialStatePropertyAll(
                                           Colors.green)),
                                   onPressed: isParticipant
@@ -132,7 +128,7 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
                                       : joinCompetition,
                                   child: Text(
                                     isParticipant ? "View Dashboard" : "Join",
-                                    style: TextStyle(color: Colors.white),
+                                    style: const TextStyle(color: Colors.white),
                                   ))),
                     ),
                   ],

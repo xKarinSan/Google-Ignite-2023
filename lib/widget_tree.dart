@@ -39,7 +39,7 @@ class _WidgetTreeState extends State<WidgetTree> {
                     : "");
             currentUser.setItem(
                 'userId',
-                snapshot.data?.uid?.isNotEmpty ?? false
+                snapshot.data?.uid.isNotEmpty ?? false
                     ? AuthHandler().currentUser?.uid
                     : "");
             return const HomePage();

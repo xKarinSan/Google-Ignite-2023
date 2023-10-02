@@ -20,9 +20,9 @@ class Loader extends StatelessWidget {
               title,
               style: const TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: const CircularProgressIndicator(
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: CircularProgressIndicator(
                   color: Color.fromRGBO(18, 126, 0, 1)),
             ),
           ],

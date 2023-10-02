@@ -29,7 +29,7 @@ class _BinLocatorState extends State<BinLocator> {
   Position? _currentPosition;
 
   // We need a variable to store the polylines:
-  Map<PolylineId, Polyline> _polylines = {};
+  final Map<PolylineId, Polyline> _polylines = {};
 
   // Method to retrieve the user's current location:
   void _getCurrentLocation() async {

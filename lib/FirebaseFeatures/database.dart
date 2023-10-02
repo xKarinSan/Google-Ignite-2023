@@ -29,7 +29,6 @@ class Database {
       DataSnapshot snapshot = await ref.get();
       if (snapshot.exists) {
         return snapshot.value as Map<dynamic, dynamic>;
-        ;
       } else {
         return {};
       }
@@ -62,7 +61,7 @@ class Database {
     if (snapshot.exists) {
       Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
       data["id"] = id;
-      return data as Map<dynamic, dynamic>;
+      return data;
     } else {
       return {};
     }

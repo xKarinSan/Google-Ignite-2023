@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final LocalStorage currentUser = new LocalStorage('current_user');
+  final LocalStorage currentUser = LocalStorage('current_user');
   Map<dynamic, dynamic>? _currentUser; // need the exact number of points
   Map<dynamic, dynamic>? _randomCompetition = {};
   // List<dynamic> userCompetitions = [];
@@ -38,16 +38,16 @@ class _HomePageState extends State<HomePage> {
     });
 
     //get all the competitions user is participating in
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       UserMethods().getUserById(userId).then((res) => setState(() {
-            _currentUser = res as Map<dynamic, dynamic>?;
+            _currentUser = res;
           }));
 
       ParticipantMethod()
           .getRandomParticipatingCompetition(userId: userId)
           .then((res) {
         setState(() {
-          _randomCompetition = res as Map<dynamic, dynamic>?;
+          _randomCompetition = res;
           _countdown = Countdown(DateTime.fromMillisecondsSinceEpoch(
               _randomCompetition?["endDate"] ?? 0,
               isUtc: true));
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
 
             // Card 1: Your Points
             Card(
-              color: Color.fromARGB(255, 23, 190, 109),
+              color: const Color.fromARGB(255, 23, 190, 109),
               margin: const EdgeInsets.symmetric(
                   horizontal: 16.0), // Add horizontal margin
               child: Padding(
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                             context, '/recycling'); // Navigate to '/recycling'
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Color.fromARGB(255, 23, 190, 109),
+                        foregroundColor: const Color.fromARGB(255, 23, 190, 109),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
                               10.0), // Adjust border radius
@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
             // Card 2: You Competition
 
             Card(
-              color: Color.fromARGB(255, 23, 190, 109),
+              color: const Color.fromARGB(255, 23, 190, 109),
               margin: const EdgeInsets.symmetric(
                   horizontal: 16.0), // Add horizontal margin
               child: Padding(
@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                       title: Text(
                         _randomCompetition?['competitionName'].toString() ??
                             "Join a competition", // Updated event name
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -219,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                       "Ends in: $countdown",
                       // 'Ends on: 15 Oct 2023',
                       // Updated event end date
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18, // Adjusted font size for date
                         color: Colors.white, // Set text color to grey
                       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../General/bottom_bar.dart';
 
 void main() {
   runApp(const Popup());
@@ -27,7 +26,7 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 50,
       child: ElevatedButton(
         onPressed: () {
@@ -47,7 +46,7 @@ class BottomBar extends StatelessWidget {
                         // Do something with the user's input
                       },
                     ),
-                    SizedBox(height: 16), // Add some spacing
+                    const SizedBox(height: 16), // Add some spacing
                     TextFormField(
                       decoration: const InputDecoration(
                         labelText: 'Quantity',
@@ -57,7 +56,7 @@ class BottomBar extends StatelessWidget {
                         // Do something with the user's input
                       },
                     ),
-                    SizedBox(height: 16), // Add some spacing
+                    const SizedBox(height: 16), // Add some spacing
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -66,8 +65,7 @@ class BottomBar extends StatelessWidget {
                             // Do something when the green button is pressed
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
-                            onPrimary: Colors.white, // Text color
+                            foregroundColor: Colors.white, backgroundColor: Colors.green, // Text color
                           ),
                           child: const Text('Add'),
                         ),
@@ -76,8 +74,7 @@ class BottomBar extends StatelessWidget {
                             // Do something when the red button is pressed
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
-                            onPrimary: Colors.white, // Text color
+                            foregroundColor: Colors.white, backgroundColor: Colors.red, // Text color
                           ),
                           child: const Text('Cancel'),
                         ),

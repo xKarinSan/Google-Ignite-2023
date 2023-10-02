@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:googleignite2023/FirebaseFeatures/rewards_model.dart';
 import 'package:googleignite2023/FirebaseFeatures/user_model.dart';
 import 'package:googleignite2023/General/loader.dart';
 import 'package:googleignite2023/Rewards/widgets/my_coupons_tab.dart';
 import 'package:googleignite2023/Rewards/widgets/redeem_tab.dart';
-import 'package:googleignite2023/Rewards/widgets/redeemed_coupon.dart';
 import 'package:localstorage/localstorage.dart';
 import '../../General/bottom_bar.dart';
 
@@ -19,14 +17,14 @@ class _UserRewardsPageState extends State<UserRewardsPage> {
   bool isLoading = true;
   int userCurrentPoints = 0;
   List<dynamic> redeemedCoupons = [];
-  final LocalStorage currentUser = new LocalStorage('current_user');
+  final LocalStorage currentUser = LocalStorage('current_user');
 
   Future<void> _getUserCurrentPoints(String userId) async {
     setState(() {
       isLoading = true;
     });
     await UserMethods().getUserById(userId).then((value) {
-      print("[_getUserCurrentPoints] value $value");
+      // print("[_getUserCurrentPoints] value $value");
       setState(() {
         userCurrentPoints = value['currentPoints'];
         isLoading = false;
@@ -50,7 +48,7 @@ class _UserRewardsPageState extends State<UserRewardsPage> {
   Widget build(BuildContext context) {
     return Container(
         child: isLoading
-            ? Loader(title: "Retrieving rewards ...")
+            ? const Loader(title: "Retrieving rewards ...")
             : DefaultTabController(
                 length: 2,
                 child: Scaffold(
@@ -81,23 +79,23 @@ class _UserRewardsPageState extends State<UserRewardsPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Your points:"),
+                                const Text("Your points:"),
                                 Text(
-                                  userCurrentPoints?.toString() ?? "0",
-                                  style: TextStyle(
+                                  userCurrentPoints.toString() ?? "0",
+                                  style: const TextStyle(
                                       fontSize: 22,
                                       color:
-                                          const Color.fromARGB(255, 2, 137, 6),
+                                          Color.fromARGB(255, 2, 137, 6),
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(
+                                const Text(
                                   'Explore and redeem various rewards offered by our participating merchants below:',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 14,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                     height:
                                         4), // Add some spacing between the title and points
                               ],
@@ -114,7 +112,7 @@ class _UserRewardsPageState extends State<UserRewardsPage> {
                       ),
                     ),
                   ),
-                  body: TabBarView(
+                  body: const TabBarView(
                     children: [
                       RedeemTab(),
                       MyCouponsTab(), // Pass the list

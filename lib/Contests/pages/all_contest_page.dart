@@ -1,4 +1,3 @@
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../../General/bottom_bar.dart';
@@ -52,11 +51,11 @@ class _ContestPageState extends State<ContestPage> {
     CompetitionMethods().getAllCompetitionsList().then((value) {
       List<Widget> tempList = [];
       value.sort((a, b) => (a?['endDate']).compareTo(b?['endDate']));
-      value.forEach((competition) {
+      for (var competition in value) {
         tempList.add(CompetitionContainer(
           competition: competition as Map,
         ));
-      });
+      }
 
       setState(() {
         competitionWidgets = tempList;
@@ -84,7 +83,7 @@ class _ContestPageState extends State<ContestPage> {
             children: competitionWidgets,
           ),
         ),
-        bottomNavigationBar: BottomBar());
+        bottomNavigationBar: const BottomBar());
   }
 }
 
@@ -171,7 +170,7 @@ class _CompetitionContainerState extends State<CompetitionContainer> {
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   size: 24.0, // Set the icon size
                 ),
