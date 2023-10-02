@@ -253,6 +253,7 @@ class _BinLocatorState extends State<BinLocator> {
                   ElevatedButton(
                     onPressed: () {
                       // Do something when the green button is pressed
+                      Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -263,6 +264,7 @@ class _BinLocatorState extends State<BinLocator> {
                   ElevatedButton(
                     onPressed: () {
                       // Do something when the red button is pressed
+                      Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
