@@ -1,7 +1,6 @@
 // ================= packages =================
 // ======= widget tree/middleware =======
 import 'package:googleignite2023/Recycling/Pages/bin_locator.dart';
-
 import "widget_tree.dart";
 
 // ======= flutter =======
@@ -33,6 +32,7 @@ import 'package:googleignite2023/Contests/pages/current_contest_ranking_page.dar
 
 // ======= rewards related =======
 import 'Rewards/pages/rewards_page.dart';
+import 'Rewards/pages/user_rewards_page.dart';
 
 // ======= profile related =======
 import 'Profile/pages/profile_page.dart';
@@ -71,10 +71,11 @@ class MyApp extends StatelessWidget {
           // ======= contests/competitions related =======
           '/contests': (context) => const ContestPage(),
           '/contests/current': (context) => const CurrentContestPage(),
-          '/contests/current/dashboard': (context) => const ContestDashboardPage(),
+          '/contests/current/dashboard': (context) =>
+              const ContestDashboardPage(),
 
           // ======= rewards related =======7
-          '/rewards': (context) => RewardsPage(userPoints: 1000),
+          '/rewards': (context) => UserRewardsPage(),
           // ======= profile related =======
 
           '/profile': (context) => const ProfilePage(),

@@ -41,4 +41,14 @@ class UserMethods {
   Future<Map<dynamic, dynamic>> getUserById(String userId) async {
     return Database().getDocumentById(entityName: "users", id: userId);
   }
+
+  Future<void> updateUserPoints(
+      {required String userId, required int points}) async {
+    try {
+      DatabaseReference ref = Database().setDatabaseReference("users/$userId");
+      await ref.update({"currentPoints": points});
+    } catch (e) {
+      print(e);
+    }
+  }
 }

@@ -190,67 +190,6 @@ class _RedeemTabState extends State<RedeemTab> {
             spacing: 16.0,
             runSpacing: 16.0,
             children: allRewards,
-
-            // [
-            //   CouponCard(
-            //     imagePath: 'assets/Subway-logo.png',
-            //     store: 'Subway',
-            //     discount: '\$10 off',
-            //     points: '1000 points',
-            //     userPoints: widget.userPoints,
-            //     addRedeemedCoupon: widget.addRedeemedCoupon,
-            //   ),
-            //   // Add more CouponCard widgets for other stores
-            //   CouponCard(
-            //       imagePath: 'assets/PKL.png',
-            //       store: "Park's Kitchen",
-            //       discount: '\$2 dollars off',
-            //       points: '50 points',
-            //       userPoints: widget.userPoints,
-            //       addRedeemedCoupon: widget.addRedeemedCoupon),
-            //   CouponCard(
-            //       imagePath: 'assets/logo-kuro_kare.png',
-            //       store: 'Kuro Kare',
-            //       discount: 'Free Drink',
-            //       points: '350 points',
-            //       userPoints: widget.userPoints,
-            //       addRedeemedCoupon: widget.addRedeemedCoupon),
-            //   CouponCard(
-            //       imagePath: 'assets/GC.png',
-            //       store: 'Gong Cha',
-            //       discount: 'Free Topping',
-            //       points: '400 points',
-            //       userPoints: widget.userPoints,
-            //       addRedeemedCoupon: widget.addRedeemedCoupon),
-            //   CouponCard(
-            //       imagePath: 'assets/yole.png',
-            //       store: 'Yole',
-            //       discount: '1-for-1',
-            //       points: '600 points',
-            //       userPoints: widget.userPoints,
-            //       addRedeemedCoupon: widget.addRedeemedCoupon),
-            //   CouponCard(
-            //       imagePath: 'assets/Ima.png',
-            //       store: 'Ima Sushi',
-            //       discount: '10% off',
-            //       points: '350 points',
-            //       userPoints: widget.userPoints,
-            //       addRedeemedCoupon: widget.addRedeemedCoupon),
-            //   CouponCard(
-            //       imagePath: 'assets/khoon.png',
-            //       store: 'Khoon Coffee House',
-            //       discount: 'Free Upgrade',
-            //       points: '400 points',
-            //       userPoints: widget.userPoints,
-            //       addRedeemedCoupon: widget.addRedeemedCoupon),
-            //   CouponCard(
-            //       imagePath: 'assets/Sub.png',
-            //       store: 'Subarashii Super Don',
-            //       discount: 'Free Drink',
-            //       points: '300 points',
-            //       userPoints: widget.userPoints,
-            //       addRedeemedCoupon: widget.addRedeemedCoupon),
-            // ],
           ),
         ],
       ),
@@ -314,6 +253,8 @@ class MyCouponsTab extends StatelessWidget {
                 ),
               ),
             ),
+
+
         ],
       ),
     );
@@ -511,5 +452,6 @@ class CouponCard extends StatelessWidget {
         ),
       ),
     );
+  
   }
 }

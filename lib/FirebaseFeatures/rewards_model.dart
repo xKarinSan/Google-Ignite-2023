@@ -13,16 +13,39 @@ class RewardMethod {
   }
 
   // existing user redeems a reward
-  Future<bool> redeemReward(
-      {required String userId,
-      required int amount,
-      required String rewardId}) async {
+  Future<bool> redeemReward({
+    required String userId,
+    required String storeName,
+    required String discount,
+    required String imagePath,
+    required int points
+  }) async {
     try {
+      // find the user and deduct points
+      // await UserMethods().getUserById(userId).then((user) async {
+      //   int userPoints = user?['currentPoints'];
+      //   userPoints -= points;
+      //   await UserMethods()
+      //       .updateUserPoints(userId: userId, points: userPoints);
+      // });
+
+      Map<dynamic, dynamic> currentUser =
+          await UserMethods().getUserById(userId);
+      int userPoints = currentUser?['currentPoints'];
+      userPoints -= points;
+      if (userPoints < 0) {
+        return false;
+      }
+      await UserMethods().updateUserPoints(userId: userId, points: userPoints);
+
+      // add redeemed reward to userRewards
       DatabaseReference ref = Database().setDatabaseReference("userRewards");
-      ref.push().set({
+      await ref.push().set({
         "userId": userId,
-        "rewardId": rewardId,
-        "redeemed": false,
+        "discount": discount,
+        "storeName": storeName,
+        "imagePath": imagePath,
+        "isUsed": false,
       });
       return true;
     } catch (e) {
@@ -32,15 +55,18 @@ class RewardMethod {
   }
 
 // get all the rewards user has
-  Future<List> getRedeemedRewards({required String userId}) async {
-    Map<dynamic, dynamic> rewardMap = await Database().getDocumentByFieldMap(
-        entityName: "reward", fieldName: "userId", fieldValue: userId);
-    List res = [];
-    rewardMap.forEach((key, value) {
-      if (value["redeemed"] == true) {
+  Future<List> getAllUserRewards({required String userId}) async {
+    try {
+      Map<dynamic, dynamic> rewardMap = await Database().getDocumentByFieldMap(
+          entityName: "userRewards", fieldName: "userId", fieldValue: userId);
+      List res = [];
+      rewardMap.forEach((key, value) {
         res.add(value);
-      }
-    });
-    return res;
+      });
+      return res;
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 }
