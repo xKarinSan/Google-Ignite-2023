@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class Loader extends StatelessWidget {
   final String title;
@@ -18,12 +19,17 @@ class Loader extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
+              style:
+                  const TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(16.0),
-              child: CircularProgressIndicator(
-                  color: Color.fromRGBO(18, 126, 0, 1)),
+              child: Container(
+                child: Lottie.asset('assets/animation_ln94j3r2.json',
+                    height: 250, width: 250),
+              ),
+              // CircularProgressIndicator(
+              //     color: Color.fromRGBO(18, 126, 0, 1)),
             ),
           ],
         ),
