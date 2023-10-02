@@ -21,8 +21,11 @@ Team members: Alyssa, Dhruv, Estrella, Siang Meng, Wei Lun
 ### ✍️ Sustainable Tips 
 - Learn the proper way of recycling and be inspired to lead a sustainable lifestyle by reading articles.
 
+
 ## Technologies Used 
 
 - **Frontend:** Flutter
 - **Backend:** Firebase
-- **API**: Google Maps API 
+- **API**: Google Maps API
+
+Note: This project is currently compatible to run only on iOS due to Google Maps API dependencies. 
