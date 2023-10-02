@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:googleignite2023/FirebaseFeatures/rewards_model.dart';
 import 'package:googleignite2023/FirebaseFeatures/user_model.dart';
 import 'package:localstorage/localstorage.dart';
 import '../../General/bottom_bar.dart';
@@ -86,8 +87,10 @@ class _RewardsPageState extends State<RewardsPage> {
                       Text("Your points:"),
                       Text(
                         userCurrentPoints?.toString() ?? "0",
-                        style: TextStyle(fontSize: 22, color: const Color.fromARGB(255, 2, 137, 6),
-                        fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: const Color.fromARGB(255, 2, 137, 6),
+                            fontWeight: FontWeight.bold),
                       ),
                       Text(
                         'Explore and redeem various rewards offered by our participating merchants below:',
@@ -116,7 +119,7 @@ class _RewardsPageState extends State<RewardsPage> {
         body: TabBarView(
           children: [
             RedeemTab(
-              userPoints: widget.userPoints,
+              userPoints: userCurrentPoints,
               addRedeemedCoupon: _addRedeemedCoupon, // Pass the function
             ),
             MyCouponsTab(redeemedCoupons: redeemedCoupons), // Pass the list
@@ -128,7 +131,7 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 }
 
-class RedeemTab extends StatelessWidget {
+class RedeemTab extends StatefulWidget {
   final int userPoints;
   final Function(String, String, String) addRedeemedCoupon;
   RedeemTab({
@@ -136,6 +139,46 @@ class RedeemTab extends StatelessWidget {
     required this.userPoints,
     required this.addRedeemedCoupon,
   }) : super(key: key);
+
+  @override
+  State<RedeemTab> createState() => _RedeemTabState();
+}
+
+class _RedeemTabState extends State<RedeemTab> {
+  @override
+  initState() {
+    super.initState();
+    // upload all the rewards
+    retrieveAllAvailableRewards();
+  }
+
+  // all the coupon cards
+  List<Widget> allRewards = [];
+
+  Future<void> retrieveAllAvailableRewards() async {
+    // retrieve all the rewards
+    List<Widget> tempRewardComponentList = [];
+
+    RewardMethod().getAllAvailableRewards().then((res) => {
+          res.forEach((element) {
+            print("element $element");
+            tempRewardComponentList.add(CouponCard(
+                imagePath: element["imagePath"],
+                store: element["vendorName"],
+                discount: element["discount"],
+                points: element["points"],
+                userPoints: widget.userPoints,
+                addRedeemedCoupon: widget.addRedeemedCoupon));
+          }),
+          setState(() {
+            allRewards = tempRewardComponentList;
+          })
+        });
+
+    // setState(() {
+    //   rewards = rewards;
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,66 +189,68 @@ class RedeemTab extends StatelessWidget {
           Wrap(
             spacing: 16.0,
             runSpacing: 16.0,
-            children: [
-              CouponCard(
-                imagePath: 'assets/Subway-logo.png',
-                store: 'Subway',
-                discount: '\$10 off',
-                points: '1000 points',
-                userPoints: userPoints,
-                addRedeemedCoupon: addRedeemedCoupon,
-              ),
-              // Add more CouponCard widgets for other stores
-              CouponCard(
-                  imagePath: 'assets/PKL.png',
-                  store: "Park's Kitchen",
-                  discount: '\$2 dollars off',
-                  points: '50 points',
-                  userPoints: userPoints,
-                  addRedeemedCoupon: addRedeemedCoupon),
-              CouponCard(
-                  imagePath: 'assets/logo-kuro_kare.png',
-                  store: 'Kuro Kare',
-                  discount: 'Free Drink',
-                  points: '350 points',
-                  userPoints: userPoints,
-                  addRedeemedCoupon: addRedeemedCoupon),
-              CouponCard(
-                  imagePath: 'assets/GC.png',
-                  store: 'Gong Cha',
-                  discount: 'Free Topping',
-                  points: '400 points',
-                  userPoints: userPoints,
-                  addRedeemedCoupon: addRedeemedCoupon),
-              CouponCard(
-                  imagePath: 'assets/yole.png',
-                  store: 'Yole',
-                  discount: '1-for-1',
-                  points: '600 points',
-                  userPoints: userPoints,
-                  addRedeemedCoupon: addRedeemedCoupon),
-              CouponCard(
-                  imagePath: 'assets/Ima.png',
-                  store: 'Ima Sushi',
-                  discount: '10% off',
-                  points: '350 points',
-                  userPoints: userPoints,
-                  addRedeemedCoupon: addRedeemedCoupon),
-              CouponCard(
-                  imagePath: 'assets/khoon.png',
-                  store: 'Khoon Coffee House',
-                  discount: 'Free Upgrade',
-                  points: '400 points',
-                  userPoints: userPoints,
-                  addRedeemedCoupon: addRedeemedCoupon),
-              CouponCard(
-                  imagePath: 'assets/Sub.png',
-                  store: 'Subarashii Super Don',
-                  discount: 'Free Drink',
-                  points: '300 points',
-                  userPoints: userPoints,
-                  addRedeemedCoupon: addRedeemedCoupon),
-            ],
+            children: allRewards,
+
+            // [
+            //   CouponCard(
+            //     imagePath: 'assets/Subway-logo.png',
+            //     store: 'Subway',
+            //     discount: '\$10 off',
+            //     points: '1000 points',
+            //     userPoints: widget.userPoints,
+            //     addRedeemedCoupon: widget.addRedeemedCoupon,
+            //   ),
+            //   // Add more CouponCard widgets for other stores
+            //   CouponCard(
+            //       imagePath: 'assets/PKL.png',
+            //       store: "Park's Kitchen",
+            //       discount: '\$2 dollars off',
+            //       points: '50 points',
+            //       userPoints: widget.userPoints,
+            //       addRedeemedCoupon: widget.addRedeemedCoupon),
+            //   CouponCard(
+            //       imagePath: 'assets/logo-kuro_kare.png',
+            //       store: 'Kuro Kare',
+            //       discount: 'Free Drink',
+            //       points: '350 points',
+            //       userPoints: widget.userPoints,
+            //       addRedeemedCoupon: widget.addRedeemedCoupon),
+            //   CouponCard(
+            //       imagePath: 'assets/GC.png',
+            //       store: 'Gong Cha',
+            //       discount: 'Free Topping',
+            //       points: '400 points',
+            //       userPoints: widget.userPoints,
+            //       addRedeemedCoupon: widget.addRedeemedCoupon),
+            //   CouponCard(
+            //       imagePath: 'assets/yole.png',
+            //       store: 'Yole',
+            //       discount: '1-for-1',
+            //       points: '600 points',
+            //       userPoints: widget.userPoints,
+            //       addRedeemedCoupon: widget.addRedeemedCoupon),
+            //   CouponCard(
+            //       imagePath: 'assets/Ima.png',
+            //       store: 'Ima Sushi',
+            //       discount: '10% off',
+            //       points: '350 points',
+            //       userPoints: widget.userPoints,
+            //       addRedeemedCoupon: widget.addRedeemedCoupon),
+            //   CouponCard(
+            //       imagePath: 'assets/khoon.png',
+            //       store: 'Khoon Coffee House',
+            //       discount: 'Free Upgrade',
+            //       points: '400 points',
+            //       userPoints: widget.userPoints,
+            //       addRedeemedCoupon: widget.addRedeemedCoupon),
+            //   CouponCard(
+            //       imagePath: 'assets/Sub.png',
+            //       store: 'Subarashii Super Don',
+            //       discount: 'Free Drink',
+            //       points: '300 points',
+            //       userPoints: widget.userPoints,
+            //       addRedeemedCoupon: widget.addRedeemedCoupon),
+            // ],
           ),
         ],
       ),
@@ -233,7 +278,7 @@ class MyCouponsTab extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
-                      Image.asset(
+                      Image.network(
                         coupon.imagePath,
                         width: 50,
                         height: 50,
@@ -424,7 +469,7 @@ class CouponCard extends StatelessWidget {
               children: [
                 AspectRatio(
                   aspectRatio: 1.5, // Set the aspect ratio for the image
-                  child: Image.asset(
+                  child: Image.network(
                     imagePath,
                     fit: BoxFit.cover,
                   ),
