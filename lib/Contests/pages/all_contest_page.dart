@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:googleignite2023/General/app_bar.dart';
 import 'package:localstorage/localstorage.dart';
 import '../../General/bottom_bar.dart';
 import "package:googleignite2023/FirebaseFeatures/database.dart";
@@ -72,17 +73,8 @@ class _ContestPageState extends State<ContestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          // backgroundColor: Color.fromARGB(255, 23, 190, 109),
-          title: const Text(
-            "Contests",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight:
-                  FontWeight.bold, // Add this line to make the text bold
-            ),
-          ),
-        ),
+        appBar: ApplicationToolbar(
+            title: "Contests", automaticallyImplyLeading: false),
         body: Center(
           child: ListView(
             children: competitionWidgets,

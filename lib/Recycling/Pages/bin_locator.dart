@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:googleignite2023/General/app_bar.dart';
 import '../../FirebaseFeatures/recycle_model.dart';
 import 'package:localstorage/localstorage.dart';
 import '../../General/bottom_bar.dart';
@@ -161,11 +162,9 @@ class _BinLocatorState extends State<BinLocator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bin Locator'),
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
-      ),
+      appBar:
+          ApplicationToolbar(title: "Bin Locator", automaticallyImplyLeading: false),
+
       body: GoogleMap(
         mapType: MapType.hybrid,
         initialCameraPosition: CameraPosition(

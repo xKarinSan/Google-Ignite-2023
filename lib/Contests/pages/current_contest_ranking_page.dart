@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:googleignite2023/Contests/helper_functions.dart';
 import 'package:googleignite2023/FirebaseFeatures/competition_model.dart';
 import 'package:googleignite2023/FirebaseFeatures/participants_model.dart';
+import 'package:googleignite2023/General/app_bar.dart';
 import 'package:googleignite2023/General/bottom_bar.dart';
 import 'package:googleignite2023/General/loader.dart';
 import 'package:localstorage/localstorage.dart';
@@ -92,9 +93,8 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
         ModalRoute.of(context)?.settings.arguments as Map<String, String>;
     id = routeArgs['competitionId'].toString();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Rankings"),
-      ),
+      appBar: ApplicationToolbar(
+          title: "Rankings", automaticallyImplyLeading: false),
       body: isLoading
           ? const Loader(title: "Retrieving competition info")
           : Padding(

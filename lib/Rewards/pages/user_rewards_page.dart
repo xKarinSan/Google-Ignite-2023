@@ -57,6 +57,7 @@ class _UserRewardsPageState extends State<UserRewardsPage> {
                 length: 2,
                 child: Scaffold(
                   appBar: AppBar(
+                    automaticallyImplyLeading: false,
                     backgroundColor: Colors.white,
                     elevation: 0,
                     title: const Text(

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:googleignite2023/FirebaseFeatures/database.dart';
+import 'package:googleignite2023/General/app_bar.dart';
 import 'package:googleignite2023/General/loader.dart';
 import 'package:localstorage/localstorage.dart';
 import '../../FirebaseFeatures/competition_model.dart';
@@ -96,9 +97,8 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
         ModalRoute.of(context)?.settings.arguments as Map<String, String>;
     id = routeArgs['competitionId'].toString();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Current Contest"),
-      ),
+      appBar: ApplicationToolbar(
+          title: "Current Contest", automaticallyImplyLeading: false),
       body: Column(children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),

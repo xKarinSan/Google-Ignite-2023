@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:googleignite2023/General/app_bar.dart';
 
 class RecyclingTipsPage extends StatelessWidget {
   const RecyclingTipsPage({super.key});
@@ -6,9 +7,9 @@ class RecyclingTipsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text('How to Recycle?'),
-          backgroundColor: const Color.fromARGB(255, 156, 206, 182)),
+      appBar: ApplicationToolbar(
+          title: "How to Recycle?", automaticallyImplyLeading: true),
+
       // Inherit MaterialApp text theme and override font size and font weight.
 
       body: ListView(
@@ -22,9 +23,9 @@ class RecyclingTipsPage extends StatelessWidget {
             description:
                 '\n\n • There is no need to sort the recyclables as they will be sorted centrally after collection.',
           ),
-const RecycleTip(
-  title: '2. Know what can or cannot be recycled',
-  description: '''
+          const RecycleTip(
+            title: '2. Know what can or cannot be recycled',
+            description: '''
 \n
 • Check the blue bin label to confirm that your items are suitable for recycling.
 • Common materials that can be recycled include glass, paper, plastic, and metal.
@@ -33,23 +34,20 @@ const RecycleTip(
 • Separate reusables (clothes, shoes, stuffed toys) from recyclables. Reusables that are in good condition should be donated. You can give them away through online sites or donate them!
 • Do not throw trash or bulky items like furniture and renovation waste into blue recycling bins.
   ''',
-),
-
-
-const RecycleTip(
-  title:
-      '3. Make sure your items are not contaminated with food or liquids',
-  description:
-      '''\n
+          ),
+          const RecycleTip(
+            title:
+                '3. Make sure your items are not contaminated with food or liquids',
+            description: '''\n
 • For example, items such as shampoo/detergent bottles, canned/bottled drinks, cosmetic jars, jam jars need to be clean before they can be recycled.
 • If containers are wet, greasy or contain food, they will contaminate the rest of the items in the recycling bin. Give these containers a simple rinse before you put them into the blue bin.
 ''',
-),
-const RecycleTip(
-  title: '4. Recycle your items!',
-  description:
-      '\n\n • Unsure whether something can be recyclable or not? Please contact NEA at 1800-CALL NEA (1800-2255 632)!',
-)
+          ),
+          const RecycleTip(
+            title: '4. Recycle your items!',
+            description:
+                '\n\n • Unsure whether something can be recyclable or not? Please contact NEA at 1800-CALL NEA (1800-2255 632)!',
+          )
         ],
       ),
     );
