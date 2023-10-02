@@ -21,7 +21,6 @@ class ParticipantMethod {
 
   Future<Map<dynamic, dynamic>> getRandomParticipatingCompetition(
       {required String userId}) async {
-    print("[getRandomParticipatingCompetition] userId $userId");
     Map<dynamic, dynamic> competitionsMap =
         await CompetitionMethods().getAllCompetitionsMap();
     Map<dynamic, dynamic> participantMap = await Database()
@@ -29,9 +28,6 @@ class ParticipantMethod {
             entityName: "participant", fieldName: "userId", fieldValue: userId);
     List res = [];
     participantMap.forEach((key, value) {
-      print("competitionsMap $competitionsMap");
-      print('value["competitionId"]');
-      print(value["competitionId"]);
       Map<dynamic, dynamic> competition =
           competitionsMap[value["competitionId"]];
       res.add(competition);

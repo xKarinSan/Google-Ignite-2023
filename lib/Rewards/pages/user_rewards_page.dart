@@ -18,13 +18,13 @@ class _UserRewardsPageState extends State<UserRewardsPage> {
   int userCurrentPoints = 0;
   List<dynamic> redeemedCoupons = [];
   final LocalStorage currentUser = LocalStorage('current_user');
+  final LocalStorage bottom_bar = LocalStorage('bottom_bar_state');
 
   Future<void> _getUserCurrentPoints(String userId) async {
     setState(() {
       isLoading = true;
     });
     await UserMethods().getUserById(userId).then((value) {
-      // print("[_getUserCurrentPoints] value $value");
       setState(() {
         userCurrentPoints = value['currentPoints'];
         isLoading = false;
@@ -35,6 +35,10 @@ class _UserRewardsPageState extends State<UserRewardsPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      bottom_bar.setItem('index', 3);
+    });
+
     String userId = currentUser.getItem("userId");
     _getUserCurrentPoints(userId);
   }
@@ -84,8 +88,7 @@ class _UserRewardsPageState extends State<UserRewardsPage> {
                                   userCurrentPoints.toString() ?? "0",
                                   style: const TextStyle(
                                       fontSize: 22,
-                                      color:
-                                          Color.fromARGB(255, 2, 137, 6),
+                                      color: Color.fromARGB(255, 2, 137, 6),
                                       fontWeight: FontWeight.bold),
                                 ),
                                 const Text(

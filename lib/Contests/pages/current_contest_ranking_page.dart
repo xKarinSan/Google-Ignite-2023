@@ -17,6 +17,7 @@ class ContestDashboardPage extends StatefulWidget {
 
 class _ContestDashboardPageState extends State<ContestDashboardPage> {
   final LocalStorage currentUser = LocalStorage('current_user');
+  final LocalStorage bottom_bar = LocalStorage('bottom_bar_state');
   String id = "";
   String countdown = "";
   String userId = "";
@@ -40,6 +41,9 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
       });
     });
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      bottom_bar.setItem('index', 2);
+    });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       CompetitionMethods().getCompetitionById(id).then((res) {
         _competition = res;

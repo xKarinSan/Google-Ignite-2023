@@ -51,7 +51,6 @@ class RewardMethod {
       Map<dynamic, dynamic> rewardMap = await Database().getDocumentByFieldMap(
           entityName: "userRewards", fieldName: "userId", fieldValue: userId);
       List res = [];
-      print("rewardMap $rewardMap");
       rewardMap.forEach((key, value) {
         res.add(value);
       });

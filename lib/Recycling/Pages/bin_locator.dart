@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 import '../../General/bottom_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 // Importing the geolocator package:
@@ -15,6 +16,9 @@ class BinLocator extends StatefulWidget {
 }
 
 class _BinLocatorState extends State<BinLocator> {
+  // for the bottom bar
+  final LocalStorage bottom_bar = LocalStorage('bottom_bar_state');
+
   // Boolean values for design purposes:
   bool isLocationEnabled = false;
   late GoogleMapController mapController;
@@ -143,6 +147,9 @@ class _BinLocatorState extends State<BinLocator> {
   void initState() {
     super.initState();
     _getCurrentLocation();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      bottom_bar.setItem("index", 1);
+    });
   }
 
   @override

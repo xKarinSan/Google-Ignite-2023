@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:localstorage/localstorage.dart';
 import '../../General/bottom_bar.dart';
 import "package:googleignite2023/FirebaseFeatures/database.dart";
 import "../../FirebaseFeatures/competition_model.dart";
@@ -40,6 +41,8 @@ class ContestPage extends StatefulWidget {
 }
 
 class _ContestPageState extends State<ContestPage> {
+  final LocalStorage bottom_bar = LocalStorage('bottom_bar_state');
+
   List<Widget> competitionWidgets = [];
   final DatabaseReference databaseReference =
       Database().setDatabaseReference("competitions");
@@ -47,6 +50,9 @@ class _ContestPageState extends State<ContestPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      bottom_bar.setItem('index', 2);
+    });
     // Get all competitions from the database.
     CompetitionMethods().getAllCompetitionsList().then((value) {
       List<Widget> tempList = [];
@@ -67,7 +73,6 @@ class _ContestPageState extends State<ContestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
           // backgroundColor: Color.fromARGB(255, 23, 190, 109),
           title: const Text(
             "Contests",

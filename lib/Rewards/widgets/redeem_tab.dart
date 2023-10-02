@@ -20,7 +20,6 @@ class _RedeemTabState extends State<RedeemTab> {
     List<Widget> couponCards = [];
     await RewardMethod().getAllAvailableRewards().then((value) {
       value.forEach((element) => {
-            print(element),
             couponCards.add(CouponCard(
               imagePath: element["imagePath"],
               vendorName: element["vendorName"],

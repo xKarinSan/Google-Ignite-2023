@@ -42,6 +42,7 @@ class _WidgetTreeState extends State<WidgetTree> {
                 snapshot.data?.uid.isNotEmpty ?? false
                     ? AuthHandler().currentUser?.uid
                     : "");
+            bottomBarStorage.setItem('index', 0);
             return const HomePage();
           } else {
             currentUser.clear();

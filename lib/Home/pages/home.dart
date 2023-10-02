@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final LocalStorage currentUser = LocalStorage('current_user');
+  final LocalStorage bottom_bar = LocalStorage('bottom_bar_state');
   Map<dynamic, dynamic>? _currentUser; // need the exact number of points
   Map<dynamic, dynamic> _randomCompetition = {};
   Timer? currTimer;
@@ -25,8 +26,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      bottom_bar.setItem("index", 0);
+    });
     String userId = currentUser.getItem("userId");
-    print("userId $userId");
     currTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _countdown.calculateRemainingTime();
@@ -205,9 +208,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Text(
-                      _randomCompetition.isEmpty
-                          ? ""
-                          : "Ends in: $countdown",
+                      _randomCompetition.isEmpty ? "" : "Ends in: $countdown",
                       // Updated event end date
                       style: const TextStyle(
                         fontSize: 18, // Adjusted font size for date
@@ -289,4 +290,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

@@ -15,7 +15,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final LocalStorage currentUser = LocalStorage('current_user');
-  final LocalStorage bottomBarStorage = LocalStorage('bottom_bar_state');
+  final LocalStorage bottom_bar = LocalStorage('bottom_bar_state');
 
   bool isLoggingOut = false;
 
@@ -29,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
           isLoggingOut = false;
         });
         currentUser.clear();
-        bottomBarStorage.clear();
+        bottom_bar.clear();
         Navigator.pushNamed(context, '/auth');
       }).catchError((onError) {
         isLoggingOut = false;
@@ -47,6 +47,15 @@ class _ProfilePageState extends State<ProfilePage> {
       onPressed: logoutUser,
       child: const Text("Sign Out"),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      bottom_bar.setItem('index', 4);
+    });
   }
 
   @override

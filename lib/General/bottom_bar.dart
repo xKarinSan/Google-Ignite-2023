@@ -16,9 +16,19 @@ class _BottomBarState extends State<BottomBar> {
 
   void _onItemTapped(int index) {
     setState(() {
+      storage.setItem('index', index);
       _selectedIndex = index;
     });
-    storage.setItem('index', index);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print('before: ${storage.getItem("index")}');
+    if (storage.getItem("index") == null) {
+      storage.setItem('index', 0);
+    }
+    _selectedIndex = storage.getItem("index");
   }
 
   @override
@@ -54,7 +64,6 @@ class _BottomBarState extends State<BottomBar> {
         ),
       ],
       onTap: (index) => {
-        // print("inded $index")
         if (index == 0 && index != _selectedIndex)
           {Navigator.pushNamed(context, "/home")}
         else if (index == 1 && index != _selectedIndex)

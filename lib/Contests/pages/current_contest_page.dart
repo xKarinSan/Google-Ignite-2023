@@ -19,6 +19,8 @@ class CurrentContestPage extends StatefulWidget {
 
 class _CurrentContestPageState extends State<CurrentContestPage> {
   final LocalStorage currentUser = LocalStorage('current_user');
+  final LocalStorage bottom_bar = LocalStorage('bottom_bar_state');
+
   String id = "";
   String countdown = "";
   String userId = "";
@@ -35,6 +37,9 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
   void initState() {
     super.initState();
     userId = currentUser.getItem("userId");
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      bottom_bar.setItem('index', 2);
+    });
     currTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _countdown.calculateRemainingTime();
