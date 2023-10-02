@@ -5,6 +5,7 @@ import '../../FirebaseFeatures/recycle_model.dart';
 import 'package:localstorage/localstorage.dart';
 import '../../General/bottom_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import "package:fluttertoast/fluttertoast.dart";
 // Importing the geolocator package:
 import 'package:geolocator/geolocator.dart';
 // Importing the polylines package:
@@ -162,8 +163,8 @@ class _BinLocatorState extends State<BinLocator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          ApplicationToolbar(title: "Bin Locator", automaticallyImplyLeading: false),
+      appBar: ApplicationToolbar(
+          title: "Bin Locator", automaticallyImplyLeading: false),
 
       body: GoogleMap(
         mapType: MapType.hybrid,
@@ -235,19 +236,41 @@ class _BinLocatorState extends State<BinLocator> {
     TextEditingController itemNameController = TextEditingController();
     TextEditingController quantityController = TextEditingController();
 
-    Future<void> recycleItem() async {
+    Future<bool?> recycleItem() async {
       print("itemName: ${itemNameController.text}");
       print("quantity: ${quantityController.text}");
       if (quantityController.text == "" || itemNameController.text == "") {
         // print("points: $points");
-        return;
+        return Fluttertoast.showToast(
+            msg: "Fields cannot be empty",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
       } else {
         int qty = int.parse(quantityController.text.split(' ')[0]);
         if (qty <= 0) {
-          return;
+          return Fluttertoast.showToast(
+              msg: "Quantity cannot be less than 0",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.TOP,
+              timeInSecForIosWeb: 3,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
         }
         await RecycleMethods().createRecycle(userId: userId);
         Navigator.pop(context);
+        return Fluttertoast.showToast(
+            msg: "Recycled!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
+            backgroundColor: const Color.fromARGB(255, 3, 136, 8),
+            textColor: Colors.white,
+            fontSize: 16.0);
       }
     }
 
