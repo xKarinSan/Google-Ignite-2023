@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../../FirebaseFeatures/recycle_model.dart';
 import 'package:localstorage/localstorage.dart';
 import '../../General/bottom_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,6 +20,8 @@ class BinLocator extends StatefulWidget {
 class _BinLocatorState extends State<BinLocator> {
   // for the bottom bar
   final LocalStorage bottom_bar = LocalStorage('bottom_bar_state');
+  final LocalStorage currentUser = LocalStorage('current_user');
+  String userId = "";
 
   // Boolean values for design purposes:
   bool isLocationEnabled = false;
@@ -145,6 +149,8 @@ class _BinLocatorState extends State<BinLocator> {
 
   @override
   void initState() {
+    userId = currentUser.getItem("userId");
+    // print("userId $userId");
     super.initState();
     _getCurrentLocation();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -227,6 +233,25 @@ class _BinLocatorState extends State<BinLocator> {
   }
 
   Future<dynamic> _dialog(BuildContext context) {
+    TextEditingController itemNameController = TextEditingController();
+    TextEditingController quantityController = TextEditingController();
+
+    Future<void> recycleItem() async {
+      print("itemName: ${itemNameController.text}");
+      print("quantity: ${quantityController.text}");
+      if (quantityController.text == "" || itemNameController.text == "") {
+        // print("points: $points");
+        return;
+      } else {
+        int qty = int.parse(quantityController.text.split(' ')[0]);
+        if (qty <= 0) {
+          return;
+        }
+        await RecycleMethods().createRecycle(userId: userId);
+        Navigator.pop(context);
+      }
+    }
+
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -239,7 +264,9 @@ class _BinLocatorState extends State<BinLocator> {
                 decoration: const InputDecoration(
                   labelText: 'Item Name',
                 ),
+                controller: itemNameController,
                 onChanged: (value) {
+                  // print("Item Name: $value");
                   // Do something with the user's input
                 },
               ),
@@ -249,6 +276,11 @@ class _BinLocatorState extends State<BinLocator> {
                   labelText: 'Quantity',
                 ),
                 keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+// for version 2 and greater youcan also use this
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                controller: quantityController,
                 onChanged: (value) {
                   // Do something with the user's input
                 },
@@ -260,7 +292,8 @@ class _BinLocatorState extends State<BinLocator> {
                   ElevatedButton(
                     onPressed: () {
                       // Do something when the green button is pressed
-                      Navigator.pop(context);
+
+                      recycleItem();
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
