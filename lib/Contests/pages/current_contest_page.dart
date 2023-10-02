@@ -9,6 +9,7 @@ import '../../FirebaseFeatures/competition_model.dart';
 import "../../FirebaseFeatures/participants_model.dart";
 import "../../General/bottom_bar.dart";
 import "../helper_functions.dart";
+import "package:lottie/lottie.dart";
 
 class CurrentContestPage extends StatefulWidget {
   const CurrentContestPage({super.key});
@@ -110,13 +111,23 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
                       children: [
                         Text(
                           _competition?["competitionName"] ?? "Loading...",
-                          style: const TextStyle(fontSize: 25),
+                          style: const TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "Ends in: $countdown",
                           style: const TextStyle(fontSize: 18),
                         ),
                       ],
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Lottie.asset(
+                          isParticipant
+                              ? 'assets/animation_ln9358fj.json'
+                              : 'assets/animation_ln92r59o.json',
+                          width: 200,
+                          height: 200),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -133,7 +144,9 @@ class _CurrentContestPageState extends State<CurrentContestPage> {
                                       : joinCompetition,
                                   child: Text(
                                     isParticipant ? "View Dashboard" : "Join",
-                                    style: const TextStyle(color: Colors.white),
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
                                   ))),
                     ),
                   ],
