@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:googleignite2023/FirebaseFeatures/user_model.dart';
+import 'package:localstorage/localstorage.dart';
 import '../../General/bottom_bar.dart';
 
 class RedeemedCoupon {
@@ -14,7 +16,7 @@ void main() {
 }
 
 class RewardsPage extends StatefulWidget {
-  final int userPoints; // Add a userPoints field
+  int userPoints; // Add a userPoints field
 
   RewardsPage({Key? key, required this.userPoints}) : super(key: key);
 
@@ -23,12 +25,30 @@ class RewardsPage extends StatefulWidget {
 }
 
 class _RewardsPageState extends State<RewardsPage> {
+  int userCurrentPoints = 0;
   List<RedeemedCoupon> redeemedCoupons = [];
+  final LocalStorage currentUser = new LocalStorage('current_user');
 
   void _addRedeemedCoupon(String storeName, String discount, String imagePath) {
     setState(() {
       redeemedCoupons.add(RedeemedCoupon(storeName, discount, imagePath));
     });
+  }
+
+  void _getUserCurrentPoints(String userId) {
+    UserMethods().getUserById(userId).then((value) {
+      print("[_getUserCurrentPoints] value $value");
+      setState(() {
+        userCurrentPoints = value['currentPoints'];
+        print(userCurrentPoints);
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    String userId = currentUser.getItem("userId");
+    _getUserCurrentPoints(userId);
   }
 
   @override
@@ -48,7 +68,7 @@ class _RewardsPageState extends State<RewardsPage> {
             ),
           ),
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(120.0),
+            preferredSize: const Size.fromHeight(160.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -60,9 +80,15 @@ class _RewardsPageState extends State<RewardsPage> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   width: MediaQuery.of(context).size.width * 0.85,
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text("Your points:"),
+                      Text(
+                        userCurrentPoints?.toString() ?? "0",
+                        style: TextStyle(fontSize: 22, color: const Color.fromARGB(255, 2, 137, 6),
+                        fontWeight: FontWeight.bold),
+                      ),
                       Text(
                         'Explore and redeem various rewards offered by our participating merchants below:',
                         style: TextStyle(
