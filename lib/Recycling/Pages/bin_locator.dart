@@ -6,7 +6,6 @@ import 'package:geolocator/geolocator.dart';
 // Importing the polylines package:
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
-
 class BinLocator extends StatefulWidget {
   const BinLocator({Key? key}) : super(key: key);
 
@@ -139,6 +138,12 @@ class _BinLocatorState extends State<BinLocator> {
       ),
     ),
   };
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -326,6 +331,9 @@ class _BinLocatorState extends State<BinLocator> {
   // If bin is not within the blue circle, then we only need to draw the polyline:
   // We need a method to check if the bin is within the blue circle:
   bool _isWithinCircle(LatLng bin) {
+    if (_currentPosition == null) {
+      return false;
+    }
     // Get user's location again:
     Position position = _currentPosition!;
     // Get the distance between the user's location and the bin:
