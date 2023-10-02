@@ -17,17 +17,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final LocalStorage currentUser = LocalStorage('current_user');
   Map<dynamic, dynamic>? _currentUser; // need the exact number of points
-  Map<dynamic, dynamic>? _randomCompetition = {};
-  // List<dynamic> userCompetitions = [];
+  Map<dynamic, dynamic> _randomCompetition = {};
   Timer? currTimer;
   String countdown = "";
   late Countdown _countdown;
+
   @override
   void initState() {
     super.initState();
-    // print("initialised home");
-    // print("currentUser $currentUser");
-    // print(currentUser.getItem("userId"));
     String userId = currentUser.getItem("userId");
     print("userId $userId");
     currTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -101,8 +98,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Text(
                       _currentUser?['currentPoints'].toString() ?? "0",
-                      // "1000",
-                      // Hardcoded points value
                       style: const TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
@@ -118,7 +113,8 @@ class _HomePageState extends State<HomePage> {
                             context, '/recycling'); // Navigate to '/recycling'
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: const Color.fromARGB(255, 23, 190, 109),
+                        foregroundColor:
+                            const Color.fromARGB(255, 23, 190, 109),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
                               10.0), // Adjust border radius
@@ -185,7 +181,6 @@ class _HomePageState extends State<HomePage> {
             ),
 
             // Card 2: You Competition
-
             Card(
               color: const Color.fromARGB(255, 23, 190, 109),
               margin: const EdgeInsets.symmetric(
@@ -197,27 +192,22 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ListTile(
-                      title: Text(
-                        _randomCompetition?['competitionName'].toString() ??
-                            "Join a competition", // Updated event name
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                      title: Center(
+                        child: Text(
+                          _randomCompetition?['competitionName'] ??
+                              'Join a competition', // Updated event name
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
-                    // const Text(
-                    //   'Your rank: #5', // Updated user's rank
-                    //   style: TextStyle(
-                    //     fontSize: 18, // Adjusted font size for rank
-                    //     fontWeight: FontWeight.bold,
-                    //     color: Colors.black,
-                    //   ),
-                    // ),
                     Text(
-                      "Ends in: $countdown",
-                      // 'Ends on: 15 Oct 2023',
+                      _randomCompetition.isEmpty
+                          ? ""
+                          : "Ends in: $countdown",
                       // Updated event end date
                       style: const TextStyle(
                         fontSize: 18, // Adjusted font size for date
@@ -300,76 +290,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class CompetitionCard extends StatelessWidget {
-  const CompetitionCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: Colors.green.shade100,
-      margin:
-          const EdgeInsets.symmetric(horizontal: 16.0), // Add horizontal margin
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const ListTile(
-              title: Text(
-                'SMU Recyclathon 2023', // Updated event name
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            const Text(
-              'Your rank: #5', // Updated user's rank
-              style: TextStyle(
-                fontSize: 18, // Adjusted font size for rank
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const Text(
-              'Ends on: 15 Oct 2023', // Updated event end date
-              style: TextStyle(
-                fontSize: 12, // Adjusted font size for date
-                color: Colors.grey, // Set text color to grey
-              ),
-            ),
-            const SizedBox(height: 16), // Add some space before the button
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context,
-                    '/contests'); // Navigate to '/leaderboard' or the appropriate route
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.green,
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(10.0), // Adjust border radius
-                ),
-                backgroundColor: Colors.green,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0), // Add padding left and right
-                minimumSize: const Size(double.infinity, 48), // Button size
-              ),
-              child: const Text(
-                'View Leaderboard 🏆', // Button text
-                style: TextStyle(
-                  fontSize: 15, // Adjust the font size
-                  fontWeight: FontWeight.bold, // Make the text bold
-                  color: Colors.white, // Set the text color to dark green
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

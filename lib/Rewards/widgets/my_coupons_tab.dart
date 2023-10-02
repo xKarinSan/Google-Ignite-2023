@@ -20,17 +20,6 @@ class _MyCouponsTabState extends State<MyCouponsTab> {
   Future<void> getUserObtainedCoupons(String userId) async {
     List<Widget> couponCards = [];
     await RewardMethod().getAllUserRewards(userId: userId).then((value) {
-      print("value $value");
-      print(" ");
-      // value.forEach((element) => {
-      //       print(element),
-      //       couponCards.add(CouponCard(
-      //         imagePath: element["imagePath"],
-      //         vendorName: element["vendorName"],
-      //         points: element["points"],
-      //         discount: element["discount"],
-      //       ))
-      //     });
       setState(() {
         redeemedCoupons = value;
         isLoading = false;
