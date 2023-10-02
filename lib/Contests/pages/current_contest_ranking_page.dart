@@ -58,8 +58,6 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
       ParticipantMethod()
           .getCompetitionParticipants(competitionId: id)
           .then((participants) {
-        // participants
-        //     .sort((a, b) => a["cumulativePoints"].compareTo(b["cumulativePoints"]));
         participants.sort((a, b) =>
             (b?['cumulativePoints']).compareTo(a?['cumulativePoints']));
         int i = 1;
@@ -74,7 +72,6 @@ class _ContestDashboardPageState extends State<ContestDashboardPage> {
           i += 1;
           userCompetitions.add(ParticipantContainer(participant: participant));
         }
-        // userCompetitions.sort((a, b) => (b?['cumulativePoints']).compareTo(a?['cumulativePoints']))
       });
     });
   }
@@ -150,11 +147,9 @@ class ParticipantContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Card(
-          // color: participant.isMe ?? Colors.red : Colors.white,
           color: participant["isMe"] ?? false
               ? const Color.fromARGB(255, 14, 157, 18)
               : Colors.white,
-          // color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Row(

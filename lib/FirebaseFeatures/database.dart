@@ -125,7 +125,6 @@ class Database {
       required Map<String, Object> data}) async {
     try {
       DatabaseReference ref = db.ref("$collection+/$docId");
-      // key:value
       await ref.update(data);
     } catch (e) {
       print(e);

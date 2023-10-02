@@ -14,7 +14,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // final User? user = AuthHandler().currentUser;
   final LocalStorage currentUser = LocalStorage('current_user');
   final LocalStorage bottomBarStorage = LocalStorage('bottom_bar_state');
 
@@ -62,16 +61,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: <Widget>[
                   Lottie.asset(
                     'assets/animation_ln7de1mq.json',
-                    // width: 300,
-                    // height: 300,
                   ),
                   Text(currentUser.getItem("displayName") ?? "User name",
-                      style:
-                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-
-                  // Text(currentUser.getItem("email") ?? "User Email"),
-                  // Text(currentUser.getItem("photoURL") ?? "Photo URL"),
-                  // Text(currentUser.getItem("userId") ?? "User ID"),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 30)),
                   _signOutButton()
                 ],
               ),

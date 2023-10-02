@@ -16,10 +16,8 @@ class AuthHandler {
   // sign in (email auth)
   Future<void> signInWithEmailAndPassword(
       {required String email, required String password}) async {
-    // try {
     await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
-    // }
     await currUserLocalStorage.setItem(
         'displayName',
         AuthHandler().currentUser?.displayName?.isNotEmpty ?? false
